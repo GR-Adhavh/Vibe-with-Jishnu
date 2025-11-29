@@ -1,0 +1,8 @@
+{
+  "name": "Vibe with Jishnu",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "start_url": ".",
+  "background_color": "#0a0f2e",
+  "theme_color": "#0a0f2e"
+}
