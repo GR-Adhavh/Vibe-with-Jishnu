@@ -21,7 +21,6 @@ body {
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
-    transition: background 0.5s ease;
 }
 
 /* --- THE BEATING HEART BACKGROUND --- */
@@ -527,22 +526,11 @@ function closePopup() {
     // Stop visuals
     stopVisuals();
     
-    // Reset Background to Normal (Default)
-    resetTheme();
-
     // Update play button to 'paused' state (triangle)
     animatePlayButton();
     
     // Stop wave animation
     toggleWave(); 
-}
-
-/* RESET THEME TO DEFAULT */
-function resetTheme() {
-    document.body.style.background = "#0a0f2e";
-    document.documentElement.style.setProperty('--song-color', '#6a5bff');
-    document.querySelector(".player").style.borderColor = "#6a5bff";
-    document.querySelectorAll("#soundwave div").forEach(w => w.style.background = "#6a5bff");
 }
 
 /* VISUALS */
@@ -612,17 +600,22 @@ function formatTime(s) {
 }
 </script>
 <script>
-/* MAGIC FULL SCREEN SCRIPT */
+/* MAGIC FULL SCREEN SCRIPT - APP MODE ONLY */
 document.addEventListener('click', function() {
-    var el = document.documentElement;
-    if (el.requestFullscreen) {
-        el.requestFullscreen();
-    } else if (el.mozRequestFullScreen) {
-        el.mozRequestFullScreen();
-    } else if (el.webkitRequestFullscreen) {
-        el.webkitRequestFullscreen();
-    } else if (el.msRequestFullscreen) {
-        el.msRequestFullscreen();
+    // Check if the app is running in 'standalone' mode (Added to Home Screen)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+
+    if (isStandalone) {
+        var el = document.documentElement;
+        if (el.requestFullscreen) {
+            el.requestFullscreen();
+        } else if (el.mozRequestFullScreen) {
+            el.mozRequestFullScreen();
+        } else if (el.webkitRequestFullscreen) {
+            el.webkitRequestFullscreen();
+        } else if (el.msRequestFullscreen) {
+            el.msRequestFullscreen();
+        }
     }
 }, { once: true });
 </script>
