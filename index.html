@@ -330,6 +330,7 @@ const songAnimations = {
 };
 
 const playlists = {
+    // RESTORED LOT-III
     list1: [
         "Anugundu Abhishek(LOT-III).mp3",
         "DSK on the move(LOT-III).mp3",
@@ -354,7 +355,6 @@ const playlists = {
     list3: [
         "Harishankar ku irukka.mp3", 
         "Happy Birthday Megharajan.mp3",
-        // UPDATED: Use simple file names
         "Bomb.mp3", 
         "Sanjai.mp3" 
     ]
@@ -377,7 +377,6 @@ for(let id in playlists){
         let displayName = clean;
         
         if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
-        // NEW: Map simple file -> Fancy Display with Parentheses
         if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
         if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         
@@ -387,7 +386,18 @@ for(let id in playlists){
         let div = document.createElement("div");
         div.className="track";
         div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
-        div.onclick = (e) => { e.stopPropagation(); playSong(id, idx); };
+        
+        // --- CLICK HANDLER ---
+        div.onclick = (e) => { 
+            e.stopPropagation(); 
+            // SPECIAL CHECK FOR LIST 1
+            if(id === 'list1') {
+                alert("Dropping soon! 🚀");
+            } else {
+                playSong(id, idx); 
+            }
+        };
+        
         listElem.appendChild(div);
     });
 }
@@ -424,6 +434,8 @@ seekSlider.addEventListener('input', () => {
 });
 
 function playSong(list, index){
+    if(!playlists[list] || playlists[list].length === 0) return;
+
     currentList = list;
     currentIndex = index;
 
@@ -453,6 +465,7 @@ function playSong(list, index){
 }
 
 function togglePlay(){
+    if(!audio.src) return; 
     if(audio.paused){ audio.play().then(()=>startVisuals()); }
     else { audio.pause(); stopVisuals(); }
     animatePlayButton();
@@ -460,13 +473,21 @@ function togglePlay(){
 }
 
 function prevSong(){
-    if(!currentList) return;
+    if(!currentList || playlists[currentList].length === 0) return;
+    
+    // Check if current list is list1 (unlikely if UI blocks it, but good for safety)
+    if(currentList === 'list1') return;
+
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
     playSong(currentList, currentIndex);
 }
 
 function nextSong(){
-    if(!currentList) return;
+    if(!currentList || playlists[currentList].length === 0) return;
+    
+    // Check if current list is list1
+    if(currentList === 'list1') return;
+
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
     playSong(currentList, currentIndex);
 }
@@ -490,7 +511,6 @@ function showPopup(songName, artist, list){
     let img = document.getElementById("popupImg");
     img.style.display="block";
     
-    // --- IMAGE LOGIC (FIXED CAPITALIZATION) ---
     if(list === "list1") {
         img.src = "Poster.jpg";
     }
@@ -498,16 +518,14 @@ function showPopup(songName, artist, list){
         img.src = "Poster2.jpeg";
     }
     else if(list === "list3") {
-        // Dynamic images for Blockbuster Hits
-        // Match the DISPLAY names or simple names
         if(songName.includes("Bomb") || songName.includes("Sanjai")) {
-            img.src = "poster4.png"; // Lowercase p
+            img.src = "poster4.png"; 
         } 
         else if (songName.includes("Harishankar")) {
-            img.src = "Poster3.jpeg"; // Capital P
+            img.src = "Poster3.jpeg"; 
         }
         else if (songName.includes("Happy Birthday")) {
-            img.src = "poster3.png"; // Lowercase p
+            img.src = "poster3.png"; 
         }
         else {
             img.src = "Poster3.jpeg";
@@ -557,5 +575,3 @@ document.addEventListener('click', function() {
 </script>
 </body>
 </html>
-
-
