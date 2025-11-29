@@ -600,22 +600,17 @@ function formatTime(s) {
 }
 </script>
 <script>
-/* MAGIC FULL SCREEN SCRIPT - APP MODE ONLY */
+/* MAGIC FULL SCREEN SCRIPT */
 document.addEventListener('click', function() {
-    // Check if the app is running in 'standalone' mode (Added to Home Screen)
-    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
-
-    if (isStandalone) {
-        var el = document.documentElement;
-        if (el.requestFullscreen) {
-            el.requestFullscreen();
-        } else if (el.mozRequestFullScreen) {
-            el.mozRequestFullScreen();
-        } else if (el.webkitRequestFullscreen) {
-            el.webkitRequestFullscreen();
-        } else if (el.msRequestFullscreen) {
-            el.msRequestFullscreen();
-        }
+    var el = document.documentElement;
+    if (el.requestFullscreen) {
+        el.requestFullscreen();
+    } else if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen();
+    } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
     }
 }, { once: true });
 </script>
