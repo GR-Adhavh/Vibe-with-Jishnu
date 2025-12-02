@@ -249,6 +249,17 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
         </div>
         <div id="list1" class="songList"></div>
     </div>
+    
+    <div class="playlistContainer">
+        <div class="playlistHeader" onclick="toggleList('list4')">
+            <img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+            <div>
+                <div class="playlistTitle">LOT-III Singles</div>
+                <div style="font-size:12px; opacity:0.6">Latest Releases</div>
+            </div>
+        </div>
+        <div id="list4" class="songList"></div>
+    </div>
 
     <div class="playlistContainer">
         <div class="playlistHeader" onclick="toggleList('list2')">
@@ -311,6 +322,10 @@ const artists = {
     "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
     "Flute anthem(LOT-III)": "G.R.Adhavh",
     
+    // LOT-III SINGLES
+    "Item no.1(LOT-III)": "G.R.Adhavh",
+    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
+    
     // 50 SHADES
     "Jishnu Anthem": "G.R.Adhavh",
     "Jishnu Anthem speaker change version": "G.R.Adhavh",
@@ -335,6 +350,10 @@ const songAnimations = {
     "Sivagasi's Daaha(LOT-III)": "#ffa600",
     "The namechange(LOT-III)": "#bb6bff",
     "Flute anthem(LOT-III)": "#00ffbf",
+
+    // LOT-III Singles Colors
+    "Item no.1(LOT-III)": "#ffd700",      /* Gold */
+    "Saavadi Saravedi(LOT-III)": "#ff4500", /* Orange Red */
     
     // 50 Shades Colors
     "Jishnu Anthem": "#00ff88",
@@ -372,6 +391,11 @@ const playlists = {
         "The namechange(LOT-III).mp3",
         "Vadakku Sadhuram il Jishnu(LOT-III).mp3",
         "Flute anthem(LOT-III).mp3"
+    ],
+    // NEW SINGLES PLAYLIST
+    list4: [
+        "Item no.1(LOT-III).mp3",
+        "Saavadi Saravedi(LOT-III).mp3"
     ],
     list2: [
         "Jishnu Anthem.mp3",
@@ -417,10 +441,22 @@ for(let id in playlists){
         // --- CLICK HANDLER ---
         div.onclick = (e) => { 
             e.stopPropagation(); 
-            // SPECIAL CHECK FOR LIST 1
-            if(id === 'list1') {
+            
+            // LOGIC FOR PLAYLIST BEHAVIOR
+            if (id === 'list4') {
+                // LOT-III Singles -> Dropping soon
                 alert("Dropping soon! 🚀");
-            } else {
+            }
+            else if (id === 'list1') {
+                // LOT-III OST -> Check for Flute Anthem
+                if (clean === "Flute anthem(LOT-III)") {
+                    playSong(id, idx);
+                } else {
+                    alert("Dropping soon! 🚀");
+                }
+            }
+            else {
+                // Normal behavior for list2, list3
                 playSong(id, idx); 
             }
         };
@@ -502,8 +538,12 @@ function togglePlay(){
 function prevSong(){
     if(!currentList || playlists[currentList].length === 0) return;
     
-    // Check if current list is list1 (unlikely if UI blocks it, but good for safety)
-    if(currentList === 'list1') return;
+    // Block playback if it's the Singles list
+    if(currentList === 'list4') return;
+    
+    // Block playback for list1 unless current song is Flute Anthem? 
+    // Actually, simply preventing navigation within restricted lists is safer for now.
+    if(currentList === 'list1') return; 
 
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
     playSong(currentList, currentIndex);
@@ -512,7 +552,10 @@ function prevSong(){
 function nextSong(){
     if(!currentList || playlists[currentList].length === 0) return;
     
-    // Check if current list is list1
+    // Block playback if it's the Singles list
+    if(currentList === 'list4') return;
+
+    // Block playback for list1
     if(currentList === 'list1') return;
 
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
@@ -555,7 +598,7 @@ function showPopup(songName, artist, list){
     let img = document.getElementById("popupImg");
     img.style.display="block";
     
-    if(list === "list1") {
+    if(list === "list1" || list === "list4") {
         img.src = "Poster.jpg";
     }
     else if(list === "list2") {
