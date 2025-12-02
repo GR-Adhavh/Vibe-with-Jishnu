@@ -323,7 +323,7 @@ const artists = {
     "Flute anthem(LOT-III)": "G.R.Adhavh",
     
     // LOT-III SINGLES
-    "Item no.1(LOT-III)": "G.R.Adhavh",
+    "Item number 1(LOT-III)": "G.R.Adhavh",
     "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
     
     // 50 SHADES
@@ -352,7 +352,7 @@ const songAnimations = {
     "Flute anthem(LOT-III)": "#00ffbf",
 
     // LOT-III Singles Colors
-    "Item no.1(LOT-III)": "#ffd700",      /* Gold */
+    "Item number 1(LOT-III)": "#ffd700",      /* Gold */
     "Saavadi Saravedi(LOT-III)": "#ff4500", /* Orange Red */
     
     // 50 Shades Colors
@@ -390,11 +390,11 @@ const playlists = {
         "Sivagasi's Daaha(LOT-III).mp3",
         "The namechange(LOT-III).mp3",
         "Vadakku Sadhuram il Jishnu(LOT-III).mp3",
-        "Flute anthem(LOT-III).mp3"
+        "Flute anthem.mp3"
     ],
     // NEW SINGLES PLAYLIST
     list4: [
-        "Item no.1(LOT-III).mp3",
+        "Item number 1(LOT-III).mp3",
         "Saavadi Saravedi(LOT-III).mp3"
     ],
     list2: [
@@ -431,6 +431,9 @@ for(let id in playlists){
         if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
         if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         
+        // FIX: Display as LOT-III version but file is just "Flute anthem"
+        if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
+        
         // Use displayName to lookup Artist
         let artist = getArtist(displayName) || getArtist(clean);
 
@@ -448,8 +451,8 @@ for(let id in playlists){
                 alert("Dropping soon! 🚀");
             }
             else if (id === 'list1') {
-                // LOT-III OST -> Check for Flute Anthem
-                if (clean === "Flute anthem(LOT-III)") {
+                // LOT-III OST -> Check for Flute Anthem by display name
+                if (displayName === "Flute anthem(LOT-III)") {
                     playSong(id, idx);
                 } else {
                     alert("Dropping soon! 🚀");
@@ -510,6 +513,7 @@ function playSong(list, index){
     if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
     if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
     if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+    if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 
     let artist = getArtist(displayName) || getArtist(clean);
     let color = getColor(displayName) || getColor(clean);
@@ -541,8 +545,7 @@ function prevSong(){
     // Block playback if it's the Singles list
     if(currentList === 'list4') return;
     
-    // Block playback for list1 unless current song is Flute Anthem? 
-    // Actually, simply preventing navigation within restricted lists is safer for now.
+    // Block playback for list1 (prevents skipping to locked songs)
     if(currentList === 'list1') return; 
 
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
@@ -555,7 +558,7 @@ function nextSong(){
     // Block playback if it's the Singles list
     if(currentList === 'list4') return;
 
-    // Block playback for list1
+    // Block playback for list1 (prevents skipping to locked songs)
     if(currentList === 'list1') return;
 
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
