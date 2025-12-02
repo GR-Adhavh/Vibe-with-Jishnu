@@ -647,23 +647,26 @@ function formatTime(s) {
 }
 </script>
 <script>
-/* ROBUST MAGIC FULL SCREEN SCRIPT - APP MODE ONLY */
+/* ROBUST MAGIC FULL SCREEN SCRIPT - APP MODE ONLY (Including APK Wrappers) */
 
-// Function to check if user is in "App Mode" (Standalone)
-function isRunningStandalone() {
-    return (window.matchMedia('(display-mode: standalone)').matches) || 
-           (window.navigator.standalone === true);
+function isRunningApp() {
+    // 1. Check for standard PWA Standalone Mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                         (window.navigator.standalone === true);
+    
+    // 2. Check for Android "WebView" (Common in APK Wrappers)
+    // Most wrappers (like WebIntoApp) include "wv" in the User Agent
+    const isWebView = navigator.userAgent.includes('wv') || (navigator.userAgent.includes('Android') && navigator.userAgent.includes('Version/'));
+
+    return isStandalone || isWebView;
 }
 
-// Only trigger if in App Mode
-if (isRunningStandalone()) {
-    document.body.addEventListener('click', function() {
+// Only trigger if we detected we are in an App/APK
+if (isRunningApp()) {
+    document.addEventListener('click', function() {
         var el = document.documentElement;
         if (el.requestFullscreen) {
-            el.requestFullscreen().catch(err => {
-                // Silent catch, in case interaction was invalid
-                console.log("Fullscreen blocked or not ready: " + err);
-            });
+            el.requestFullscreen().catch(e => console.log("Fullscreen blocked"));
         } else if (el.mozRequestFullScreen) {
             el.mozRequestFullScreen();
         } else if (el.webkitRequestFullscreen) {
