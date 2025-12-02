@@ -647,18 +647,28 @@ function formatTime(s) {
 }
 </script>
 <script>
-/* MAGIC FULL SCREEN SCRIPT - APP MODE ONLY */
-// Check if running in Standalone (App) Mode
-if (window.matchMedia('(display-mode: standalone)').matches) {
-    document.addEventListener('click', function() {
+/* ROBUST MAGIC FULL SCREEN SCRIPT - APP MODE ONLY */
+
+// Function to check if user is in "App Mode" (Standalone)
+function isRunningStandalone() {
+    return (window.matchMedia('(display-mode: standalone)').matches) || 
+           (window.navigator.standalone === true);
+}
+
+// Only trigger if in App Mode
+if (isRunningStandalone()) {
+    document.body.addEventListener('click', function() {
         var el = document.documentElement;
         if (el.requestFullscreen) {
-            el.requestFullscreen();
-        } else if (el.mozRequestFullScreen) { /* Firefox */
+            el.requestFullscreen().catch(err => {
+                // Silent catch, in case interaction was invalid
+                console.log("Fullscreen blocked or not ready: " + err);
+            });
+        } else if (el.mozRequestFullScreen) {
             el.mozRequestFullScreen();
-        } else if (el.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+        } else if (el.webkitRequestFullscreen) {
             el.webkitRequestFullscreen();
-        } else if (el.msRequestFullscreen) { /* IE/Edge */
+        } else if (el.msRequestFullscreen) {
             el.msRequestFullscreen();
         }
     }, { once: true });
