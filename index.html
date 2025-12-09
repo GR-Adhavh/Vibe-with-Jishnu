@@ -11,29 +11,6 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0a0f2e"> 
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
-        authDomain: "weapon-fanpage.firebaseapp.com",
-        projectId: "weapon-fanpage",
-        storageBucket: "weapon-fanpage.firebasestorage.app",
-        messagingSenderId: "124549409527",
-        appId: "1:124549409527:web:85657a1d41c8950f7601f2",
-        measurementId: "G-MXBR3C8ET7"
-    };
-
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    window.db = db; // Make DB available globally for use in the main script
-</script>
-
-
 <style>
 /* PAGE THEME */
 body {
@@ -99,8 +76,8 @@ header h1 {
     letter-spacing: 1px;
 }
 
-/* CONTENT PADDING - Increased to prevent player overlap */
-.content { padding-bottom: 180px; }
+/* CONTENT PADDING */
+.content { padding-bottom: 160px; }
 
 /* PLAYLIST BOX */
 .playlistContainer {
@@ -137,13 +114,13 @@ header h1 {
 .track strong { font-size: 14px; }
 .track span { font-size: 12px; opacity: 0.7; }
 
-/* PLAYER BAR - Adjusted bottom padding */
+/* PLAYER BAR */
 .player {
     position: fixed;
     bottom: 0; left: 0; width: 100%;
     background: rgba(10, 5, 30, 0.95);
     backdrop-filter: blur(10px);
-    padding: 15px 0 30px 0; /* Increased bottom padding */
+    padding: 15px 0;
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     border-top: 2px solid #6a5bff;
@@ -197,9 +174,9 @@ input[type="range"]::-webkit-slider-thumb {
 }
 input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 
-/* POPUP - Adjusted bottom position */
+/* POPUP */
 #popup {
-    position: fixed; bottom: 160px; right: 20px; width: 220px; /* Adjusted from 130px */
+    position: fixed; bottom: 130px; right: 20px; width: 220px;
     background: rgba(15, 10, 40, 0.9);
     padding: 15px; border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.1);
@@ -250,44 +227,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 @keyframes wave { 0%, 100% { height: 3px; } 50% { height: 15px; } }
 .paused div { animation-play-state: paused; height: 3px; }
 
-/* TRENDING SECTION */
-.trendingContainer {
-    width: 90%;
-    max-width: 700px;
-    margin: 40px auto 20px auto;
-}
-.trendingContainer h2 {
-    font-size: 24px;
-    border-left: 5px solid #b84bff;
-    padding-left: 10px;
-    margin-bottom: 20px;
-}
-.trendingItem {
-    display: flex;
-    align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.08);
-    cursor: pointer;
-}
-.trendingItem:last-child { border-bottom: none; }
-.trendingRank {
-    font-size: 30px;
-    font-weight: bold;
-    color: #b84bff;
-    width: 40px;
-    text-align: center;
-}
-.trendingInfo { flex-grow: 1; margin-left: 15px; }
-.trendingInfo strong { display: block; font-size: 16px; }
-.trendingInfo span { font-size: 12px; opacity: 0.6; }
-.trendingImg {
-    width: 50px;
-    height: 50px;
-    object-fit: cover;
-    border-radius: 6px;
-    margin-right: 15px;
-}
-
 </style>
 </head>
 <body class="">
@@ -300,37 +239,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 </header>
 
 <div class="content">
-
-        <div class="trendingContainer">
-        <h2>🔥 Trending Songs</h2>
-        <div id="trendingList">
-                        <div class="trendingItem">
-                <div class="trendingRank">1</div>
-                <img class="trendingImg" src="Poster2.jpeg" alt="Album Cover">
-                <div class="trendingInfo">
-                    <strong>Jishnu Anthem</strong>
-                    <span>G.R.Adhavh • 1,200 views</span>
-                </div>
-            </div>
-            <div class="trendingItem">
-                <div class="trendingRank">2</div>
-                <img class="trendingImg" src="Poster.jpg" alt="Album Cover">
-                <div class="trendingInfo">
-                    <strong>Flute anthem(LOT-III)</strong>
-                    <span>G.R.Adhavh • 980 views</span>
-                </div>
-            </div>
-            <div class="trendingItem">
-                <div class="trendingRank">3</div>
-                <img class="trendingImg" src="poster4.png" alt="Album Cover">
-                <div class="trendingInfo">
-                    <strong>Bomb (Endhu 1cm)</strong>
-                    <span>Kavinraaj, Kaliyappan, G.R.Adhavh • 750 views</span>
-            </div>
-          </div>
-        </div>
-    </div>
-
     <div class="playlistContainer">
         <div class="playlistHeader" onclick="toggleList('list1')">
             <img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
@@ -418,9 +326,9 @@ const artists = {
     "Item number 1(LOT-III)": "G.R.Adhavh",
     "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
     
-    // 50 SHADES - UPDATED NAME
+    // 50 SHADES
     "Jishnu Anthem": "G.R.Adhavh",
-    "Jishnu Anthem Thalapathy Vijay Vocal": "G.R.Adhavh", // <--- UPDATED
+    "Jishnu Anthem speaker change version": "G.R.Adhavh",
     "Jishnu Anthem slowed and reverbed": "G.R.Adhavh",
     "Jishnu Anthem Karoke": "G.R.Adhavh",
     
@@ -444,12 +352,12 @@ const songAnimations = {
     "Flute anthem(LOT-III)": "#00ffbf",
 
     // LOT-III Singles Colors
-    "Item number 1(LOT-III)": "#ffd700",
-    "Saavadi Saravedi(LOT-III)": "#ff4500",
+    "Item number 1(LOT-III)": "#ffd700",      /* Gold */
+    "Saavadi Saravedi(LOT-III)": "#ff4500", /* Orange Red */
     
-    // 50 Shades Colors - UPDATED NAME
+    // 50 Shades Colors
     "Jishnu Anthem": "#00ff88",
-    "Jishnu Anthem Thalapathy Vijay Vocal": "#ccff00", // <--- UPDATED
+    "Jishnu Anthem speaker change version": "#ccff00",
     "Jishnu Anthem slowed and reverbed": "#00ccff",
     "Jishnu Anthem Karoke": "#ffffff",
     
@@ -459,7 +367,7 @@ const songAnimations = {
     "Happy Birthday Megharajan": "#a600ff",
     
     // UPDATED: Use Display Names as keys
-    "Bomb (Endhu 1cm)": "#ff3300",
+    "Bomb (Endhu 1cm)": "#ff3300",          
     "Sanjai's room (Endhu 1cm)": "#ff00cc",
 
     "default": "#6a5bff"
@@ -491,7 +399,7 @@ const playlists = {
     ],
     list2: [
         "Jishnu Anthem.mp3",
-        "Jishnu anthem Thalapathy Vijay vocal.mp3", // <--- UPDATED FILE NAME
+        "Jishnu Anthem speaker change version.mp3",
         "Jishnu Anthem slowed and reverbed.mp3",
         "Jishnu Anthem Karoke.mp3"
     ],
@@ -506,30 +414,6 @@ const playlists = {
 /* UTILS */
 function getArtist(song) { return artists[song.replace(".mp3","")] || artists["default"]; }
 function getColor(song) { return songAnimations[song.replace(".mp3","")] || songAnimations["default"]; }
-
-function getPopupImg(list, songName) {
-    if(list === "list1" || list === "list4") {
-        return "Poster.jpg";
-    }
-    else if(list === "list2") {
-        return "Poster2.jpeg";
-    }
-    else if(list === "list3") {
-        if(songName.includes("Bomb") || songName.includes("Sanjai")) {
-            return "poster4.png";
-        }
-        else if (songName.includes("Harishankar")) {
-            return "Poster3.jpeg";
-        }
-        else if (songName.includes("Happy Birthday")) {
-            return "poster3.png";
-        }
-        else {
-            return "Poster3.jpeg";
-        }
-    }
-    return "Poster.jpg";
-}
 
 /* UI GENERATION */
 for(let id in playlists){
@@ -546,10 +430,9 @@ for(let id in playlists){
         if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
         if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
         if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+        
         // FIX: Display as LOT-III version but file is just "Flute anthem"
         if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
-        // ADDED: Display name for the new file
-        if(clean === "Jishnu anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
         
         // Use displayName to lookup Artist
         let artist = getArtist(displayName) || getArtist(clean);
@@ -564,19 +447,20 @@ for(let id in playlists){
             
             // LOGIC FOR PLAYLIST BEHAVIOR
             if (id === 'list4') {
+                // LOT-III Singles -> Dropping soon
                 alert("Dropping soon! 🚀");
             }
             else if (id === 'list1') {
                 // LOT-III OST -> Check for Flute Anthem by display name
-                if (displayName.includes("Flute anthem")) {
-                    playSong(id, idx, displayName);
+                if (displayName === "Flute anthem(LOT-III)") {
+                    playSong(id, idx);
                 } else {
                     alert("Dropping soon! 🚀");
                 }
             }
             else {
                 // Normal behavior for list2, list3
-                playSong(id, idx, displayName); 
+                playSong(id, idx); 
             }
         };
         
@@ -589,67 +473,6 @@ function toggleList(id){
     let el = document.getElementById(id);
     el.style.display = (el.style.display === "block") ? "none" : "block";
 }
-
-/* FIREBASE INTEGRATION LOGIC */
-
-async function incrementViewCount(songDisplayName) {
-    if (!window.db) {
-        console.error("Firebase DB not initialized.");
-        return;
-    }
-
-    // Use a simplified, safe key for the database
-    const dbKey = songDisplayName.replace(/[.#$/[\]]/g, "_");
-
-    try {
-        const songRef = ref(window.db, 'views/' + dbKey);
-        const snapshot = await get(songRef);
-        let currentViews = 0;
-
-        if (snapshot.exists()) {
-            currentViews = snapshot.val().views || 0;
-        }
-
-        // Increment and update the database
-        await update(songRef, { views: currentViews + 1 });
-        // console.log(`View count for ${songDisplayName} incremented to ${currentViews + 1}`);
-
-        // OPTIONAL: Refresh trending list after update
-        // fetchTrendingSongs();
-
-    } catch (error) {
-        console.error("Error updating view count:", error);
-    }
-}
-
-// Conceptual function to fetch and display trending data
-function fetchTrendingSongs() {
-    // This is where you would fetch data from Firebase DB, sort it,
-    // and dynamically generate the 'trendingItem' elements.
-    // For now, the trending list uses static placeholder data in the HTML.
-    // The actual implementation relies on Firebase DB structure (e.g., 'views/').
-    // Example:
-    /*
-    const viewsRef = ref(window.db, 'views');
-    get(viewsRef).then((snapshot) => {
-        if (snapshot.exists()) {
-            const songViews = snapshot.val();
-            const trending = Object.keys(songViews)
-                .map(key => ({
-                    name: key.replace(/_/g, " "), // reverse the safe key
-                    views: songViews[key].views,
-                    // You'd need a map to get the correct artist/image for the key
-                }))
-                .sort((a, b) => b.views - a.views)
-                .slice(0, 5); // Top 5
-            
-            // ... then dynamically inject HTML into #trendingList
-        }
-    });
-    */
-    console.log("Trending songs feature initialized. Requires dynamic Firebase data fetching.");
-}
-
 
 /* PLAYER LOGIC */
 let currentList = null, currentIndex = 0;
@@ -676,7 +499,7 @@ seekSlider.addEventListener('input', () => {
     }
 });
 
-function playSong(list, index, displayName){
+function playSong(list, index){
     if(!playlists[list] || playlists[list].length === 0) return;
 
     currentList = list;
@@ -685,33 +508,25 @@ function playSong(list, index, displayName){
     let song = playlists[list][index];
     let clean = song.replace(".mp3","");
     
-    // Set display name for player (use the one passed from UI click or re-calculate)
-    let finalDisplayName = displayName;
-    if(!finalDisplayName) {
-        finalDisplayName = clean;
-        if(clean === "Harishankar ku irukka") finalDisplayName = "Harishankar ku irukka?";
-        if(clean === "Bomb") finalDisplayName = "Bomb (Endhu 1cm)";
-        if(clean === "Sanjai") finalDisplayName = "Sanjai's room (Endhu 1cm)";
-        if(clean === "Flute anthem") finalDisplayName = "Flute anthem(LOT-III)";
-        if(clean === "Jishnu anthem Thalapathy Vijay vocal") finalDisplayName = "Jishnu Anthem Thalapathy Vijay Vocal";
-    }
+    // --- DISPLAY NAME LOGIC FOR PLAYER ---
+    let displayName = clean;
+    if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
+    if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
+    if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+    if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 
-    let artist = getArtist(finalDisplayName) || getArtist(clean);
-    let color = getColor(finalDisplayName) || getColor(clean);
+    let artist = getArtist(displayName) || getArtist(clean);
+    let color = getColor(displayName) || getColor(clean);
 
     audio.src = song;
     let playPromise = audio.play();
-
-    // Increment view count on play
-    incrementViewCount(finalDisplayName);
-
     if (playPromise !== undefined) {
         playPromise.then(_ => startVisuals()).catch(e => { console.error(e); stopVisuals(); });
     }
 
     document.getElementById("seekContainer").style.display = "flex";
 
-    showPopup(finalDisplayName, artist, list);
+    showPopup(displayName, artist, list);
     applySongTheme(color);
     animatePlayButton();
 }
@@ -734,18 +549,7 @@ function prevSong(){
     if(currentList === 'list1') return; 
 
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
-    
-    // Get the display name of the new song to be played
-    const newSongFile = playlists[currentList][currentIndex];
-    const newSongClean = newSongFile.replace(".mp3", "");
-    let newDisplayName = newSongClean;
-    if(newSongClean === "Harishankar ku irukka") newDisplayName = "Harishankar ku irukka?";
-    if(newSongClean === "Bomb") newDisplayName = "Bomb (Endhu 1cm)";
-    if(newSongClean === "Sanjai") newDisplayName = "Sanjai's room (Endhu 1cm)";
-    if(newSongClean === "Flute anthem") newDisplayName = "Flute anthem(LOT-III)";
-    if(newSongClean === "Jishnu anthem Thalapathy Vijay vocal") newDisplayName = "Jishnu Anthem Thalapathy Vijay Vocal";
-
-    playSong(currentList, currentIndex, newDisplayName);
+    playSong(currentList, currentIndex);
 }
 
 function nextSong(){
@@ -758,18 +562,7 @@ function nextSong(){
     if(currentList === 'list1') return;
 
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
-
-    // Get the display name of the new song to be played
-    const newSongFile = playlists[currentList][currentIndex];
-    const newSongClean = newSongFile.replace(".mp3", "");
-    let newDisplayName = newSongClean;
-    if(newSongClean === "Harishankar ku irukka") newDisplayName = "Harishankar ku irukka?";
-    if(newSongClean === "Bomb") newDisplayName = "Bomb (Endhu 1cm)";
-    if(newSongClean === "Sanjai") newDisplayName = "Sanjai's room (Endhu 1cm)";
-    if(newSongClean === "Flute anthem") newDisplayName = "Flute anthem(LOT-III)";
-    if(newSongClean === "Jishnu anthem Thalapathy Vijay vocal") newDisplayName = "Jishnu Anthem Thalapathy Vijay Vocal";
-
-    playSong(currentList, currentIndex, newDisplayName);
+    playSong(currentList, currentIndex);
 }
 
 /* POPUP CLOSE FUNCTION */
@@ -808,7 +601,29 @@ function showPopup(songName, artist, list){
     let img = document.getElementById("popupImg");
     img.style.display="block";
     
-    img.src = getPopupImg(list, songName);
+    if(list === "list1" || list === "list4") {
+        img.src = "Poster.jpg";
+    }
+    else if(list === "list2") {
+        img.src = "Poster2.jpeg";
+    }
+    else if(list === "list3") {
+        if(songName.includes("Bomb") || songName.includes("Sanjai")) {
+            img.src = "poster4.png"; 
+        } 
+        else if (songName.includes("Harishankar")) {
+            img.src = "Poster3.jpeg"; 
+        }
+        else if (songName.includes("Happy Birthday")) {
+            img.src = "poster3.png"; 
+        }
+        else {
+            img.src = "Poster3.jpeg";
+        }
+    }
+    else {
+        img.src = "Poster.jpg";
+    }
     
     toggleWave();
 }
@@ -832,10 +647,21 @@ function formatTime(s) {
     if(sec < 10) sec = "0" + sec;
     return min + ":" + sec;
 }
-
-// Initial call to load/simulate trending songs
-document.addEventListener('DOMContentLoaded', fetchTrendingSongs);
-
+</script>
+<script>
+/* MAGIC FULL SCREEN SCRIPT */
+document.addEventListener('click', function() {
+    var el = document.documentElement;
+    if (el.requestFullscreen) {
+        el.requestFullscreen();
+    } else if (el.mozRequestFullScreen) {
+        el.mozRequestFullScreen();
+    } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+    }
+}, { once: true });
 </script>
 </body>
 </html>
