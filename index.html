@@ -499,7 +499,7 @@ list4: [
 "Item number 1(LOT-III).mp3", "Saavadi Saravedi(LOT-III).mp3"
 ],
 list2: [
-"Jishnu Anthem.mp3", "Jishnu Anthem Thalapathy Vijay vocal.mp3", 
+"Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", // <-- FIX APPLIED HERE
 "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"
 ],
 list3: [
@@ -608,7 +608,9 @@ function renderTrendingUI(viewsMap) {
                 if (songNameFromDB === "Bomb (Endhu 1cm)") return fileName === "Bomb";
                 if (songNameFromDB === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
                 if (songNameFromDB === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
-                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu Anthem Thalapathy Vijay vocal";
+                
+                // CRITICAL CHECK for the Thalapathy song's actual file name
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
                 
                 return fileName === songNameFromDB;
             });
