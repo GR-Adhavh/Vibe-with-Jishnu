@@ -379,7 +379,7 @@ margin-top: 3px;
 </div>
 
 <div class="trendingSection">
-<h2>Trending Songs 🔥</h2>
+<h2>Trending Songs 🔥 <span style="color:red; font-size:14px;">(DEBUG: High views injected for Thalapathy)</span></h2>
 <ul class="trendingList" id="trendingList">
 </ul>
 </div>
@@ -529,7 +529,7 @@ function simplifyDisplayName(displayName) {
     if (displayName === "Item number 1(LOT-III)") return "ItemNumber1";
     if (displayName === "Saavadi Saravedi(LOT-III)") return "SaavadiSaravedi";
     if (displayName === "Jishnu Anthem") return "JishnuAnthem";
-    // *** FIX APPLIED HERE for the confirmed database key ***
+    // *** FIX APPLIED HERE: Using confirmed database key to match display name ***
     if (displayName === "Jishnu Anthem Thalapathy Vijay Vocal") return "JishnuanthemThalapathyVijayvocal"; 
     if (displayName === "Jishnu Anthem slowed and reverbed") return "JishnuAnthemSlowedReverbed";
     if (displayName === "Jishnu Anthem Karoke") return "JishnuAnthemKaroke";
@@ -672,11 +672,11 @@ function sortAndRenderTrending(viewsMap) {
  */
 async function fetchAndRenderTrending() {
     if (!window.db) {
-        // *** TEMPORARY INITIAL TRENDING DISPLAY ***
+        // *** Initial Placeholder Display (your requested tracks) ***
         const initialTrendingSongs = [
-            { name: "Jishnu Anthem Thalapathy Vijay Vocal", dbName: "JishnuanthemThalapathyVijayvocal", cover: "Poster2.jpeg" },
-            { name: "Saavachuruven unna(LOT-III)", dbName: "SaavachuruvenUnna", cover: "Poster.jpg" },
-            { name: "Sivagasi's Daaha(LOT-III)", dbName: "SivagasisDaaha", cover: "Poster.jpg" },
+            { name: "Jishnu Anthem Thalapathy Vijay Vocal", dbName: simplifyDisplayName("Jishnu Anthem Thalapathy Vijay Vocal"), cover: "Poster2.jpeg" },
+            { name: "Saavachuruven unna(LOT-III)", dbName: simplifyDisplayName("Saavachuruven unna(LOT-III)"), cover: "Poster.jpg" },
+            { name: "Sivagasi's Daaha(LOT-III)", dbName: simplifyDisplayName("Sivagasi's Daaha(LOT-III)"), cover: "Poster.jpg" },
         ];
         renderTrendingUI(initialTrendingSongs, {}); // Render placeholder with 0 views
 
@@ -691,7 +691,17 @@ async function fetchAndRenderTrending() {
 
         if (docSnap.exists()) {
             const data = docSnap.data();
-            sortAndRenderTrending(data.views_map || {}); 
+            let viewsMap = data.views_map || {};
+
+            // --- TEMPORARY DEBUG INJECTION (REMOVE THIS BLOCK LATER) ---
+            // Forces the Thalapathy track to the top when data loads, confirming mapping and sorting.
+            const thalapathyDbName = "JishnuanthemThalapathyVijayvocal";
+            if (viewsMap[thalapathyDbName] !== undefined || simplifyDisplayName("Jishnu Anthem Thalapathy Vijay Vocal") === thalapathyDbName) {
+                viewsMap[thalapathyDbName] = 99999; 
+            }
+            // --- END DEBUG INJECTION ---
+            
+            sortAndRenderTrending(viewsMap); 
         } else {
             console.warn("Views document does not exist. Using default/empty sort.");
             sortAndRenderTrending({});
