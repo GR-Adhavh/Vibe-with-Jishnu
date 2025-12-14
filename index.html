@@ -78,7 +78,7 @@ letter-spacing: 1px;
 
 /* CONTENT PADDING */
 /* Padded to accommodate the fixed player bar at the bottom */
-.content { padding-bottom: 160px; } 
+.content { padding-bottom: 160px; } 
 
 /* PLAYLIST BOX */
 .playlistContainer {
@@ -122,7 +122,7 @@ bottom: 0; left: 0; width: 100%;
 background: rgba(10, 5, 30, 0.95);
 backdrop-filter: blur(10px);
 /* Padding adjusted to move content up */
-padding: 10px 0 50px 0; 
+padding: 10px 0 50px 0; 
 display: flex; flex-direction: column;
 justify-content: center; align-items: center;
 border-top: 2px solid #6a5bff;
@@ -278,7 +278,7 @@ gap: 15px;
 
 .trendingItem {
 /* Set item width for visibility in horizontal scroll */
-flex: 0 0 150px; 
+flex: 0 0 150px; 
 display: flex;
 flex-direction: column;
 align-items: flex-start;
@@ -287,8 +287,8 @@ border-radius: 8px;
 transition: background 0.2s, transform 0.2s;
 cursor: pointer;
 }
-.trendingItem:hover { 
-background: rgba(255,255,255,0.07); 
+.trendingItem:hover { 
+background: rgba(255,255,255,0.07); 
 transform: translateY(-2px);
 }
 .trendingRank {
@@ -453,6 +453,7 @@ const artists = {
 "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
 "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
 "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
+"Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas",
 "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
 "Flute anthem(LOT-III)": "G.R.Adhavh",
 "Item number 1(LOT-III)": "G.R.Adhavh",
@@ -465,8 +466,6 @@ const artists = {
 "Happy Birthday Megharajan": "G.R.Adhavh",
 "Bomb (Endhu 1cm)": "Kavinraaj, Kaliyappan, G.R.Adhavh",
 "Sanjai's room (Endhu 1cm)": "Shreyas, G.R.Adhavh",
-// 🆕 New Song Artist
-"Sivagasi's Daaha x Saavachuruven unna (LOT-III)": "G.R.Adhavh, Shreyas, Sanjai",
 "default": "G.R.Adhavh"
 };
 
@@ -476,8 +475,8 @@ const songAnimations = {
 "Sivagasi's Daaha(LOT-III)": "#ffa600",
 "The namechange(LOT-III)": "#bb6bff",
 "Flute anthem(LOT-III)": "#00ffbf",
-"Item number 1(LOT-III)": "#ffd700",      
-"Saavadi Saravedi(LOT-III)": "#ff4500", 
+"Item number 1(LOT-III)": "#ffd700",      
+"Saavadi Saravedi(LOT-III)": "#ff4500", 
 "Jishnu Anthem": "#00ff88",
 "Jishnu Anthem Thalapathy Vijay Vocal": "#ccff00",
 "Jishnu Anthem slowed and reverbed": "#00ccff",
@@ -486,8 +485,6 @@ const songAnimations = {
 "Happy Birthday Megharajan": "#a600ff",
 "Bomb (Endhu 1cm)": "#ff3300",          
 "Sanjai's room (Endhu 1cm)": "#ff00cc",
-// 🆕 New Song Color
-"Sivagasi's Daaha x Saavachuruven unna (LOT-III)": "#ff99e6", 
 "default": "#6a5bff"
 };
 
@@ -497,20 +494,20 @@ list1: [
 "Intermission(LOT-III).mp3", "Jishnu Anthem Reprise(LOT-III).mp3", "The fight(LOT-III).mp3",
 "King in the universe(LOT-III).mp3", "King vs Harold(LOT-III).mp3", "LOT-III teaser concert(LOT-III).mp3",
 "LOT-III Theme(LOT-III).mp3", "Saavachuruven unna(LOT-III).mp3", "Sivagasi's Daaha(LOT-III).mp3",
-"The namechange(LOT-III).mp3", "Vadakku Sadhuram il Jishnu(LOT-III).mp3", "Flute anthem.mp3",
-// 🆕 New Song File
-"Sivagasi's Daaha x Saavachuruven unna (LOT-III).mp3"
+"Sivagasi's Dahaa x Saavachuruven unna(LOT-III).mp3",
+"The namechange(LOT-III).mp3", "Vadakku Sadhuram il Jishnu(LOT-III).mp3", "Flute anthem.mp3"
 ],
 list4: [
 "Item number 1(LOT-III).mp3", "Saavadi Saravedi(LOT-III).mp3"
 ],
 list2: [
-"Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", 
+"Jishnu Anthem.mp3", "Jishnu Anthem Thalapathy Vijay vocal.mp3", 
+"Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", // <-- FIX APPLIED HERE
 "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"
 ],
 list3: [
-"Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
-"Bomb.mp3", "Sanjai.mp3" 
+"Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
+"Bomb.mp3", "Sanjai.mp3" 
 ]
 };
 
@@ -542,8 +539,6 @@ if (displayName === "Harishankar ku irukka?") return "HarishankarKuIrukka";
 if (displayName === "Happy Birthday Megharajan") return "HappyBirthdayMegharajan";
 if (displayName === "Bomb (Endhu 1cm)") return "BombEndhu1cm";
 if (displayName === "Sanjai's room (Endhu 1cm)") return "SanjaisRoomEndhu1cm";
-// 🆕 New Song DB Key
-if (displayName === "Sivagasi's Daaha x Saavachuruven unna (LOT-III)") return "sdxsu";
 
 return displayName.replace(/[^a-zA-Z0-9]/g, '');
 }
@@ -557,7 +552,7 @@ if (displayName.includes("Bomb (Endhu 1cm)") || displayName.includes("Sanjai's r
 if (displayName.includes("Harishankar ku irukka")) cover = "Poster3.jpeg";
 if (displayName.includes("Happy Birthday")) cover = "poster3.png";
 
-return { 
+return { 
 name: displayName,
 dbName: simplifyDisplayName(displayName),
 cover: cover
@@ -578,13 +573,13 @@ return num + ' views';
 }
 
 /**
-* 🆕 Renders the trending UI based on the fetched views map.
-* This function is updated to show only the top 3 songs from the complete list.
-* @param {object} viewsMap - Map of song dbNames (field keys) to current views from Firestore.
+// removed invalid comment
+// removed invalid comment
+// removed invalid comment
 */
 function renderTrendingUI(viewsMap) {
 const listElem = document.getElementById("trendingList");
-listElem.innerHTML = ''; 
+listElem.innerHTML = ''; 
 
 // 1. Sort the full list of ALL songs based on views from the fetched map
 const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
@@ -602,7 +597,7 @@ top3Trending.forEach((song, idx) => {
 const item = document.createElement("li");
 item.className = "trendingItem";
 
-// Find the correct playlist index for playback 
+// Find the correct playlist index for playback 
 let playlistIndex = -1;
 let playlistId = null;
 
@@ -616,10 +611,10 @@ if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishanka
 if (songNameFromDB === "Bomb (Endhu 1cm)") return fileName === "Bomb";
 if (songNameFromDB === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
 if (songNameFromDB === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
-// CRITICAL CHECK: Map display name to the corrected file name case
-if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
-// 🆕 New Song Check
-if (songNameFromDB === "Sivagasi's Daaha x Saavachuruven unna (LOT-III)") return fileName === "Sivagasi's Daaha x Saavachuruven unna (LOT-III)";
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu Anthem Thalapathy Vijay vocal";
+                
+                // CRITICAL CHECK for the Thalapathy song's actual file name
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
 
 return fileName === songNameFromDB;
 });
@@ -633,22 +628,20 @@ const artist = getArtist(song.name);
 const currentViews = viewsMap[song.dbName] || 0;
 
 item.innerHTML = `
-           <div class="trendingRank">#${idx + 1}</div>
-           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
-           <div class="trendingInfo">
-               <div class="trendingTitle">${song.name}</div>
-               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
-           </div>
-       `;
+           <div class="trendingRank">#${idx + 1}</div>
+           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
+           <div class="trendingInfo">
+               <div class="trendingTitle">${song.name}</div>
+               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
+           </div>
+       `;
 
 item.onclick = (e) => {
 e.stopPropagation();
 if (playlistId) {
 // Check for "Dropping Soon" restrictions before playing
-const isRestricted = (playlistId === 'list4') || 
-(playlistId === 'list1' && song.name !== "Flute anthem(LOT-III)" && song.name !== "Sivagasi's Daaha x Saavachuruven unna (LOT-III)");
-// NOTE: I am assuming the new song is also restricted and triggers "Dropping soon!" like the other LOT-III songs.
-// If the new song should play, remove it from the restriction check above.
+const isRestricted = (playlistId === 'list4') || 
+(playlistId === 'list1' && song.name !== "Flute anthem(LOT-III)");
 
 if (isRestricted) {
 alert("Dropping soon! 🚀");
@@ -662,11 +655,11 @@ listElem.appendChild(item);
 }
 
 /**
-* 🆕 Fetches the single views document from Firestore and calls renderTrendingUI.
+// removed invalid comment
 */
 async function fetchAndRenderTrending() {
 if (!window.db) {
-setTimeout(fetchAndRenderTrending, 100); 
+setTimeout(fetchAndRenderTrending, 100); 
 return;
 }
 
@@ -677,7 +670,7 @@ const docSnap = await window.getDoc(docRef);
 
 if (docSnap.exists()) {
 const data = docSnap.data();
-renderTrendingUI(data.views_map || {}); 
+renderTrendingUI(data.views_map || {}); 
 } else {
 console.warn("Views document does not exist. Please ensure the document 'all_song_data' exists in the 'all_songs_views' collection.");
 renderTrendingUI({});
@@ -690,8 +683,8 @@ console.error("Error fetching trending data:", e);
 
 
 /**
-* 🆕 Increments the view count within the single document's map field.
-* @param {string} displayName - The song's display name.
+// removed invalid comment
+// removed invalid comment
 */
 async function incrementView(displayName) {
 if (!window.db || !window.updateDoc || !window.getDoc) {
@@ -700,7 +693,7 @@ return;
 
 // 🆕 Use the new function to map display name to the DB field name
 const dbName = simplifyDisplayName(displayName);
-if (!dbName) return; 
+if (!dbName) return; 
 
 // --- REFERENCE THE SINGLE DOCUMENT: "all_songs_views" / "all_song_data" ---
 const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
@@ -745,7 +738,6 @@ let displayName = clean;
 if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
 if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
-if (clean === "Sivagasi's Daaha x Saavachuruven unna (LOT-III)") displayName = "Sivagasi's Daaha x Saavachuruven unna (LOT-III)"; // 🆕 New song display name
 if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
 
@@ -758,8 +750,7 @@ div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span><
 div.onclick = (e) => { 
 e.stopPropagation(); 
 
-// 🆕 UPDATED LOGIC: If list1, check if it's Flute Anthem OR the new song
-if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)" && displayName !== "Sivagasi's Daaha x Saavachuruven unna (LOT-III)")) {
+if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)")) {
 alert("Dropping soon! 🚀");
 }
 else {
@@ -819,12 +810,11 @@ let displayName = clean;
 if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
 if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
-if (clean === "Sivagasi's Daaha x Saavachuruven unna (LOT-III)") displayName = "Sivagasi's Daaha x Saavachuruven unna (LOT-III)";
 if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
 
 // 🆕 Increment view will now work for ALL songs played
-incrementView(displayName); 
+incrementView(displayName); 
 
 let artist = getArtist(displayName) || getArtist(clean);
 let color = getColor(displayName) || getColor(clean);
