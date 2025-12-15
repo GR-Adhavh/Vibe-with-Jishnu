@@ -78,7 +78,7 @@ letter-spacing: 1px;
 
 /* CONTENT PADDING */
 /* Padded to accommodate the fixed player bar at the bottom */
-.content { padding-bottom: 160px; } 
+.content { padding-bottom: 160px; } 
 
 /* PLAYLIST BOX */
 .playlistContainer {
@@ -122,7 +122,7 @@ bottom: 0; left: 0; width: 100%;
 background: rgba(10, 5, 30, 0.95);
 backdrop-filter: blur(10px);
 /* Padding adjusted to move content up */
-padding: 10px 0 50px 0; 
+padding: 10px 0 50px 0; 
 display: flex; flex-direction: column;
 justify-content: center; align-items: center;
 border-top: 2px solid #6a5bff;
@@ -278,7 +278,7 @@ gap: 15px;
 
 .trendingItem {
 /* Set item width for visibility in horizontal scroll */
-flex: 0 0 150px; 
+flex: 0 0 150px; 
 display: flex;
 flex-direction: column;
 align-items: flex-start;
@@ -287,8 +287,8 @@ border-radius: 8px;
 transition: background 0.2s, transform 0.2s;
 cursor: pointer;
 }
-.trendingItem:hover { 
-background: rgba(255,255,255,0.07); 
+.trendingItem:hover { 
+background: rgba(255,255,255,0.07); 
 transform: translateY(-2px);
 }
 .trendingRank {
@@ -475,8 +475,8 @@ const songAnimations = {
 "Sivagasi's Daaha(LOT-III)": "#ffa600",
 "The namechange(LOT-III)": "#bb6bff",
 "Flute anthem(LOT-III)": "#00ffbf",
-"Item number 1(LOT-III)": "#ffd700",      
-"Saavadi Saravedi(LOT-III)": "#ff4500", 
+"Item number 1(LOT-III)": "#ffd700",      
+"Saavadi Saravedi(LOT-III)": "#ff4500", 
 "Jishnu Anthem": "#00ff88",
 "Jishnu Anthem Thalapathy Vijay Vocal": "#ccff00",
 "Jishnu Anthem slowed and reverbed": "#00ccff",
@@ -505,8 +505,8 @@ list2: [
 "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"
 ],
 list3: [
-"Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
-"Bomb.mp3", "Sanjai.mp3" 
+"Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
+"Bomb.mp3", "Sanjai.mp3" 
 ]
 };
 
@@ -551,7 +551,7 @@ if (displayName.includes("Bomb (Endhu 1cm)") || displayName.includes("Sanjai's r
 if (displayName.includes("Harishankar ku irukka")) cover = "Poster3.jpeg";
 if (displayName.includes("Happy Birthday")) cover = "poster3.png";
 
-return { 
+return { 
 name: displayName,
 dbName: simplifyDisplayName(displayName),
 cover: cover
@@ -578,7 +578,7 @@ return num + ' views';
 */
 function renderTrendingUI(viewsMap) {
 const listElem = document.getElementById("trendingList");
-listElem.innerHTML = ''; 
+listElem.innerHTML = ''; 
 
 // 1. Sort the full list of ALL songs based on views from the fetched map
 const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
@@ -596,7 +596,7 @@ top3Trending.forEach((song, idx) => {
 const item = document.createElement("li");
 item.className = "trendingItem";
 
-// Find the correct playlist index for playback 
+// Find the correct playlist index for playback 
 let playlistIndex = -1;
 let playlistId = null;
 
@@ -607,13 +607,15 @@ let fileName = file.replace(".mp3", "");
 let songNameFromDB = song.name;
 
 if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
-if (songNameFromDB === "Bomb (Endhu 1cm)") return fileName === "Bomb";
+
+if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
+if (songNameFromDB === "LOT-III teaser concert(LOT-III)") return fileName === "LOT-III teaser concert";
 if (songNameFromDB === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
 if (songNameFromDB === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
-                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu Anthem Thalapathy Vijay vocal";
-                
-                // CRITICAL CHECK for the Thalapathy song's actual file name
-                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu Anthem Thalapathy Vijay vocal";
+                
+                // CRITICAL CHECK for the Thalapathy song's actual file name
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
 
 return fileName === songNameFromDB;
 });
@@ -627,20 +629,20 @@ const artist = getArtist(song.name);
 const currentViews = viewsMap[song.dbName] || 0;
 
 item.innerHTML = `
-           <div class="trendingRank">#${idx + 1}</div>
-           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
-           <div class="trendingInfo">
-               <div class="trendingTitle">${song.name}</div>
-               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
-           </div>
-       `;
+           <div class="trendingRank">#${idx + 1}</div>
+           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
+           <div class="trendingInfo">
+               <div class="trendingTitle">${song.name}</div>
+               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
+           </div>
+       `;
 
 item.onclick = (e) => {
 e.stopPropagation();
 if (playlistId) {
 // Check for "Dropping Soon" restrictions before playing
-const isRestricted = (playlistId === 'list4') || 
-(playlistId === 'list1' && song.name !== "Flute anthem(LOT-III)" && song.name !== "LOT-III teaser concert(LOT-III)"); // ⬅️ MODIFIED THIS LINE
+const isRestricted = (playlistId === 'list4') || 
+(playlistId === 'list1' && song.name !== "Flute anthem(LOT-III)");
 
 if (isRestricted) {
 alert("Dropping soon! 🚀");
@@ -658,7 +660,7 @@ listElem.appendChild(item);
 */
 async function fetchAndRenderTrending() {
 if (!window.db) {
-setTimeout(fetchAndRenderTrending, 100); 
+setTimeout(fetchAndRenderTrending, 100); 
 return;
 }
 
@@ -669,7 +671,7 @@ const docSnap = await window.getDoc(docRef);
 
 if (docSnap.exists()) {
 const data = docSnap.data();
-renderTrendingUI(data.views_map || {}); 
+renderTrendingUI(data.views_map || {}); 
 } else {
 console.warn("Views document does not exist. Please ensure the document 'all_song_data' exists in the 'all_songs_views' collection.");
 renderTrendingUI({});
@@ -692,7 +694,7 @@ return;
 
 // 🆕 Use the new function to map display name to the DB field name
 const dbName = simplifyDisplayName(displayName);
-if (!dbName) return; 
+if (!dbName) return; 
 
 // --- REFERENCE THE SINGLE DOCUMENT: "all_songs_views" / "all_song_data" ---
 const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
@@ -749,7 +751,7 @@ div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span><
 div.onclick = (e) => { 
 e.stopPropagation(); 
 
-if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)" && displayName !== "LOT-III teaser concert(LOT-III)")) { // ⬅️ MODIFIED THIS LINE
+if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)")) {
 alert("Dropping soon! 🚀");
 }
 else {
@@ -813,7 +815,7 @@ if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
 
 // 🆕 Increment view will now work for ALL songs played
-incrementView(displayName); 
+incrementView(displayName); 
 
 let artist = getArtist(displayName) || getArtist(clean);
 let color = getColor(displayName) || getColor(clean);
@@ -932,3 +934,4 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
