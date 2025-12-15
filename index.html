@@ -642,12 +642,14 @@ e.stopPropagation();
 if (playlistId) {
 // Check for "Dropping Soon" restrictions before playing
 const isRestricted = (playlistId === 'list4') || 
-(playlistId === 'list1' && song.name !== "Flute anthem(LOT-III)");
+                     (playlistId === 'list1' && 
+                      song.name !== "Flute anthem(LOT-III)" && 
+                      song.name !== "LOT-III teaser concert(LOT-III)");
 
 if (isRestricted) {
-alert("Dropping soon! 🚀");
+    alert("Dropping soon! 🚀");
 } else {
-playSong(playlistId, playlistIndex);
+    playSong(playlistId, playlistIndex);
 }
 }
 };
@@ -751,7 +753,8 @@ div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span><
 div.onclick = (e) => { 
 e.stopPropagation(); 
 
-if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)")) {
+if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)"&& 
+                      displayName !== "LOT-III teaser concert(LOT-III)")) {
 alert("Dropping soon! 🚀");
 }
 else {
@@ -934,4 +937,5 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
 
