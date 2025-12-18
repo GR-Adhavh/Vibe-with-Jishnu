@@ -12,6 +12,78 @@
 <meta name="theme-color" content="#0a0f2e"> 
 
 <style>
+/* ADD THIS NEW BLOCK INSIDE THE <style> TAG */
+
+/* New badge for the playlist container itself */
+.playlistContainer.new-release {
+    border-color: #38ff38 !important; /* Bright green border */
+}
+.playlistContainer.new-release .playlistHeader {
+    position: relative;
+}
+
+/* Style for the "NEW!!" badge */
+.playlistContainer.new-release .new-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #38ff38; /* Bright green background */
+    color: #0a0f2e;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    transform: rotate(5deg);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+/* Styling for the playable tracks */
+.track.playable-new strong {
+    color: #00ffbf; /* Flute Anthem's color for emphasis */
+}
+
+/* END OF NEW CSS BLOCK */
+
+  /* ADD THIS NEW BLOCK INSIDE THE <style> TAG */
+
+.trailer-banner {
+    width: 90%;
+    max-width: 700px;
+    margin: 0px auto 10px auto; /* Adds margin below the header and above the playlists */
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: #1a0842; /* Fallback background */
+}
+
+.trailer-banner img {
+    width: 100%;
+    height: auto;
+    display: block;
+    filter: brightness(0.7); /* Slightly darken image so text stands out */
+}
+
+.banner-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px 20px;
+    background: linear-gradient(to top, rgba(10, 15, 46, 0.9), rgba(10, 15, 46, 0));
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.banner-caption span {
+    color: #38ff38; /* Uses the "NEW!!" green for the highlight */
+}
+
+/* END OF NEW CSS BLOCK */
+  
 /* PAGE THEME */
 body {
 margin: 0;
@@ -78,7 +150,11 @@ letter-spacing: 1px;
 
 /* CONTENT PADDING */
 /* Padded to accommodate the fixed player bar at the bottom */
-.content { padding-bottom: 160px; } 
+.content { 
+    /* Add padding to the top to push content down slightly */
+    padding-top: 20px; 
+    padding-bottom: 160px; 
+}
 
 /* PLAYLIST BOX */
 .playlistContainer {
@@ -333,49 +409,56 @@ margin-top: 3px;
 <h1>Vibe with Jishnu</h1>
 </header>
 
-<div class="content">
-<div class="playlistContainer">
-<div class="playlistHeader" onclick="toggleList('list1')">
-<img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-<div>
-<div class="playlistTitle">LOT-III OST</div>
-<div style="font-size:12px; opacity:0.6">Original Sound Track</div>
+<div class="trailer-banner">
+    <img src="tp.jpg" alt="LOT-III Trailer">
+    <div class="banner-caption">
+        <span>LOT-III Trailer out now!!</span>
+    </div>
 </div>
-</div>
-<div id="list1" class="songList"></div>
+
+<div class="playlistContainer new-release">
+    <div class="playlistHeader" onclick="toggleList('list1')">
+        <span class="new-badge">NEW!!</span>
+        <img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">LOT-III OST</div>
+            <div style="font-size:12px; opacity:0.6">Original Sound Track</div>
+        </div>
+    </div>
+    <div id="list1" class="songList"></div>
 </div>
 
 <div class="playlistContainer">
-<div class="playlistHeader" onclick="toggleList('list4')">
-<img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-<div>
-<div class="playlistTitle">LOT-III Singles</div>
-<div style="font-size:12px; opacity:0.6">Latest Releases</div>
-</div>
-</div>
-<div id="list4" class="songList"></div>
-</div>
-
-<div class="playlistContainer">
-<div class="playlistHeader" onclick="toggleList('list2')">
-<img src="Poster2.jpeg" alt="50 Shades" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-<div>
-<div class="playlistTitle">50 Shades of Jishnu Anthem</div>
-<div style="font-size:12px; opacity:0.6">Song of the century</div>
-</div>
-</div>
-<div id="list2" class="songList"></div>
+    <div class="playlistHeader" onclick="toggleList('list4')">
+        <img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">LOT-III Singles</div>
+            <div style="font-size:12px; opacity:0.6">Latest Releases</div>
+        </div>
+    </div>
+    <div id="list4" class="songList"></div>
 </div>
 
 <div class="playlistContainer">
-<div class="playlistHeader" onclick="toggleList('list3')">
-<img src="Poster3.jpeg" alt="Hits" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-<div>
-<div class="playlistTitle">Blockbuster Hits</div>
-<div style="font-size:12px; opacity:0.6">Fan Favorites</div>
+    <div class="playlistHeader" onclick="toggleList('list2')">
+        <img src="Poster2.jpeg" alt="50 Shades" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">50 Shades of Jishnu Anthem</div>
+            <div style="font-size:12px; opacity:0.6">Song of the century</div>
+        </div>
+    </div>
+    <div id="list2" class="songList"></div>
 </div>
-</div>
-<div id="list3" class="songList"></div>
+
+<div class="playlistContainer">
+    <div class="playlistHeader" onclick="toggleList('list3')">
+        <img src="Poster3.jpeg" alt="Hits" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">Blockbuster Hits</div>
+            <div style="font-size:12px; opacity:0.6">Fan Favorites</div>
+        </div>
+    </div>
+    <div id="list3" class="songList"></div>
 </div>
 
 <div class="trendingSection">
@@ -737,22 +820,26 @@ let listElem = document.getElementById(id);
 
 playlists[id].forEach((song, idx)=>{
 let clean = song.replace(".mp3","");
-// Corrected block around line 734
 let displayName = clean;
 if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
 if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
 if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
 if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
-// 🆕 ADDED MAPPING FOR TEASER CONCERT
-if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)";
+if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)"; // ⬅️ **THIS IS THE CRITICAL MISSING LINE**
 
 // 🆕 Increment view will now work for ALL songs played
-
+incrementView(displayName);
 let artist = getArtist(displayName) || getArtist(clean);
 
 let div = document.createElement("div");
 div.className="track";
+
+// 🆕 Check if the track is one of the new, playable releases
+if (id === 'list1' && (displayName === "Flute anthem(LOT-III)" || displayName === "LOT-III teaser concert(LOT-III)")) {
+    div.classList.add("playable-new");
+}
+
 div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
 
 div.onclick = (e) => { 
@@ -815,7 +902,6 @@ currentIndex = index;
 let song = playlists[list][index];
 let clean = song.replace(".mp3","");
 
-// Inside function playSong(list, index) - Around line 734
 let displayName = clean;
 if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
@@ -825,7 +911,7 @@ if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthe
 if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)";
 
 // 🆕 Increment view will now work for ALL songs played
-incrementView(displayName);
+incrementView(displayName); 
 
 let artist = getArtist(displayName) || getArtist(clean);
 let color = getColor(displayName) || getColor(clean);
@@ -944,7 +1030,6 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
-
 
 
 
