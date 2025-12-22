@@ -64,30 +64,58 @@
     display: block;
     filter: brightness(0.7); /* Slightly darken image so text stands out */
 }
-h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #00d4ff;
-        }
+/* --- UPDATED COUNTDOWN BLOCK --- */
+#countdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 700px;
+    padding: 30px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
 
-        #countdown {
-            font-size: 4rem;
-            font-weight: bold;
-            font-family: monospace;
-            background: #333;
-            padding: 20px 40px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 2px solid #00d4ff;
-        }
+.countdown-title {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: #00d4ff;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
 
-        .label {
-            font-size: 1rem;
-            color: #888;
-            margin-top: 10px;
-        }
+#countdown {
+    font-size: clamp(2rem, 8vw, 3.5rem); /* Responsive sizing */
+    font-weight: 800;
+    font-family: 'Courier New', Courier, monospace;
+    color: #ffffff;
+    letter-spacing: 2px;
+    line-height: 1;
+}
+
+.label-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+    opacity: 0.6;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* This helps align the labels under the numbers */
+.label-container span {
+    flex: 1;
+    text-align: center;
+}
 
 .banner-caption {
     position: absolute;
@@ -1095,6 +1123,7 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
 
 
 
