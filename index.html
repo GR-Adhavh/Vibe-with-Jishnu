@@ -64,6 +64,30 @@
     display: block;
     filter: brightness(0.7); /* Slightly darken image so text stands out */
 }
+h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #00d4ff;
+        }
+
+        #countdown {
+            font-size: 4rem;
+            font-weight: bold;
+            font-family: monospace;
+            background: #333;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid #00d4ff;
+        }
+
+        .label {
+            font-size: 1rem;
+            color: #888;
+            margin-top: 10px;
+        }
 
 .banner-caption {
     position: absolute;
@@ -401,6 +425,10 @@ margin-top: 3px;
 </style>
 </head>
 <body class="">
+    <h1>LOT-III release on</h1>
+    <div id="countdown">Loading...</div>
+    <div class="label">Days : Hours : Mins : Secs</div>
+
 
 <div id="bass-bg"></div>
 
@@ -497,6 +525,42 @@ margin-top: 3px;
 <audio id="audio"></audio>
 
 <script type="module">
+// Set the target date: January 21st of the next occurrence
+        const currentYear = new Date().getFullYear();
+        let targetDate = new Date(`Jan 21, ${currentYear} 00:00:00`).getTime();
+
+        // If Jan 21 has already passed this year, set it to next year
+        if (new Date().getTime() > targetDate) {
+            targetDate = new Date(`Jan 21, ${currentYear + 1} 00:00:00`).getTime();
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display formatting: Adds a leading zero if number is less than 10
+            const format = (num) => num.toString().padStart(2, '0');
+
+            document.getElementById("countdown").innerHTML = 
+                `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+
+            // If the countdown is finished
+            if (distance < 0) {
+                clearInterval(interval);
+                document.getElementById("countdown").innerHTML = "RELEASED";
+            }
+        }
+
+        // Update every 1 second
+        const interval = setInterval(updateCountdown, 1000);
+        updateCountdown(); // Run immediately on load
+    
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
@@ -1030,6 +1094,7 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
 
 
 
