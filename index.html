@@ -684,8 +684,6 @@ margin-top: 3px;
     window.doc = doc;
     window.updateDoc = updateDoc;
     window.getDoc = getDoc;
-
-    console.log("Firebase Initialized:", app.name);
 </script>
 
 <script>
@@ -739,7 +737,7 @@ const playlists = {
         "The namechange(LOT-III).mp3", "Vadakku Sadhuram il Jishnu(LOT-III).mp3", "Flute anthem.mp3"
     ],
     list4: [
-        "Item number 1(LOT-III).mp3", "Saavadi Saravedi(LOT-III).mp3"
+        "Item number 1(LOT-III).mp3", "Saavadi Saravedi.mp3" // FIXED FILENAME HERE
     ],
     list2: [
         "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3",
@@ -777,7 +775,6 @@ function simplifyDisplayName(displayName) {
     if (displayName === "Happy Birthday Megharajan") return "HappyBirthdayMegharajan";
     if (displayName === "Bomb (Endhu 1cm)") return "BombEndhu1cm";
     if (displayName === "Sanjai's room (Endhu 1cm)") return "SanjaisRoomEndhu1cm";
-
     return displayName.replace(/[^a-zA-Z0-9]/g, '');
 }
 
@@ -787,125 +784,82 @@ const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default'
     if (displayName.includes("Bomb (Endhu 1cm)") || displayName.includes("Sanjai's room")) cover = "poster4.png";
     if (displayName.includes("Harishankar ku irukka")) cover = "Poster3.jpeg";
     if (displayName.includes("Happy Birthday")) cover = "poster3.png";
-
-    return { 
-        name: displayName,
-        dbName: simplifyDisplayName(displayName),
-        cover: cover
-    };
+    return { name: displayName, dbName: simplifyDisplayName(displayName), cover: cover };
 });
 
-/* UTILS */
 function getArtist(song) { return artists[song.replace(".mp3","")] || artists["default"]; }
 function getColor(song) { return songAnimations[song.replace(".mp3","")] || songAnimations["default"]; }
 
 function formatViews(num) {
     if (num === undefined) return "N/A views";
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K views';
-    return num + ' views';
+    return num >= 1000 ? (num / 1000).toFixed(1) + 'K views' : num + ' views';
 }
 
 function renderTrendingUI(viewsMap) {
     const listElem = document.getElementById("trendingList");
     listElem.innerHTML = ''; 
-
-    const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
-        const viewsA = viewsMap[a.dbName] || 0;
-        const viewsB = viewsMap[b.dbName] || 0;
-        return viewsB - viewsA;
-    });
-
+    const sortedTrending = allSongsForTrending.slice().sort((a, b) => (viewsMap[b.dbName] || 0) - (viewsMap[a.dbName] || 0));
     const top3Trending = sortedTrending.slice(0, 3);
 
     top3Trending.forEach((song, idx) => {
         const item = document.createElement("li");
         item.className = "trendingItem";
-        let playlistIndex = -1;
-        let playlistId = null;
+        let playlistIndex = -1, playlistId = null;
 
         for (const listId in playlists) {
             playlistIndex = playlists[listId].findIndex(file => {
                 let fileName = file.replace(".mp3", "");
-                let songNameFromDB = song.name;
-                if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
-                if (songNameFromDB === "LOT-III teaser concert(LOT-III)") return fileName === "LOT-III teaser concert";
-                if (songNameFromDB === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
-                if (songNameFromDB === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
-                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
-                return fileName === songNameFromDB;
+                if (song.name === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
+                if (song.name === "Saavadi Saravedi(LOT-III)") return fileName === "Saavadi Saravedi"; // MAP TRENDING TO FILE
+                if (song.name === "LOT-III teaser concert(LOT-III)") return fileName === "LOT-III teaser concert";
+                if (song.name === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
+                if (song.name === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
+                if (song.name === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
+                return fileName === song.name;
             });
-            if (playlistIndex !== -1) {
-                playlistId = listId;
-                break;
-            }
+            if (playlistIndex !== -1) { playlistId = listId; break; }
         }
 
         const artist = getArtist(song.name);
-        const currentViews = viewsMap[song.dbName] || 0;
-
         item.innerHTML = `
            <div class="trendingRank">#${idx + 1}</div>
            <img class="trendingCover" src="${song.cover}" alt="${song.name}">
            <div class="trendingInfo">
                <div class="trendingTitle">${song.name}</div>
-               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
+               <div class="trendingViews">${artist} • ${formatViews(viewsMap[song.dbName] || 0)}</div>
            </div>
         `;
-
-        item.onclick = (e) => {
-            e.stopPropagation();
-            if (playlistId) {
-                playSong(playlistId, playlistIndex); // Restrictions removed
-            }
-        };
+        item.onclick = (e) => { e.stopPropagation(); if (playlistId) playSong(playlistId, playlistIndex); };
         listElem.appendChild(item);
     });
 }
 
 async function fetchAndRenderTrending() {
-    if (!window.db) {
-        setTimeout(fetchAndRenderTrending, 100); 
-        return;
-    }
+    if (!window.db) { setTimeout(fetchAndRenderTrending, 100); return; }
     try {
         const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
         const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            renderTrendingUI(data.views_map || {}); 
-        } else {
-            renderTrendingUI({});
-        }
-    } catch (e) {
-        console.error("Error fetching trending data:", e);
-    }
+        if (docSnap.exists()) renderTrendingUI(docSnap.data().views_map || {});
+    } catch (e) { console.error("Error fetching trending data:", e); }
 }
 
 async function incrementView(displayName) {
-    if (!window.db || !window.updateDoc || !window.getDoc) return;
+    if (!window.db) return;
     const dbName = simplifyDisplayName(displayName);
-    if (!dbName) return; 
-
     const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
     try {
         const docSnap = await window.getDoc(docRef);
         if (!docSnap.exists()) return;
-
-        const data = docSnap.data();
-        const viewsMap = data.views_map || {};
+        const viewsMap = docSnap.data().views_map || {};
         viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
-
         await window.updateDoc(docRef, { views_map: viewsMap });
         renderTrendingUI(viewsMap);
-    } catch (e) {
-        console.error(`Error incrementing views for ${displayName}:`, e);
-    }
+    } catch (e) { console.error(`Error incrementing views:`, e); }
 }
 
-/* UI GENERATION (for playlists) */
+/* UI GENERATION */
 for(let id in playlists){
     if(id === 'list1') playlists[id].sort();
-
     let listElem = document.getElementById(id);
 
     playlists[id].forEach((song, idx)=>{
@@ -915,25 +869,17 @@ for(let id in playlists){
         if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
         if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
+        if(clean === "Saavadi Saravedi") displayName = "Saavadi Saravedi(LOT-III)"; // MAP FILE TO DISPLAY NAME
         if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
         if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)";
 
         let div = document.createElement("div");
         div.className="track";
+        if (id === 'list1' || id === 'list4') div.classList.add("playable-new");
 
-        // ALL songs in list1 (OST) and list4 (Singles) are now marked as playable-new
-        if (id === 'list1' || id === 'list4') {
-            div.classList.add("playable-new");
-        }
-
-        let artist = getArtist(displayName) || getArtist(clean);
+        let artist = getArtist(displayName);
         div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
-
-        div.onclick = (e) => { 
-            e.stopPropagation(); 
-            playSong(id, idx); // Dropping soon warning removed
-        };
-
+        div.onclick = (e) => { e.stopPropagation(); playSong(id, idx); };
         listElem.appendChild(div);
     });
 }
@@ -954,67 +900,56 @@ let currTimeText = document.getElementById("currTimeText");
 let durTimeText = document.getElementById("durTimeText");
 
 audio.addEventListener('ended', nextSong);
-
 audio.addEventListener('timeupdate', () => {
     if(audio.duration){
-        let pct = (audio.currentTime / audio.duration) * 100;
-        seekSlider.value = pct;
+        seekSlider.value = (audio.currentTime / audio.duration) * 100;
         currTimeText.innerText = formatTime(audio.currentTime);
         durTimeText.innerText = formatTime(audio.duration);
     }
 });
 
-seekSlider.addEventListener('input', () => {
-    if(audio.duration){
-        audio.currentTime = (seekSlider.value / 100) * audio.duration;
-    }
-});
+seekSlider.addEventListener('input', () => { if(audio.duration) audio.currentTime = (seekSlider.value / 100) * audio.duration; });
 
 function playSong(list, index){
-    if(!playlists[list] || playlists[list].length === 0) return;
+    if(!playlists[list]) return;
     currentList = list;
     currentIndex = index;
-
     let song = playlists[list][index];
     let clean = song.replace(".mp3","");
+    
     let displayName = clean;
     if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
     if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
     if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
     if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
+    if(clean === "Saavadi Saravedi") displayName = "Saavadi Saravedi(LOT-III)";
     if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
     if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)";
 
     incrementView(displayName); 
-
-    let artist = getArtist(displayName) || getArtist(clean);
-    let color = getColor(displayName) || getColor(clean);
-
     audio.src = song;
-    audio.play().then(_ => startVisuals()).catch(e => { console.error(e); stopVisuals(); });
-
+    audio.play().then(_ => document.body.classList.add("pulsing")).catch(console.error);
     document.getElementById("seekContainer").style.display = "flex";
-    showPopup(displayName, artist, list);
-    applySongTheme(color);
-    animatePlayButton();
+    showPopup(displayName, getArtist(displayName), list);
+    applySongTheme(getColor(displayName));
+    document.getElementById("playPauseIcon").innerText = "⏸";
 }
 
 function togglePlay(){
     if(!audio.src) return; 
-    if(audio.paused) { audio.play().then(()=>startVisuals()); }
-    else { audio.pause(); stopVisuals(); }
-    animatePlayButton();
-    toggleWave();
+    if(audio.paused) { audio.play(); document.body.classList.add("pulsing"); }
+    else { audio.pause(); document.body.classList.remove("pulsing"); }
+    document.getElementById("playPauseIcon").innerText = audio.paused ? "▶" : "⏸";
 }
 
 function prevSong(){
-    if(!currentList || playlists[currentList].length === 0) return;
+    if(!currentList) return;
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
     playSong(currentList, currentIndex);
 }
 
 function nextSong(){
-    if(!currentList || playlists[currentList].length === 0) return;
+    if(!currentList) return;
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
     playSong(currentList, currentIndex);
 }
@@ -1022,19 +957,12 @@ function nextSong(){
 function closePopup() {
     document.getElementById("popup").style.display = "none";
     audio.pause();
-    stopVisuals();
-    animatePlayButton();
-    toggleWave(); 
+    document.body.classList.remove("pulsing");
 }
-
-function startVisuals() { document.body.classList.add("pulsing"); }
-function stopVisuals() { document.body.classList.remove("pulsing"); }
 
 function applySongTheme(color){
     document.documentElement.style.setProperty('--song-color', color);
     document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
-    document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
-    document.querySelector(".player").style.borderColor = color;
 }
 
 function showPopup(songName, artist, list){
@@ -1042,29 +970,14 @@ function showPopup(songName, artist, list){
     popup.style.display = "block";
     document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
     let img = document.getElementById("popupImg");
-    img.style.display="block";
-
-    if(list === "list1" || list === "list4") { img.src = "Poster.jpg"; }
-    else if(list === "list2") { img.src = "Poster2.jpeg"; }
-    else if(list === "list3") {
-        if(songName.includes("Bomb") || songName.includes("Sanjai")) img.src = "poster4.png"; 
-        else if (songName.includes("Harishankar")) img.src = "Poster3.jpeg"; 
-        else if (songName.includes("Happy Birthday")) img.src = "poster3.png";
+    if(list === "list1" || list === "list4") img.src = "Poster.jpg";
+    else if(list === "list2") img.src = "Poster2.jpeg";
+    else if(list === "list3"){
+        if(songName.includes("Bomb") || songName.includes("Sanjai")) img.src = "poster4.png";
+        else if(songName.includes("Harishankar")) img.src = "Poster3.jpeg";
+        else if(songName.includes("Happy Birthday")) img.src = "poster3.png";
         else img.src = "Poster3.jpeg";
     }
-    else { img.src = "Poster.jpg"; }
-    toggleWave();
-}
-
-function animatePlayButton(){
-    let icon = document.getElementById("playPauseIcon");
-    icon.innerText = audio.paused ? "▶" : "⏸";
-}
-
-function toggleWave(){
-    let wave = document.getElementById("soundwave");
-    if(audio.paused) wave.classList.add("paused");
-    else wave.classList.remove("paused");
 }
 
 function formatTime(s) {
@@ -1076,6 +989,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
