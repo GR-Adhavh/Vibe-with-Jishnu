@@ -688,328 +688,274 @@ margin-top: 3px;
 </script>
 
 <script>
-    /* TRENDING LOGIC RESTORED */
-const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
-    let cover = "Poster.jpg";
-    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
-    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
-    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
-    if (displayName.includes("Happy Birthday")) cover = "poster3.png";
+/* 1. DEFINE DATA FIRST */
+const artists = {
+    "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
+    "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
+    "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
+    "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
+    "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
+    "Flute anthem(LOT-III)": "G.R.Adhavh",
+    "Item number 1(LOT-III)": "G.R.Adhavh",
+    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
+    "Anugundu Abhishek(LOT-III)": "G.R.Adhavh",
+    "DSK on the move(LOT-III)": "G.R.Adhavh",
+    "Hyper Harishankar(LOT-III)": "G.R.Adhavh",
+    "Jishnu Anthem Reprise(LOT-III)": "G.R.Adhavh",
+    "The fight(LOT-III)": "G.R.Adhavh",
+    "King in the universe(LOT-III)": "G.R.Adhavh",
+    "King vs Harold(LOT-III)": "G.R.Adhavh",
+    "LOT-III teaser concert(LOT-III)": "G.R.Adhavh",
+    "LOT-III Theme(LOT-III)": "G.R.Adhavh",
+    "Vadakku Sadhuram il Jishnu(LOT-III)": "G.R.Adhavh",
+    "default": "G.R.Adhavh"
+};
 
-    return { 
-        name: displayName, 
-        dbName: displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, ''), 
-        cover: cover 
-    };
-});
+const songAnimations = {
+    "Intermission(LOT-III)": "#ff4d6d",
+    "Saavachuruven unna(LOT-III)": "#4dd6ff",
+    "Sivagasi's Daaha(LOT-III)": "#ffa600",
+    "The namechange(LOT-III)": "#bb6bff",
+    "Flute anthem(LOT-III)": "#00ffbf",
+    "Item number 1(LOT-III)": "#ffd700",      
+    "Saavadi Saravedi(LOT-III)": "#ff4500", 
+    "Jishnu Anthem": "#00ff88",
+    "default": "#6a5bff"
+};
 
-function renderTrendingUI(viewsMap) {
-    const listElem = document.getElementById("trendingList");
-    listElem.innerHTML = ''; 
+const playlists = {
+    list1: [
+        "Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3",
+        "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3",
+        "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3",
+        "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3",
+        "Sivagasis Daaha x Saavachuruven unna.mp3",
+        "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
+    ],
+    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
+    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
+    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
+};
 
-    const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
-        const viewsA = viewsMap[a.dbName] || 0;
-        const viewsB = viewsMap[b.dbName] || 0;
-        return viewsB - viewsA;
-    });
-
-    sortedTrending.slice(0, 3).forEach((song, idx) => {
-        const item = document.createElement("li");
-        item.className = "trendingItem";
-        
-        let playlistId = null, playlistIndex = -1;
-        for (const listId in playlists) {
-            playlistIndex = playlists[listId].findIndex(f => {
-                let clean = f.replace(".mp3", "");
-                if (listId === 'list1' || listId === 'list4') {
-                   if (clean === "Sivagasis Daaha x Saavachuruven unna") clean = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-                   else if (clean === "Sivagasi's Daaha") clean = "Sivagasi's Daaha(LOT-III)";
-                   else clean = clean + "(LOT-III)";
-                }
-                return clean === song.name;
-            });
-            if (playlistIndex !== -1) { playlistId = listId; break; }
-        }
-
-        item.innerHTML = `
-           <div class="trendingRank">#${idx + 1}</div>
-           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
-           <div class="trendingInfo">
-               <div class="trendingTitle">${song.name}</div>
-               <div class="trendingViews">${artists[song.name] || "Artist"} • ${formatViews(viewsMap[song.dbName])}</div>
-           </div>
-        `;
-
-        item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
-        listElem.appendChild(item);
-    });
-}
-/* DATA CONFIGURATION */
+/* 2. DEFINE UTILITIES */
 let currentList = "list1";
 let currentIndex = 0;
 
-const artists = {
-    "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
-    "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
-    "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
-    "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
-    "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Flute anthem(LOT-III)": "G.R.Adhavh",
-    "Item number 1(LOT-III)": "G.R.Adhavh",
-    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Anugundu Abhishek(LOT-III)": "G.R.Adhavh",
-    "DSK on the move(LOT-III)": "G.R.Adhavh",
-    "Hyper Harishankar(LOT-III)": "G.R.Adhavh",
-    "Jishnu Anthem Reprise(LOT-III)": "G.R.Adhavh",
-    "The fight(LOT-III)": "G.R.Adhavh",
-    "King in the universe(LOT-III)": "G.R.Adhavh",
-    "King vs Harold(LOT-III)": "G.R.Adhavh",
-    "LOT-III teaser concert(LOT-III)": "G.R.Adhavh",
-    "LOT-III Theme(LOT-III)": "G.R.Adhavh",
-    "Vadakku Sadhuram il Jishnu(LOT-III)": "G.R.Adhavh",
-    "default": "G.R.Adhavh"
-};
-const songAnimations = {
-    "Intermission(LOT-III)": "#ff4d6d",
-    "Saavachuruven unna(LOT-III)": "#4dd6ff",
-    "Sivagasi's Daaha(LOT-III)": "#ffa600",
-    "The namechange(LOT-III)": "#bb6bff",
-    "Flute anthem(LOT-III)": "#00ffbf",
-    "Item number 1(LOT-III)": "#ffd700",      
-    "Saavadi Saravedi(LOT-III)": "#ff4500", 
-    "Jishnu Anthem": "#00ff88",
-    "default": "#6a5bff"
-};
-const playlists = {
-    list1: [
-        "Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3",
-        "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3",
-        "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3",
-        "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3",
-        "Sivagasis Daaha x Saavachuruven unna.mp3",
-        "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
-    ],
-    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
-    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
-    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
-};
-const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
-    let cover = "Poster.jpg";
-    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
-    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
-    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
-    if (displayName.includes("Happy Birthday")) cover = "poster3.png";
-
-    return { 
-        name: displayName, 
-        dbName: displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, ''), 
-        cover: cover 
-    };
-});
-function renderTrendingUI(viewsMap) {
-    const listElem = document.getElementById("trendingList");
-    if (!listElem) return;
-    listElem.innerHTML = ''; 
-
-    const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
-        const viewsA = viewsMap[a.dbName] || 0;
-        const viewsB = viewsMap[b.dbName] || 0;
-        return viewsB - viewsA;
-    });
-
-    sortedTrending.slice(0, 3).forEach((song, idx) => {
-        const item = document.createElement("li");
-        item.className = "trendingItem";
-        
-        let playlistId = null, playlistIndex = -1;
-        for (const listId in playlists) {
-            playlistIndex = playlists[listId].findIndex(f => {
-                let clean = f.replace(".mp3", "");
-                if (listId === 'list1' || listId === 'list4') {
-                   if (clean === "Sivagasis Daaha x Saavachuruven unna") clean = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-                   else if (clean === "Sivagasi's Daaha") clean = "Sivagasi's Daaha(LOT-III)";
-                   else clean = clean + "(LOT-III)";
-                }
-                return clean === song.name;
-            });
-            if (playlistIndex !== -1) { playlistId = listId; break; }
-        }
-
-        item.innerHTML = `
-           <div class="trendingRank">#${idx + 1}</div>
-           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
-           <div class="trendingInfo">
-               <div class="trendingTitle">${song.name}</div>
-               <div class="trendingViews">${artists[song.name] || "Artist"} • ${formatViews(viewsMap[song.dbName])}</div>
-           </div>
-        `;
-        item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
-        listElem.appendChild(item);
-    });
-}
-
 function simplifyDisplayName(displayName) {
-    return displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, '');
+    return displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, '');
 }
 
-function toggleList(id) {
-    const el = document.getElementById(id);
-    const isVisible = el.style.display === "block";
-    document.querySelectorAll('.songList').forEach(list => list.style.display = "none");
-    el.style.display = isVisible ? "none" : "block";
+function formatViews(num) {
+    if (num === undefined) return "0 views";
+    if (num >= 1000) return (num / 1000).toFixed(1) + 'K views';
+    return num + ' views';
 }
 
-function setupPlaylists() {
-    for (let id in playlists) {
-        let listElem = document.getElementById(id);
-        if (!listElem) continue;
-        playlists[id].forEach((fileName, idx) => {
-            let clean = fileName.replace(".mp3", "");
-            let displayName = clean;
-            if (id === 'list1' || id === 'list4') {
-                if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-                else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
-                else displayName = clean + "(LOT-III)";
-            }
-            let div = document.createElement("div");
-            div.className = "track";
-            if (id === 'list1' || id === 'list4') div.classList.add("playable-new");
-            let artist = artists[displayName] || "G.R.Adhavh";
-            div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span>▶</span>`;
-            div.onclick = () => playSong(id, idx);
-            listElem.appendChild(div);
-        });
-    }
-}
-
-async function incrementView(displayName) {
-    if (!window.db) return;
-    const dbName = simplifyDisplayName(displayName);
-    const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-    try {
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            const viewsMap = data.views_map || {};
-            viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
-            await window.updateDoc(docRef, { views_map: viewsMap });
-            
-            // ADD THIS LINE to refresh the trending UI instantly
-            renderTrendingUI(viewsMap);
-        }
-    } catch (e) { console.error("Firebase Update Error:", e); }
-}
-
+/* 3. DEFINE PLAYER FUNCTIONS */
 function applySongTheme(color){
-    document.documentElement.style.setProperty('--song-color', color);
-    document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
-    document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
-}
-
-function playSong(list, index) {
-    currentList = list;
-    currentIndex = index;
-    const fileName = playlists[list][index];
-    const audio = document.getElementById("audio");
-    audio.src = fileName;
-    audio.play();
-
-    // Logic to find display name
-    let clean = fileName.replace(".mp3", "");
-    let displayName = clean;
-    if (list === 'list1' || list === 'list4') {
-        if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-        else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
-        else displayName = clean + "(LOT-III)";
-    }
-
-    document.getElementById("playPauseIcon").innerText = "⏸";
-    document.getElementById("seekContainer").style.display = "flex";
-    document.body.classList.add("pulsing");
-    
-    incrementView(displayName);
-    showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
-    applySongTheme(songAnimations[displayName] || "#6a5bff");
-}
-function togglePlay() {
-    const audio = document.getElementById("audio");
-    const icon = document.getElementById("playPauseIcon");
-    if (audio.paused) {
-        audio.play();
-        icon.innerText = "⏸";
-        document.body.classList.add("pulsing");
-    } else {
-        audio.pause();
-        icon.innerText = "▶";
-        document.body.classList.remove("pulsing");
-    }
-}
-
-function nextSong() {
-    currentIndex = (currentIndex + 1) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
-}
-
-function prevSong() {
-    currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
-}
-
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
+    document.documentElement.style.setProperty('--song-color', color);
+    document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
+    document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
 }
 
 function showPopup(name, artist, list) {
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("popupSongName").innerHTML = `<span>${name} — ${artist}</span>`;
-    let img = document.getElementById("popupImg");
-    
-    if (list === 'list1' || list === 'list4') img.src = "Poster.jpg";
-    else if (list === 'list2') img.src = "Poster2.jpeg";
-    else {
-        if (name.includes("Bomb") || name.includes("Sanjai")) img.src = "poster4.png";
-        else if (name.includes("Harishankar")) img.src = "Poster3.jpeg";
-        else if (name.includes("Happy Birthday")) img.src = "poster3.png";
-        else img.src = "Poster3.jpeg";
-    }
+    document.getElementById("popup").style.display = "block";
+    document.getElementById("popupSongName").innerHTML = `<span>${name} — ${artist}</span>`;
+    let img = document.getElementById("popupImg");
+    if (list === 'list1' || list === 'list4') img.src = "Poster.jpg";
+    else if (list === 'list2') img.src = "Poster2.jpeg";
+    else {
+        if (name.includes("Bomb") || name.includes("Sanjai")) img.src = "poster4.png";
+        else if (name.includes("Harishankar")) img.src = "Poster3.jpeg";
+        else if (name.includes("Happy Birthday")) img.src = "poster3.png";
+        else img.src = "Poster3.jpeg";
+    }
 }
 
-// Progress Bar Logic
+function playSong(list, index) {
+    currentList = list;
+    currentIndex = index;
+    const fileName = playlists[list][index];
+    const audio = document.getElementById("audio");
+    audio.src = fileName;
+    audio.play();
+
+    let clean = fileName.replace(".mp3", "");
+    let displayName = clean;
+    if (list === 'list1' || list === 'list4') {
+        if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
+        else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
+        else displayName = clean + "(LOT-III)";
+    }
+
+    document.getElementById("playPauseIcon").innerText = "⏸";
+    document.getElementById("seekContainer").style.display = "flex";
+    document.body.classList.add("pulsing");
+    
+    incrementView(displayName);
+    showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
+    applySongTheme(songAnimations[displayName] || "#6a5bff");
+}
+
+/* 4. TRENDING LOGIC (Using defined data and functions) */
+const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
+    let cover = "Poster.jpg";
+    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
+    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
+    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
+    if (displayName.includes("Happy Birthday")) cover = "poster3.png";
+    return { name: displayName, dbName: simplifyDisplayName(displayName), cover: cover };
+});
+
+function renderTrendingUI(viewsMap) {
+    const listElem = document.getElementById("trendingList");
+    if (!listElem) return;
+    listElem.innerHTML = ''; 
+    const sortedTrending = allSongsForTrending.slice().sort((a, b) => (viewsMap[b.dbName] || 0) - (viewsMap[a.dbName] || 0));
+    sortedTrending.slice(0, 3).forEach((song, idx) => {
+        const item = document.createElement("li");
+        item.className = "trendingItem";
+        let playlistId = null, playlistIndex = -1;
+        for (const lid in playlists) {
+            playlistIndex = playlists[lid].findIndex(f => {
+                let c = f.replace(".mp3", "");
+                if (lid === 'list1' || lid === 'list4') {
+                   if (c === "Sivagasis Daaha x Saavachuruven unna") c = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
+                   else if (c === "Sivagasi's Daaha") c = "Sivagasi's Daaha(LOT-III)";
+                   else c = c + "(LOT-III)";
+                }
+                return c === song.name;
+            });
+            if (playlistIndex !== -1) { playlistId = lid; break; }
+        }
+        item.innerHTML = `<div class="trendingRank">#${idx+1}</div><img class="trendingCover" src="${song.cover}"><div class="trendingInfo"><div class="trendingTitle">${song.name}</div><div class="trendingViews">${artists[song.name]} • ${formatViews(viewsMap[song.dbName])}</div></div>`;
+        item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
+        listElem.appendChild(item);
+    });
+}
+
+/* 5. REST OF THE UI & FIREBASE CODE */
+function toggleList(id) {
+    const el = document.getElementById(id);
+    const isVisible = el.style.display === "block";
+    document.querySelectorAll('.songList').forEach(l => l.style.display = "none");
+    el.style.display = isVisible ? "none" : "block";
+}
+
+function setupPlaylists() {
+    for (let id in playlists) {
+        let listElem = document.getElementById(id);
+        if (!listElem) continue;
+        playlists[id].forEach((fileName, idx) => {
+            let clean = fileName.replace(".mp3", "");
+            let displayName = clean;
+            if (id === 'list1' || id === 'list4') {
+                if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
+                else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
+                else displayName = clean + "(LOT-III)";
+            }
+            let div = document.createElement("div");
+            div.className = "track";
+            if (id === 'list1' || id === 'list4') div.classList.add("playable-new");
+            div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artists[displayName] || "G.R.Adhavh"}</span></div><span>▶</span>`;
+            div.onclick = () => playSong(id, idx);
+            listElem.appendChild(div);
+        });
+    }
+}
+
+async function incrementView(displayName) {
+    if (!window.db) return;
+    const dbName = simplifyDisplayName(displayName);
+    const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
+    try {
+        const docSnap = await window.getDoc(docRef);
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            const viewsMap = data.views_map || {};
+            viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
+            await window.updateDoc(docRef, { views_map: viewsMap });
+            renderTrendingUI(viewsMap);
+        }
+    } catch (e) { console.error(e); }
+}
+
+async function fetchAndRenderTrending() {
+    if (!window.db) { setTimeout(fetchAndRenderTrending, 100); return; }
+    try {
+        const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
+        const docSnap = await window.getDoc(docRef);
+        if (docSnap.exists()) renderTrendingUI(docSnap.data().views_map || {});
+    } catch (e) { console.error(e); }
+}
+
+/* PLAYER CONTROLS & EVENT LISTENERS */
+
+function togglePlay() {
+    const audio = document.getElementById("audio");
+    const icon = document.getElementById("playPauseIcon");
+    if (!audio.src) return;
+
+    if (audio.paused) {
+        audio.play();
+        icon.innerText = "⏸";
+        document.body.classList.add("pulsing");
+    } else {
+        audio.pause();
+        icon.innerText = "▶";
+        document.body.classList.remove("pulsing");
+    }
+}
+
+function nextSong() {
+    if (!currentList) return;
+    currentIndex = (currentIndex + 1) % playlists[currentList].length;
+    playSong(currentList, currentIndex);
+}
+
+function prevSong() {
+    if (!currentList) return;
+    currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
+    playSong(currentList, currentIndex);
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
+/* AUDIO ELEMENT LOGIC */
 const audio = document.getElementById("audio");
 const seekSlider = document.getElementById("seekSlider");
+
+// Update progress bar as song plays
 audio.addEventListener('timeupdate', () => {
-    const tm = (audio.currentTime / audio.duration) * 100;
-    seekSlider.value = tm || 0;
-    document.getElementById("currTimeText").innerText = formatTime(audio.currentTime);
-    document.getElementById("durTimeText").innerText = formatTime(audio.duration);
-});
-seekSlider.addEventListener('input', () => {
-    audio.currentTime = (seekSlider.value / 100) * audio.duration;
+    if (audio.duration) {
+        const pct = (audio.currentTime / audio.duration) * 100;
+        seekSlider.value = pct;
+        document.getElementById("currTimeText").innerText = formatTime(audio.currentTime);
+        document.getElementById("durTimeText").innerText = formatTime(audio.duration);
+    }
 });
 
+// Seek song when slider is moved
+seekSlider.addEventListener('input', () => {
+    if (audio.duration) {
+        audio.currentTime = (seekSlider.value / 100) * audio.duration;
+    }
+});
+
+// Auto-play next song when current one ends
+audio.addEventListener('ended', nextSong);
+
 function formatTime(s) {
-    if(isNaN(s)) return "0:00";
-    let m = Math.floor(s/60), sec = Math.floor(s%60);
-    return m + ":" + (sec < 10 ? "0" + sec : sec);
+    if(isNaN(s)) return "0:00";
+    let m = Math.floor(s/60), sec = Math.floor(s%60);
+    return m + ":" + (sec < 10 ? "0" + sec : sec);
 }
-async function fetchAndRenderTrending() {
-    if (!window.db) { 
-        setTimeout(fetchAndRenderTrending, 100); 
-        return; 
-    }
-    try {
-        const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) {
-            renderTrendingUI(docSnap.data().views_map || {});
-        }
-    } catch (e) { 
-        console.error("Error fetching trending data:", e); 
-    }
-}
+
 window.onload = () => {
-    setupPlaylists();
-    fetchAndRenderTrending(); // Add this line
+    setupPlaylists();
+    fetchAndRenderTrending();
 };
 </script>
 </body>
