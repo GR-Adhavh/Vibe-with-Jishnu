@@ -958,14 +958,13 @@ for (let id in playlists) {
     let listElem = document.getElementById(id);
     if (!listElem) continue;
 
-    // Remove duplicates (Fixes Single repetition)
     const uniqueSongs = [...new Set(playlists[id])];
 
-    uniqueSongs.forEach((song, idx) => {
-        let fileName = song.replace(".mp3", "");
+    uniqueSongs.forEach((songFilename) => {
+        let fileName = songFilename.replace(".mp3", "");
         let displayName = fileName;
 
-        // DISPLAY FORMATTING
+        // DISPLAY FORMATTING (This adds the brackets for the UI)
         if (fileName === "Bomb3") displayName = "Bomb (Endhu 1cm)";
         if (fileName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         if (fileName === "Flute anthem") displayName = "Flute anthem(LOT-III)";
@@ -977,11 +976,18 @@ for (let id in playlists) {
         let artist = getArtist(displayName);
         let div = document.createElement("div");
         div.className = "track";
+        
         if (id === 'list1' && (fileName === "Flute anthem" || fileName === "LOT-III teaser concert")) {
             div.classList.add("playable-new");
         }
+        
         div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
-        div.onclick = (e) => { e.stopPropagation(); playSong(id, idx); };
+        
+        // FIX: Pass the exact songFilename string instead of index
+        div.onclick = (e) => { 
+            e.stopPropagation(); 
+            playSongByName(id, songFilename); 
+        };
         listElem.appendChild(div);
     });
 }
@@ -1014,27 +1020,35 @@ seekSlider.addEventListener('input', () => {
     if(audio.duration) audio.currentTime = (seekSlider.value / 100) * audio.duration;
 });
 
-function playSong(list, index){
-    if(!playlists[list]) return;
-    currentList = list;
-    currentIndex = index;
-    let song = playlists[list][index];
-    let fileName = song.replace(".mp3","");
+// NEW FUNCTION: Plays by filename to prevent sorting errors
+function playSongByName(listId, filename) {
+    if (!playlists[listId]) return;
+    currentList = listId;
+    currentIndex = playlists[listId].indexOf(filename);
     
-    // Display name mapping for Popup
-    let disp = fileName;
-    if (fileName === "Bomb3") disp = "Bomb (Endhu 1cm)";
-    if (fileName === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
-    if (fileName === "Flute anthem") disp = "Flute anthem(LOT-III)";
+    let fileNameClean = filename.replace(".mp3","");
+    let disp = fileNameClean;
     
+    // UI Mapping for the popup
+    if (fileNameClean === "Bomb3") disp = "Bomb (Endhu 1cm)";
+    if (fileNameClean === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
+    if (fileNameClean === "Flute anthem") disp = "Flute anthem(LOT-III)";
+    if (fileNameClean === "LOT-III teaser concert") disp = "LOT-III teaser concert(LOT-III)";
+
     incrementView(disp);
-    audio.src = song;
-    audio.play().then(() => startVisuals()).catch(e => console.log(e));
+    audio.src = filename; // This is the actual file like "Anugundu Abhishek(LOT-III).mp3"
+    audio.play().then(() => startVisuals()).catch(e => console.log("Play error:", e));
     
     document.getElementById("seekContainer").style.display = "flex";
-    showPopup(disp, getArtist(disp), list);
+    showPopup(disp, getArtist(disp), listId);
     applySongTheme(getColor(disp));
     animatePlayButton();
+}
+
+// Keep original index function for Prev/Next buttons
+function playSong(list, index){
+    if(!playlists[list]) return;
+    playSongByName(list, playlists[list][index]);
 }
 
 function togglePlay(){
@@ -1089,12 +1103,12 @@ function showPopup(songName, artist, list){
 
 function animatePlayButton(){
     let icon = document.getElementById("playPauseIcon");
-    icon.innerText = audio.paused ? "▶" : "⏸";
+    if(icon) icon.innerText = audio.paused ? "▶" : "⏸";
 }
 
 function toggleWave(){
     let wave = document.getElementById("soundwave");
-    audio.paused ? wave.classList.add("paused") : wave.classList.remove("paused");
+    if(wave) audio.paused ? wave.classList.add("paused") : wave.classList.remove("paused");
 }
 
 function formatTime(s) {
@@ -1105,6 +1119,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
