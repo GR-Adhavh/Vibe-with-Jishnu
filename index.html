@@ -782,22 +782,34 @@ const playlists = {
 function simplifyDisplayName(displayName) {
     let clean = displayName.replace("(LOT-III)", "").trim();
     
-    if (clean.includes("Anugundu Abhishek")) return "AnugunduAbhishek";
-    if (clean.includes("DSK on the move")) return "DSKOnTheMove";
-    if (clean.includes("Hyper Harishankar")) return "HyperHarishankar";
-    if (clean.includes("Intermission")) return "IntermissionLOTIII";
-    if (clean.includes("Jishnu Anthem Reprise")) return "JishnuAnthemReprise";
-    if (clean.includes("The fight")) return "TheFightLOTIII";
-    if (clean.includes("King in the Universe") || clean.includes("King in the universe")) return "KingInTheUniverse";
-    if (clean.includes("King vs Harold")) return "KingVsHarold";
-    if (clean.includes("teaser concert")) return "LOTIIITeaserConcert";
-    if (clean.includes("LOT-III Theme")) return "LOTIIITheme";
-    if (clean.includes("Saavachuruven unna")) return "SaavachuruvenUnna";
-    if (clean.includes("Sivagasi")) return "SivagasisDaaha";
-    if (clean.includes("Flute anthem")) return "FluteAnthemLOTIII";
-    if (clean.includes("Bomb")) return "BombEndhu1cm";
-    if (clean.includes("Sanjai")) return "SanjaisRoomEndhu1cm";
-    if (clean.includes("Vadakku Sadhuram")) return "VadakkuSadhuramIlJishnu";
+if (clean.includes("abhishek")) return "AnugunduAbhishek";
+    if (clean.includes("dsk")) return "DSKOnTheMove";
+    if (clean.includes("hyper")) return "HyperHarishankar";
+    if (clean.includes("intermission")) return "IntermissionLOTIII";
+    if (clean.includes("reprise")) return "JishnuAnthemReprise";
+    if (clean.includes("fight")) return "TheFightLOTIII";
+    if (clean.includes("universe")) return "KingInTheUniverse";
+    if (clean.includes("harold")) return "KingVsHarold";
+    if (clean.includes("teaser")) return "LOTIIITeaserConcert";
+    if (clean.includes("theme")) return "LOTIIITheme";
+    if (clean.includes("saavachuruven")) return "SaavachuruvenUnna";
+    if (clean.includes("sivagasi")) return "SivagasisDaaha";
+    if (clean.includes("flute")) return "FluteAnthemLOTIII";
+    if (clean.includes("bomb")) return "BombEndhu1cm";
+    if (clean.includes("sanjai")) return "SanjaisRoomEndhu1cm";
+    if (clean.includes("vadakku")) return "VadakkuSadhuramIlJishnu";
+    if (clean.includes("namechange")) return "TheNamechange";
+    if (clean.includes("saravedi")) return "SaavadiSaravedi";
+    if (clean.includes("item number 1")) return "Itemnumber1";
+    
+    // Specific check for Jishnu Anthem variants
+    if (clean.includes("vijay") || clean.includes("vocal")) return "JishnuanthemThalapathyVijayvocal";
+    if (clean.includes("slowed") || clean.includes("reverb")) return "JishnuAnthemSlowedReverbed";
+    if (clean.includes("karoke")) return "JishnuAnthemKaroke";
+    if (clean.includes("anthem")) return "JishnuAnthem";
+    
+    if (clean.includes("birthday") || clean.includes("megharajan")) return "HappyBirthdayMegharajan";
+    if (clean.includes("irukka")) return "HarishankarKuIrukka";
     
     return clean.replace(/[^a-zA-Z0-9]/g, '');
 }
@@ -1108,6 +1120,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
