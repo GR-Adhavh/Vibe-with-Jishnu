@@ -630,9 +630,9 @@ margin-top: 3px;
 <audio id="audio"></audio>
 
 <script type="module">
-    // --- FIREBASE INITIALIZATION ---
+    // --- FIREBASE INITIALIZATION (Consolidated) ---
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, doc, updateDoc, getDoc, getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
@@ -646,7 +646,7 @@ margin-top: 3px;
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Global access for the functions
+    // Global access for the functions used in inline HTML onclicks
     window.db = db;
     window.doc = doc;
     window.updateDoc = updateDoc;
@@ -688,59 +688,7 @@ margin-top: 3px;
 </script>
 
 <script>
-/* DATA CONFIGURATION */
-let currentList = "list1";
-let currentIndex = 0;
-
-const artists = {
-    "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
-    "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
-    "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
-    "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
-    "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Flute anthem(LOT-III)": "G.R.Adhavh",
-    "Item number 1(LOT-III)": "G.R.Adhavh",
-    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Anugundu Abhishek(LOT-III)": "G.R.Adhavh",
-    "DSK on the move(LOT-III)": "G.R.Adhavh",
-    "Hyper Harishankar(LOT-III)": "G.R.Adhavh",
-    "Jishnu Anthem Reprise(LOT-III)": "G.R.Adhavh",
-    "The fight(LOT-III)": "G.R.Adhavh",
-    "King in the universe(LOT-III)": "G.R.Adhavh",
-    "King vs Harold(LOT-III)": "G.R.Adhavh",
-    "LOT-III teaser concert(LOT-III)": "G.R.Adhavh",
-    "LOT-III Theme(LOT-III)": "G.R.Adhavh",
-    "Vadakku Sadhuram il Jishnu(LOT-III)": "G.R.Adhavh",
-    "default": "G.R.Adhavh"
-};
-
-const playlists = {
-    list1: [
-        "Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3",
-        "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3",
-        "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3",
-        "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3",
-        "Sivagasis Daaha x Saavachuruven unna.mp3",
-        "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
-    ],
-    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
-    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
-    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
-};
-
-const songAnimations = {
-    "Intermission(LOT-III)": "#ff4d6d",
-    "Saavachuruven unna(LOT-III)": "#4dd6ff",
-    "Sivagasi's Daaha(LOT-III)": "#ffa600",
-    "The namechange(LOT-III)": "#bb6bff",
-    "Flute anthem(LOT-III)": "#00ffbf",
-    "Item number 1(LOT-III)": "#ffd700",      
-    "Saavadi Saravedi(LOT-III)": "#ff4500", 
-    "Jishnu Anthem": "#00ff88",
-    "default": "#6a5bff"
-};
-
-/* TRENDING LOGIC RESTORED */
+    /* TRENDING LOGIC RESTORED */
 const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
     let cover = "Poster.jpg";
     if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
@@ -754,12 +702,6 @@ const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default'
         cover: cover 
     };
 });
-
-function formatViews(num) {
-    if (num === undefined) return "0 views";
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K views';
-    return num + ' views';
-}
 
 function renderTrendingUI(viewsMap) {
     const listElem = document.getElementById("trendingList");
@@ -802,17 +744,110 @@ function renderTrendingUI(viewsMap) {
         listElem.appendChild(item);
     });
 }
+/* DATA CONFIGURATION */
+let currentList = "list1";
+let currentIndex = 0;
 
-async function fetchAndRenderTrending() {
-    if (!window.db) { setTimeout(fetchAndRenderTrending, 100); return; }
-    try {
-        const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) renderTrendingUI(docSnap.data().views_map || {});
-    } catch (e) { console.error(e); }
+const artists = {
+    "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
+    "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
+    "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
+    "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
+    "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
+    "Flute anthem(LOT-III)": "G.R.Adhavh",
+    "Item number 1(LOT-III)": "G.R.Adhavh",
+    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
+    "Anugundu Abhishek(LOT-III)": "G.R.Adhavh",
+    "DSK on the move(LOT-III)": "G.R.Adhavh",
+    "Hyper Harishankar(LOT-III)": "G.R.Adhavh",
+    "Jishnu Anthem Reprise(LOT-III)": "G.R.Adhavh",
+    "The fight(LOT-III)": "G.R.Adhavh",
+    "King in the universe(LOT-III)": "G.R.Adhavh",
+    "King vs Harold(LOT-III)": "G.R.Adhavh",
+    "LOT-III teaser concert(LOT-III)": "G.R.Adhavh",
+    "LOT-III Theme(LOT-III)": "G.R.Adhavh",
+    "Vadakku Sadhuram il Jishnu(LOT-III)": "G.R.Adhavh",
+    "default": "G.R.Adhavh"
+};
+const songAnimations = {
+    "Intermission(LOT-III)": "#ff4d6d",
+    "Saavachuruven unna(LOT-III)": "#4dd6ff",
+    "Sivagasi's Daaha(LOT-III)": "#ffa600",
+    "The namechange(LOT-III)": "#bb6bff",
+    "Flute anthem(LOT-III)": "#00ffbf",
+    "Item number 1(LOT-III)": "#ffd700",      
+    "Saavadi Saravedi(LOT-III)": "#ff4500", 
+    "Jishnu Anthem": "#00ff88",
+    "default": "#6a5bff"
+};
+const playlists = {
+    list1: [
+        "Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3",
+        "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3",
+        "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3",
+        "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3",
+        "Sivagasis Daaha x Saavachuruven unna.mp3",
+        "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
+    ],
+    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
+    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
+    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
+};
+const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
+    let cover = "Poster.jpg";
+    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
+    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
+    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
+    if (displayName.includes("Happy Birthday")) cover = "poster3.png";
+
+    return { 
+        name: displayName, 
+        dbName: displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, ''), 
+        cover: cover 
+    };
+});
+function renderTrendingUI(viewsMap) {
+    const listElem = document.getElementById("trendingList");
+    if (!listElem) return;
+    listElem.innerHTML = ''; 
+
+    const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
+        const viewsA = viewsMap[a.dbName] || 0;
+        const viewsB = viewsMap[b.dbName] || 0;
+        return viewsB - viewsA;
+    });
+
+    sortedTrending.slice(0, 3).forEach((song, idx) => {
+        const item = document.createElement("li");
+        item.className = "trendingItem";
+        
+        let playlistId = null, playlistIndex = -1;
+        for (const listId in playlists) {
+            playlistIndex = playlists[listId].findIndex(f => {
+                let clean = f.replace(".mp3", "");
+                if (listId === 'list1' || listId === 'list4') {
+                   if (clean === "Sivagasis Daaha x Saavachuruven unna") clean = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
+                   else if (clean === "Sivagasi's Daaha") clean = "Sivagasi's Daaha(LOT-III)";
+                   else clean = clean + "(LOT-III)";
+                }
+                return clean === song.name;
+            });
+            if (playlistIndex !== -1) { playlistId = listId; break; }
+        }
+
+        item.innerHTML = `
+           <div class="trendingRank">#${idx + 1}</div>
+           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
+           <div class="trendingInfo">
+               <div class="trendingTitle">${song.name}</div>
+               <div class="trendingViews">${artists[song.name] || "Artist"} • ${formatViews(viewsMap[song.dbName])}</div>
+           </div>
+        `;
+        item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
+        listElem.appendChild(item);
+    });
 }
 
-/* PLAYER LOGIC */
 function simplifyDisplayName(displayName) {
     return displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, '');
 }
@@ -858,34 +893,11 @@ async function incrementView(displayName) {
             const viewsMap = data.views_map || {};
             viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
             await window.updateDoc(docRef, { views_map: viewsMap });
+            
+            // ADD THIS LINE to refresh the trending UI instantly
             renderTrendingUI(viewsMap);
         }
-    } catch (e) { console.error(e); }
-}
-
-function playSong(list, index) {
-    currentList = list;
-    currentIndex = index;
-    const fileName = playlists[list][index];
-    const clean = fileName.replace(".mp3", "");
-    let displayName = clean;
-    if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
-    if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
-    if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
-    if (list === 'list1' || list === 'list4') {
-        if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-        else displayName = clean + "(LOT-III)";
-    }
-    const audio = document.getElementById("audio");
-    audio.src = fileName;
-    audio.play();
-    document.getElementById("playPauseIcon").innerText = "⏸";
-    document.getElementById("seekContainer").style.display = "flex";
-    document.body.classList.add("pulsing");
-    
-    incrementView(displayName);
-    showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
-    applySongTheme(songAnimations[displayName] || "#6a5bff");
+    } catch (e) { console.error("Firebase Update Error:", e); }
 }
 
 function applySongTheme(color){
@@ -894,6 +906,31 @@ function applySongTheme(color){
     document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
 }
 
+function playSong(list, index) {
+    currentList = list;
+    currentIndex = index;
+    const fileName = playlists[list][index];
+    const audio = document.getElementById("audio");
+    audio.src = fileName;
+    audio.play();
+
+    // Logic to find display name
+    let clean = fileName.replace(".mp3", "");
+    let displayName = clean;
+    if (list === 'list1' || list === 'list4') {
+        if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
+        else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
+        else displayName = clean + "(LOT-III)";
+    }
+
+    document.getElementById("playPauseIcon").innerText = "⏸";
+    document.getElementById("seekContainer").style.display = "flex";
+    document.body.classList.add("pulsing");
+    
+    incrementView(displayName);
+    showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
+    applySongTheme(songAnimations[displayName] || "#6a5bff");
+}
 function togglePlay() {
     const audio = document.getElementById("audio");
     const icon = document.getElementById("playPauseIcon");
@@ -926,6 +963,7 @@ function showPopup(name, artist, list) {
     document.getElementById("popup").style.display = "block";
     document.getElementById("popupSongName").innerHTML = `<span>${name} — ${artist}</span>`;
     let img = document.getElementById("popupImg");
+    
     if (list === 'list1' || list === 'list4') img.src = "Poster.jpg";
     else if (list === 'list2') img.src = "Poster2.jpeg";
     else {
@@ -936,6 +974,7 @@ function showPopup(name, artist, list) {
     }
 }
 
+// Progress Bar Logic
 const audio = document.getElementById("audio");
 const seekSlider = document.getElementById("seekSlider");
 audio.addEventListener('timeupdate', () => {
@@ -953,16 +992,28 @@ function formatTime(s) {
     let m = Math.floor(s/60), sec = Math.floor(s%60);
     return m + ":" + (sec < 10 ? "0" + sec : sec);
 }
-
+async function fetchAndRenderTrending() {
+    if (!window.db) { 
+        setTimeout(fetchAndRenderTrending, 100); 
+        return; 
+    }
+    try {
+        const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
+        const docSnap = await window.getDoc(docRef);
+        if (docSnap.exists()) {
+            renderTrendingUI(docSnap.data().views_map || {});
+        }
+    } catch (e) { 
+        console.error("Error fetching trending data:", e); 
+    }
+}
 window.onload = () => {
     setupPlaylists();
-    fetchAndRenderTrending();
+    fetchAndRenderTrending(); // Add this line
 };
 </script>
 </body>
 </html>
-
-
 
 
 
