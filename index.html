@@ -757,9 +757,18 @@ function formatViews(num) {
 
 /* 3. DEFINE PLAYER FUNCTIONS */
 function applySongTheme(color){
+    // This line is CRITICAL - it tells the CSS which color to use for the pulse
     document.documentElement.style.setProperty('--song-color', color);
+    
+    // Updates the overall page background gradient
     document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
+    
+    // Updates the soundwave bars to match the song color
     document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
+    
+    // Updates the player border to match the song color
+    const player = document.querySelector(".player");
+    if(player) player.style.borderColor = color;
 }
 
 function showPopup(name, artist, list) {
@@ -964,4 +973,5 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
 
