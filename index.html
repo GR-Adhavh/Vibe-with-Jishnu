@@ -774,7 +774,7 @@ const playlists = {
     list1: ["Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3", "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3", "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3", "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3", "Sivagasis Daaha x Saavachuruven unna.mp3", "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"],
     list4: ["Item number 1.mp3", "Saavadi Saravedi.mp3"],
     list2: ["Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"],
-    list3: ["Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb3.mp3", "Sanjai.mp3"]
+    list3: ["Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3"]
 };
 
 // --- UNIVERSAL MAPPING FUNCTION ---
@@ -816,9 +816,9 @@ for (let listId in playlists) {
     playlists[listId].forEach(file => {
         let cleanName = file.replace(".mp3", "");
         let displayName = cleanName;
-        if (cleanName.includes("Bomb")) displayName = "Bomb (Endhu 1cm)";
-        if (cleanName.includes("Sanjai")) displayName = "Sanjai's room (Endhu 1cm)";
-        if (cleanName.includes("Harishankar")) displayName = "Harishankar ku irukka?";
+        if (cleanName === "Bomb") displayName = "Bomb (Endhu 1cm)";
+        if (cleanName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+        if (cleanName === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
         if (['list1', 'list4'].includes(listId) && !displayName.includes("(LOT-III)")) displayName += "(LOT-III)";
 
         if (!seenSongs.has(displayName)) {
@@ -839,6 +839,11 @@ function getArtist(song) {
     return artists[name] || artists["default"]; 
 }
 function getColor(song) { return songAnimations[song] || songAnimations["default"]; }
+function formatTime(s) {
+    if(isNaN(s)) return "0:00";
+    let min = Math.floor(s / 60), sec = Math.floor(s % 60);
+    return min + ":" + (sec < 10 ? "0" + sec : sec);
+}
 function formatViews(num) {
     if (num === undefined) return "0 views";
     return num >= 1000 ? (num / 1000).toFixed(1) + 'K views' : num + ' views';
@@ -858,7 +863,7 @@ function renderTrendingUI(viewsMap) {
             pIndex = playlists[id].findIndex(f => {
                 let cleanF = f.replace(".mp3", "");
                 return cleanF === song.name.replace("(LOT-III)","").replace("?","").trim() || 
-                       (cleanF === "Bomb3" && song.name.includes("Bomb")) ||
+                       (cleanF === "Bomb" && song.name.includes("Bomb")) ||
                        (cleanF === "Sanjai" && song.name.includes("Sanjai"));
             });
             if (pIndex !== -1) { playlistId = id; break; }
@@ -901,7 +906,7 @@ for (let id in playlists) {
         let fileName = songFilename.replace(".mp3", "");
         let displayName = fileName;
         if (['list1', 'list4'].includes(id) && !displayName.includes("(LOT-III)")) displayName += "(LOT-III)";
-        if (fileName === "Bomb3") displayName = "Bomb (Endhu 1cm)";
+        if (fileName === "Bomb") displayName = "Bomb (Endhu 1cm)";
         if (fileName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         if (fileName === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 
@@ -931,8 +936,9 @@ function playSongByName(listId, filename) {
     currentIndex = playlists[listId].indexOf(filename);
     let fileNameClean = filename.replace(".mp3","");
     let disp = fileNameClean;
+
     if (['list1', 'list4'].includes(listId) && !disp.includes("(LOT-III)")) disp += "(LOT-III)";
-    if (fileNameClean === "Bomb3") disp = "Bomb (Endhu 1cm)";
+    if (fileNameClean === "Bomb") disp = "Bomb (Endhu 1cm)";
     if (fileNameClean === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
 
     incrementView(disp);
@@ -940,8 +946,9 @@ function playSongByName(listId, filename) {
     audio.play().then(() => document.body.classList.add("pulsing")).catch(e => console.log(e));
     document.getElementById("seekContainer").style.display = "flex";
     
-    // Fixed Popup call
+    // CALL POPUP
     showPopup(disp, getArtist(disp), listId, filename);
+    
     applySongTheme(getColor(disp));
     document.getElementById("playPauseIcon").innerText = "⏸";
 }
@@ -971,8 +978,7 @@ function applySongTheme(color){
     document.querySelector(".player").style.borderColor = color;
 }
 
-// RESTORED POPUP FUNCTION
-function showPopup(songName, artist, listId, actualFilename){
+function showPopup(songName, artist, listId, filename){
     let popup = document.getElementById("popup");
     popup.style.display = "block";
     document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
@@ -980,9 +986,9 @@ function showPopup(songName, artist, listId, actualFilename){
     let img = document.getElementById("popupImg");
     img.style.display = "block";
     
-    let fName = actualFilename ? actualFilename.toLowerCase() : "";
+    let fName = filename.toLowerCase();
 
-    // Correct Poster Logic
+    // POSTER LOGIC
     if(listId === "list1" || listId === "list4") {
         img.src = "Poster.jpg";
     }
@@ -990,6 +996,7 @@ function showPopup(songName, artist, listId, actualFilename){
         img.src = "Poster2.jpeg";
     }
     else if(listId === "list3") {
+        // Checking filename for specific list 3 posters
         if(fName.includes("bomb") || fName.includes("sanjai")) {
             img.src = "poster4.png";
         } else if (fName.includes("harishankar")) {
@@ -1002,8 +1009,6 @@ function showPopup(songName, artist, listId, actualFilename){
     } else {
         img.src = "Poster.jpg";
     }
-
-    if (window.toggleWave) window.toggleWave(); 
 }
 
 window.closePopup = () => { 
@@ -1011,9 +1016,6 @@ window.closePopup = () => {
     audio.pause(); 
     document.body.classList.remove("pulsing"); 
 };
-
-function formatTime(s) {
-    if(isNaN(s)) return "0:00";
-    let min = Math.floor(s / 60), sec = Math.floor(s % 60);
-    return min + ":" + (sec < 10 ? "0" + sec : sec);
-}
+</script>
+</body>
+</html>
