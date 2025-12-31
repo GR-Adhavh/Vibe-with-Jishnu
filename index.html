@@ -630,6 +630,29 @@ margin-top: 3px;
 <audio id="audio"></audio>
 
 <script type="module">
+    // --- FIREBASE INITIALIZATION (Consolidated) ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
+        authDomain: "weapon-fanpage.firebaseapp.com",
+        projectId: "weapon-fanpage",
+        storageBucket: "weapon-fanpage.firebasestorage.app",
+        messagingSenderId: "124549409527",
+        appId: "1:124549409527:web:85657a1d41c8950f7601f2"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Global access for the functions used in inline HTML onclicks
+    window.db = db;
+    window.doc = doc;
+    window.updateDoc = updateDoc;
+    window.getDoc = getDoc;
+
+    // --- COUNTDOWN LOGIC ---
     function updateCountdown() {
         const now = new Date();
         const targetDate = new Date(`Jan 21, 2026 00:00:00`).getTime();
@@ -639,7 +662,7 @@ margin-top: 3px;
         const container = document.getElementById("countdown-container");
 
         if (currentTime >= expiryDate) {
-            container.style.display = "none";
+            if(container) container.style.display = "none";
             return; 
         }
 
@@ -662,55 +685,13 @@ margin-top: 3px;
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
-    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
-        authDomain: "weapon-fanpage.firebaseapp.com",
-        projectId: "weapon-fanpage",
-        storageBucket: "weapon-fanpage.firebasestorage.app",
-        messagingSenderId: "124549409527",
-        appId: "1:124549409527:web:85657a1d41c8950f7601f2",
-        measurementId: "G-MXBR3C8ET7"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const db = getFirestore(app);
-
-    window.db = db;
-    window.doc = doc;
-    window.updateDoc = updateDoc;
-    window.getDoc = getDoc;
-
-    // --- FIREBASE INITIALIZATION ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
-        authDomain: "weapon-fanpage.firebaseapp.com",
-        projectId: "weapon-fanpage",
-        storageBucket: "weapon-fanpage.firebasestorage.app",
-        messagingSenderId: "124549409527",
-        appId: "1:124549409527:web:85657a1d41c8950f7601f2"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Global access for the main script
-    window.db = db;
-    window.doc = doc;
-    window.updateDoc = updateDoc;
-    window.getDoc = getDoc;
 </script>
 
 <script>
 /* DATA CONFIGURATION */
+let currentList = "list1";
+let currentIndex = 0;
+
 const artists = {
     "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
     "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
@@ -742,61 +723,49 @@ const playlists = {
         "Sivagasis Daaha x Saavachuruven unna.mp3",
         "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
     ],
-    list4: [
-        "Item number 1.mp3", "Saavadi Saravedi.mp3"
-    ],
-    list2: [
-        "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3",
-        "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"
-    ],
-    list3: [
-        "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
-        "Bomb.mp3", "Sanjai.mp3" 
-    ]
+    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
+    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
+    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
 };
 
-// Map Display Name to Firebase Field Name
 function simplifyDisplayName(displayName) {
     return displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, '');
 }
 
-/* UI GENERATION */
+function toggleList(id) {
+    const el = document.getElementById(id);
+    const isVisible = el.style.display === "block";
+    document.querySelectorAll('.songList').forEach(list => list.style.display = "none");
+    el.style.display = isVisible ? "none" : "block";
+}
+
 function setupPlaylists() {
     for (let id in playlists) {
         let listElem = document.getElementById(id);
         if (!listElem) continue;
-
         playlists[id].forEach((fileName, idx) => {
             let clean = fileName.replace(".mp3", "");
-            
-            // Generate Display Name: Add (LOT-III) back for specific lists
             let displayName = clean;
             if (id === 'list1' || id === 'list4') {
-                // Fix specific naming oddities
                 if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
                 else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
                 else displayName = clean + "(LOT-III)";
             }
-
             let div = document.createElement("div");
             div.className = "track";
             if (id === 'list1' || id === 'list4') div.classList.add("playable-new");
-
             let artist = artists[displayName] || "G.R.Adhavh";
             div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span>▶</span>`;
-            
             div.onclick = () => playSong(id, idx);
             listElem.appendChild(div);
         });
     }
 }
 
-/* FIREBASE VIEW INCREMENT */
 async function incrementView(displayName) {
     if (!window.db) return;
     const dbName = simplifyDisplayName(displayName);
     const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-
     try {
         const docSnap = await window.getDoc(docRef);
         if (docSnap.exists()) {
@@ -805,47 +774,90 @@ async function incrementView(displayName) {
             viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
             await window.updateDoc(docRef, { views_map: viewsMap });
         }
-    } catch (e) {
-        console.error("Firebase Update Error:", e);
-    }
+    } catch (e) { console.error("Firebase Update Error:", e); }
 }
 
-/* PLAYER CORE */
 function playSong(list, index) {
+    currentList = list;
+    currentIndex = index;
     const fileName = playlists[list][index];
     const clean = fileName.replace(".mp3", "");
-    
-    // Reconstruct display name for Firebase and Popup
     let displayName = clean;
     if (list === 'list1' || list === 'list4') {
         if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
         else displayName = clean + "(LOT-III)";
     }
-
     const audio = document.getElementById("audio");
     audio.src = fileName;
     audio.play();
-
+    document.getElementById("playPauseIcon").innerText = "⏸";
+    document.getElementById("seekContainer").style.display = "flex";
+    document.body.classList.add("pulsing");
     incrementView(displayName);
     showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
 }
 
+function togglePlay() {
+    const audio = document.getElementById("audio");
+    const icon = document.getElementById("playPauseIcon");
+    if (audio.paused) {
+        audio.play();
+        icon.innerText = "⏸";
+        document.body.classList.add("pulsing");
+    } else {
+        audio.pause();
+        icon.innerText = "▶";
+        document.body.classList.remove("pulsing");
+    }
+}
+
+function nextSong() {
+    currentIndex = (currentIndex + 1) % playlists[currentList].length;
+    playSong(currentList, currentIndex);
+}
+
+function prevSong() {
+    currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
+    playSong(currentList, currentIndex);
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+}
+
 function showPopup(name, artist, list) {
     document.getElementById("popup").style.display = "block";
-    document.getElementById("popupSongName").innerText = name + " — " + artist;
-    
-    // Auto-select cover image based on list
+    document.getElementById("popupSongName").innerHTML = `<span>${name} — ${artist}</span>`;
     let img = document.getElementById("popupImg");
     if (list === 'list1' || list === 'list4') img.src = "Poster.jpg";
     else if (list === 'list2') img.src = "Poster2.jpeg";
     else img.src = "Poster3.jpeg";
 }
 
-// Initialize on load
+// Progress Bar Logic
+const audio = document.getElementById("audio");
+const seekSlider = document.getElementById("seekSlider");
+audio.addEventListener('timeupdate', () => {
+    const tm = (audio.currentTime / audio.duration) * 100;
+    seekSlider.value = tm || 0;
+    document.getElementById("currTimeText").innerText = formatTime(audio.currentTime);
+    document.getElementById("durTimeText").innerText = formatTime(audio.duration);
+});
+seekSlider.addEventListener('input', () => {
+    audio.currentTime = (seekSlider.value / 100) * audio.duration;
+});
+
+function formatTime(s) {
+    if(isNaN(s)) return "0:00";
+    let m = Math.floor(s/60), sec = Math.floor(s%60);
+    return m + ":" + (sec < 10 ? "0" + sec : sec);
+}
+
 window.onload = setupPlaylists;
 </script>
 </body>
 </html>
+
 
 
 
