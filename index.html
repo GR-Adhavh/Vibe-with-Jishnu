@@ -233,9 +233,9 @@ animation: heartbeat 0.6s cubic-bezier(0.1, 0.7, 1.0, 0.1) infinite;
 }
 
 @keyframes heartbeat {
-0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.1; }
-10% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.6; }
-100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.3; } /* Increased from 0.1 */
+  10% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; } /* Increased from 0.6 */
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
 }
 
 /* HEADER */
@@ -757,16 +757,16 @@ function formatViews(num) {
 
 /* 3. DEFINE PLAYER FUNCTIONS */
 function applySongTheme(color){
-    // This line is CRITICAL - it tells the CSS which color to use for the pulse
+    // This line sends the color to the CSS so the bass-bg can see it
     document.documentElement.style.setProperty('--song-color', color);
     
-    // Updates the overall page background gradient
+    // This restores the original radial gradient look
     document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
     
-    // Updates the soundwave bars to match the song color
+    // Syncs the soundwave bars
     document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
     
-    // Updates the player border to match the song color
+    // Syncs the player border
     const player = document.querySelector(".player");
     if(player) player.style.borderColor = color;
 }
@@ -973,5 +973,6 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
 
 
