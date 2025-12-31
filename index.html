@@ -757,16 +757,13 @@ function formatViews(num) {
 
 /* 3. DEFINE PLAYER FUNCTIONS */
 function applySongTheme(color){
-    // This line sends the color to the CSS so the bass-bg can see it
+    // This pushes the color to the CSS --song-color variable used by #bass-bg
     document.documentElement.style.setProperty('--song-color', color);
     
-    // This restores the original radial gradient look
-    document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
+    // This creates the soft violet radial glow in the background center
+    document.body.style.background = `radial-gradient(circle at center, ${color}33 0%, #0a0f2e 100%)`;
     
-    // Syncs the soundwave bars
-    document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
-    
-    // Syncs the player border
+    // Updates the player's top border to match the song's "vibe"
     const player = document.querySelector(".player");
     if(player) player.style.borderColor = color;
 }
@@ -824,24 +821,39 @@ function renderTrendingUI(viewsMap) {
     const listElem = document.getElementById("trendingList");
     if (!listElem) return;
     listElem.innerHTML = ''; 
+    
     const sortedTrending = allSongsForTrending.slice().sort((a, b) => (viewsMap[b.dbName] || 0) - (viewsMap[a.dbName] || 0));
+    
     sortedTrending.slice(0, 3).forEach((song, idx) => {
         const item = document.createElement("li");
         item.className = "trendingItem";
+        
+        // This ensures the image used in the Trending UI matches the song
+        let coverImg = "Poster.jpg"; // Default
+        if (song.name.includes("Anthem")) coverImg = "Poster2.jpeg";
+        if (song.name.includes("Harishankar") || song.name.includes("Megharajan")) coverImg = "Poster3.jpeg";
+        if (song.name.includes("Bomb") || song.name.includes("Sanjai")) coverImg = "poster4.png";
+
+        item.innerHTML = `
+            <div class="trendingRank">#${idx + 1}</div>
+            <img class="trendingCover" src="${coverImg}" alt="${song.name}" onerror="this.src='https://via.placeholder.com/150/6a5bff/fff?text=Music'">
+            <div class="trendingInfo">
+                <div class="trendingTitle">${song.name}</div>
+                <div class="trendingViews">${artists[song.name] || "G.R.Adhavh"} • ${formatViews(viewsMap[song.dbName])}</div>
+            </div>
+        `;
+        
+        // Find playlist ID to allow playing from trending click
         let playlistId = null, playlistIndex = -1;
         for (const lid in playlists) {
             playlistIndex = playlists[lid].findIndex(f => {
                 let c = f.replace(".mp3", "");
-                if (lid === 'list1' || lid === 'list4') {
-                   if (c === "Sivagasis Daaha x Saavachuruven unna") c = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-                   else if (c === "Sivagasi's Daaha") c = "Sivagasi's Daaha(LOT-III)";
-                   else c = c + "(LOT-III)";
-                }
+                if (lid === 'list1' || lid === 'list4') c += "(LOT-III)";
                 return c === song.name;
             });
             if (playlistIndex !== -1) { playlistId = lid; break; }
         }
-        item.innerHTML = `<div class="trendingRank">#${idx+1}</div><img class="trendingCover" src="${song.cover}"><div class="trendingInfo"><div class="trendingTitle">${song.name}</div><div class="trendingViews">${artists[song.name]} • ${formatViews(viewsMap[song.dbName])}</div></div>`;
+        
         item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
         listElem.appendChild(item);
     });
@@ -973,6 +985,7 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
 
 
 
