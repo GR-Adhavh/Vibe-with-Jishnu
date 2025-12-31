@@ -859,18 +859,16 @@ return displayName.replace(/[^a-zA-Z0-9]/g, '');
 
 // 🆕 This generates the full list of all songs for the trending renderer to use
 const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
-// Find the associated cover image based on the playlist logic used in showPopup
-let cover = "Poster.jpg"; // Default
-if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
-if (displayName.includes("Bomb (Endhu 1cm)") || displayName.includes("Sanjai's room")) cover = "poster4.png";
-if (displayName.includes("Harishankar ku irukka")) cover = "Poster3.jpeg";
-if (displayName.includes("Happy Birthday")) cover = "poster3.png";
-
-return { 
-name: displayName,
-dbName: simplifyDisplayName(displayName),
-cover: cover
-};
+    let cover = "Poster.jpg";
+    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
+    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
+    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
+    
+    return { 
+        name: displayName,
+        dbName: simplifyDisplayName(displayName),
+        cover: cover
+    };
 });
 
 
@@ -1047,56 +1045,38 @@ console.error(`Error incrementing views for ${displayName}:`, e);
 }
 
 
-/* UI GENERATION (for playlists) */
-for(let id in playlists){
-if(id === 'list1') playlists[id].sort();
+/* UI GENERATION */
+for (let id in playlists) {
+    if (id === 'list1') playlists[id].sort();
+    let listElem = document.getElementById(id);
+    if (!listElem) continue;
 
-let listElem = document.getElementById(id);
+    playlists[id].forEach((song, idx) => {
+        let fileName = song.replace(".mp3", "");
+        let displayName = fileName;
 
-playlists[id].forEach((song, idx)=>{
-    let fileName = song.replace(".mp3","");
-    let displayName = fileName;
+        // Add parentheses back for display only
+        if (fileName === "Bomb") displayName = "Bomb (Endhu 1cm)";
+        if (fileName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+        if (fileName === "Flute anthem") displayName = "Flute Anthem (LOT-III)";
+        if (fileName === "LOT-III teaser concert") displayName = "LOT-III Teaser Concert (LOT-III)";
+        if (fileName === "Item number 1") displayName = "Item Number 1 (LOT-III)";
+        if (fileName === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
 
-    // Mapping filenames to Pretty Display Names
-    if(fileName === "Bomb3") displayName = "Bomb (Endhu 1cm)";
-    if(fileName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
-    if(fileName === "Flute anthem") displayName = "Flute Anthem (LOT-III)";
-    if(fileName === "LOT-III teaser concert") displayName = "LOT-III Teaser Concert (LOT-III)";
-    if(fileName === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
-    if(fileName === "Item number 1") displayName = "Item Number 1 (LOT-III)";
-    
-    // For others that already have (LOT-III) in filename, it will display naturally.
+        let artist = getArtist(displayName);
+        let div = document.createElement("div");
+        div.className = "track";
 
-// 🆕 Increment view will now work for ALL songs played
-incrementView(displayName);
-let artist = getArtist(displayName) || getArtist(clean);
+        div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
 
-let div = document.createElement("div");
-div.className="track";
+        // REMOVED RESTRICTIONS - Everything is now playable
+        div.onclick = (e) => {
+            e.stopPropagation();
+            playSong(id, idx);
+        };
 
-// 🆕 Check if the track is one of the new, playable releases
-if (id === 'list1' && (displayName === "Flute anthem(LOT-III)" || displayName === "LOT-III teaser concert(LOT-III)")) {
-    div.classList.add("playable-new");
-}
-
-div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
-
-div.onclick = (e) => { 
-    e.stopPropagation(); 
-    playSong(id, idx); // Removed the alert restriction entirely
-};
-
-if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)"&& 
-                      displayName !== "LOT-III teaser concert(LOT-III)")) {
-alert("Dropping soon! 🚀");
-}
-else {
-playSong(id, idx); 
-}
-};
-
-listElem.appendChild(div);
-});
+        listElem.appendChild(div);
+    });
 }
 
 // 🆕 Initial render of trending songs fetches data from the single document
@@ -1271,6 +1251,7 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
 
 
 
