@@ -1007,12 +1007,41 @@ function applySongTheme(color){
 }
 
 function showPopup(songName, artist, list){
-    document.getElementById("popup").style.display = "block";
+    let popup = document.getElementById("popup");
+    popup.style.display = "block";
     document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
+
     let img = document.getElementById("popupImg");
-    if(list === "list1" || list === "list4") img.src = "Poster.jpg";
-    else if(list === "list2") img.src = "Poster2.jpeg";
-    else img.src = songName.includes("Bomb") ? "poster4.png" : "Poster3.jpeg";
+    img.style.display="block";
+
+    // Logic to select the correct poster based on filename or list
+    if(list === "list1" || list === "list4") {
+        img.src = "Poster.jpg";
+    }
+    else if(list === "list2") {
+        img.src = "Poster2.jpeg";
+    }
+    else if(list === "list3") {
+        // We use toLowerCase() to prevent naming errors (e.g., "bomb" vs "Bomb")
+        let lowerName = songName.toLowerCase();
+        if(lowerName.includes("bomb") || lowerName.includes("sanjai")) {
+            img.src = "poster4.png"; 
+        } 
+        else if (lowerName.includes("harishankar")) {
+            img.src = "Poster3.jpeg"; 
+        }
+        else if (lowerName.includes("birthday") || lowerName.includes("megharajan")) {
+            img.src = "poster3.png"; 
+        }
+        else {
+            img.src = "Poster3.jpeg";
+        }
+    }
+    else {
+        img.src = "Poster.jpg";
+    }
+
+    toggleWave();
 }
 
 function formatTime(s) {
@@ -1023,4 +1052,5 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
