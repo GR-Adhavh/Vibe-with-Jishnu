@@ -515,7 +515,7 @@ margin-top: 3px;
 </style>
 </head>
 <body class="">
-    
+    
 
 <div id="bass-bg"></div>
 
@@ -525,73 +525,73 @@ margin-top: 3px;
 </header>
 
 <div class="trailer-banner">
-    <img src="tp.jpg" alt="LOT-III Trailer">
-    <div class="banner-caption">
-        <span>LOT-III Trailer out now!!</span>
-    </div>
+    <img src="tp.jpg" alt="LOT-III Trailer">
+    <div class="banner-caption">
+        <span>LOT-III Trailer out now!!</span>
+    </div>
 </div>
-    
+    
 <a href="https://drive.google.com/file/d/1sl3XzH4e5rl8wIvRxTHvxDzpU0vTlZPv/view?usp=drivesdk" target="_blank" class="trailer-link-box">
 
-    <div class="trailer-text"><span>▶</span> LOT-III OFFICIAL TRAILER</div>
+    <div class="trailer-text"><span>▶</span> LOT-III OFFICIAL TRAILER</div>
 
 </a>
 <div id="countdown-container">
-    <div class="countdown-title">LOT-III Release In</div>
-    <div id="countdown">00:00:00:00</div>
-    <div class="label-container">
-        <span>Days</span>
-        <span>Hrs</span>
-        <span>Min</span>
-        <span>Sec</span>
-    </div>
+    <div class="countdown-title">LOT-III Release In</div>
+    <div id="countdown">00:00:00:00</div>
+    <div class="label-container">
+        <span>Days</span>
+        <span>Hrs</span>
+        <span>Min</span>
+        <span>Sec</span>
+    </div>
 </div>
 
 
 <div class="playlistContainer new-release">
-    <div class="playlistHeader" onclick="toggleList('list1')">
-        <span class="new-badge">NEW!!</span>
-        <img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-        <div>
-            <div class="playlistTitle">LOT-III OST</div>
-            <div style="font-size:12px; opacity:0.6">Original Sound Track</div>
-        </div>
-    </div>
-    <div id="list1" class="songList"></div>
+    <div class="playlistHeader" onclick="toggleList('list1')">
+        <span class="new-badge">NEW!!</span>
+        <img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">LOT-III OST</div>
+            <div style="font-size:12px; opacity:0.6">Original Sound Track</div>
+        </div>
+    </div>
+    <div id="list1" class="songList"></div>
 </div>
 
 <div class="playlistContainer new-release">
-    <div class="playlistHeader" onclick="toggleList('list4')">
-        <span class="new-badge">NEW!!</span>
-        <img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-        <div>
-            <div class="playlistTitle">LOT-III Singles</div>
-            <div style="font-size:12px; opacity:0.6">Latest Releases</div>
-        </div>
-    </div>
-    <div id="list4" class="songList"></div>
+    <div class="playlistHeader" onclick="toggleList('list4')">
+	<span class="new-badge">NEW!!</span>
+        <img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">LOT-III Singles</div>
+            <div style="font-size:12px; opacity:0.6">Latest Releases</div>
+        </div>
+    </div>
+    <div id="list4" class="songList"></div>
 </div>
 
 <div class="playlistContainer">
-    <div class="playlistHeader" onclick="toggleList('list2')">
-        <img src="Poster2.jpeg" alt="50 Shades" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-        <div>
-            <div class="playlistTitle">50 Shades of Jishnu Anthem</div>
-            <div style="font-size:12px; opacity:0.6">Song of the century</div>
-        </div>
-    </div>
-    <div id="list2" class="songList"></div>
+    <div class="playlistHeader" onclick="toggleList('list2')">
+        <img src="Poster2.jpeg" alt="50 Shades" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">50 Shades of Jishnu Anthem</div>
+            <div style="font-size:12px; opacity:0.6">Song of the century</div>
+        </div>
+    </div>
+    <div id="list2" class="songList"></div>
 </div>
 
 <div class="playlistContainer">
-    <div class="playlistHeader" onclick="toggleList('list3')">
-        <img src="Poster3.jpeg" alt="Hits" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
-        <div>
-            <div class="playlistTitle">Blockbuster Hits</div>
-            <div style="font-size:12px; opacity:0.6">Fan Favorites</div>
-        </div>
-    </div>
-    <div id="list3" class="songList"></div>
+    <div class="playlistHeader" onclick="toggleList('list3')">
+        <img src="Poster3.jpeg" alt="Hits" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
+        <div>
+            <div class="playlistTitle">Blockbuster Hits</div>
+            <div style="font-size:12px; opacity:0.6">Fan Favorites</div>
+        </div>
+    </div>
+    <div id="list3" class="songList"></div>
 </div>
 
 <div class="trendingSection">
@@ -630,361 +630,628 @@ margin-top: 3px;
 <audio id="audio"></audio>
 
 <script type="module">
-    // --- FIREBASE INITIALIZATION (Fixed Duplicate Imports) ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
-        authDomain: "weapon-fanpage.firebaseapp.com",
-        projectId: "weapon-fanpage",
-        storageBucket: "weapon-fanpage.firebasestorage.app",
-        messagingSenderId: "124549409527",
-        appId: "1:124549409527:web:85657a1d41c8950f7601f2"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // Share Firebase functions globally for the standard script below
-    window.db = db;
-    window.doc = doc;
-    window.updateDoc = updateDoc;
-    window.getDoc = getDoc;
-
-    // --- COUNTDOWN LOGIC ---
     function updateCountdown() {
-        const now = new Date();
-        const targetDate = new Date(`Jan 21, 2026 00:00:00`).getTime();
-        const expiryDate = new Date(`Jan 22, 2026 00:00:00`).getTime();
-        const currentTime = now.getTime();
-        const distance = targetDate - currentTime;
-        const container = document.getElementById("countdown-container");
 
-        if (currentTime >= expiryDate) {
-            if(container) container.style.display = "none";
-            return; 
-        }
+    const now = new Date();
 
-        if (distance <= 0) {
-            const cd = document.getElementById("countdown");
-            if(cd) {
-                cd.innerHTML = "Happy Birthday Jishnu";
-                cd.style.fontSize = "1.8rem";
-            }
-            const label = document.querySelector(".label-container");
-            if(label) label.style.display = "none";
-            return;
-        }
+    const currentYear = now.getFullYear();
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        const format = (num) => num.toString().padStart(2, '0');
+    
 
-        const cdBox = document.getElementById("countdown");
-        if(cdBox) cdBox.innerHTML = `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    // Set Target: Jan 21st of this year
+
+    const targetDate = new Date(`Jan 21, 2026 00:00:00`).getTime();
+const expiryDate = new Date(`Jan 22, 2026 00:00:00`).getTime();
+
+    
+
+    const currentTime = now.getTime();
+
+    const distance = targetDate - currentTime;
+
+    const container = document.getElementById("countdown-container");
+
+
+
+    // STAGE 3: If it's Jan 22nd or later, remove the section entirely
+
+    if (currentTime >= expiryDate) {
+
+        container.style.display = "none";
+
+        return; 
+
     }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+
+
+    // STAGE 2: If it's Jan 21st (Distance is 0 or negative, but not expired)
+
+    if (distance <= 0) {
+
+        document.getElementById("countdown").innerHTML = "Happy Birthday Jishnu";
+
+        document.getElementById("countdown").style.fontSize = "1.8rem"; // Adjusting size for long text
+
+        document.querySelector(".label-container").style.display = "none"; // Hide Days/Hrs labels
+
+        document.querySelector(".countdown-title").innerHTML = "Celebration Time!";
+
+        return;
+
+    }
+
+
+
+    // STAGE 1: The Countdown
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+
+
+    const format = (num) => num.toString().padStart(2, '0');
+
+
+
+    document.getElementById("countdown").innerHTML = 
+
+        `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+
+}
+
+
+
+// Update every 1 second
+
+const interval = setInterval(updateCountdown, 1000);
+
+updateCountdown();
+
+    
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+// Firestore Imports
+import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
+authDomain: "weapon-fanpage.firebaseapp.com",
+projectId: "weapon-fanpage",
+storageBucket: "weapon-fanpage.firebasestorage.app",
+messagingSenderId: "124549409527",
+appId: "1:124549409527:web:85657a1d41c8950f7601f2",
+measurementId: "G-MXBR3C8ET7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+// Initialize Firestore
+const db = getFirestore(app);
+
+// Make the database instance and functions available globally for the main script
+window.db = db;
+window.doc = doc;
+window.updateDoc = updateDoc;
+window.getDoc = getDoc;
+
+console.log("Firebase Initialized:", app.name);
 </script>
 
 <script>
-/* 1. DEFINE DATA FIRST */
+/* DATA - UPDATED */
 const artists = {
-    "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
-    "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
-    "Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
-    "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
-    "The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Flute anthem(LOT-III)": "G.R.Adhavh",
-    "Item number 1(LOT-III)": "G.R.Adhavh",
-    "Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
-    "Anugundu Abhishek(LOT-III)": "G.R.Adhavh",
-    "DSK on the move(LOT-III)": "G.R.Adhavh",
-    "Hyper Harishankar(LOT-III)": "G.R.Adhavh",
-    "Jishnu Anthem Reprise(LOT-III)": "G.R.Adhavh",
-    "The fight(LOT-III)": "G.R.Adhavh",
-    "King in the universe(LOT-III)": "G.R.Adhavh",
-    "King vs Harold(LOT-III)": "G.R.Adhavh",
-    "LOT-III teaser concert(LOT-III)": "G.R.Adhavh",
-    "LOT-III Theme(LOT-III)": "G.R.Adhavh",
-    "Vadakku Sadhuram il Jishnu(LOT-III)": "G.R.Adhavh",
-    "default": "G.R.Adhavh"
+"Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
+"Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
+"Sivagasi's Daaha(LOT-III)": "G.R.Adhavh, Shreyas",
+"Sivagasi's Dahaa x Saavachuruven unna(LOT-III)": "G.R.Adhavh, Shreyas, Jishnu",
+"The namechange(LOT-III)": "Kavinraaj, G.R.Adhavh",
+"Flute anthem(LOT-III)": "G.R.Adhavh",
+"Item number 1(LOT-III)": "G.R.Adhavh",
+"Saavadi Saravedi(LOT-III)": "Kavinraaj, G.R.Adhavh",
+"Jishnu Anthem": "G.R.Adhavh",
+"Jishnu Anthem Thalapathy Vijay Vocal": "G.R.Adhavh",
+"Jishnu Anthem slowed and reverbed": "G.R.Adhavh",
+"Jishnu Anthem Karoke": "G.R.Adhavh",
+"Harishankar ku irukka?": "Kavinraaj, G.R.Adhavh",
+"Happy Birthday Megharajan": "G.R.Adhavh",
+"Bomb (Endhu 1cm)": "Kavinraaj, Kaliyappan, G.R.Adhavh",
+"Sanjai's room (Endhu 1cm)": "Shreyas, G.R.Adhavh",
+"default": "G.R.Adhavh"
 };
 
 const songAnimations = {
-    "Intermission(LOT-III)": "#ff4d6d",
-    "Saavachuruven unna(LOT-III)": "#4dd6ff",
-    "Sivagasi's Daaha(LOT-III)": "#ffa600",
-    "The namechange(LOT-III)": "#bb6bff",
-    "Flute anthem(LOT-III)": "#00ffbf",
-    "Item number 1(LOT-III)": "#ffd700",      
-    "Saavadi Saravedi(LOT-III)": "#ff4500", 
-    "Jishnu Anthem": "#00ff88",
-    "default": "#6a5bff"
+"Intermission(LOT-III)": "#ff4d6d",
+"Saavachuruven unna(LOT-III)": "#4dd6ff",
+"Sivagasi's Daaha(LOT-III)": "#ffa600",
+"The namechange(LOT-III)": "#bb6bff",
+"Flute anthem(LOT-III)": "#00ffbf",
+"Item number 1(LOT-III)": "#ffd700",      
+"Saavadi Saravedi(LOT-III)": "#ff4500", 
+"Jishnu Anthem": "#00ff88",
+"Jishnu Anthem Thalapathy Vijay Vocal": "#ccff00",
+"Jishnu Anthem slowed and reverbed": "#00ccff",
+"Jishnu Anthem Karoke": "#ffffff",
+"Harishankar ku irukka?": "#ff0055",
+"Happy Birthday Megharajan": "#a600ff",
+"Bomb (Endhu 1cm)": "#ff3300",          
+"Sanjai's room (Endhu 1cm)": "#ff00cc",
+"default": "#6a5bff"
 };
 
 const playlists = {
-    list1: [
-        "Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3",
-        "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3",
-        "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3",
-        "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3",
-        "Sivagasis Daaha x Saavachuruven unna.mp3",
-        "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3"
-    ],
-    list4: [ "Item number 1.mp3", "Saavadi Saravedi.mp3" ],
-    list2: [ "Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3" ],
-    list3: [ "Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3" ]
+list1: [
+"Anugundu Abhishek(LOT-III).mp3", "DSK on the move(LOT-III).mp3", "Hyper Harishankar(LOT-III).mp3",
+"Intermission(LOT-III).mp3", "Jishnu Anthem Reprise(LOT-III).mp3", "The fight(LOT-III).mp3",
+"King in the universe(LOT-III).mp3", "King vs Harold(LOT-III).mp3", "LOT-III teaser concert.mp3",
+"LOT-III Theme(LOT-III).mp3", "Saavachuruven unna(LOT-III).mp3", "Sivagasi's Daaha(LOT-III).mp3",
+"Sivagasi's Dahaa x Saavachuruven unna(LOT-III).mp3",
+"The namechange(LOT-III).mp3", "Vadakku Sadhuram il Jishnu(LOT-III).mp3", "Flute anthem.mp3"
+],
+list4: [
+"Item number 1(LOT-III).mp3", "Saavadi Saravedi(LOT-III).mp3"
+],
+list2: [
+"Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", // <-- FIX APPLIED HERE
+"Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"
+],
+list3: [
+"Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3",
+"Bomb.mp3", "Sanjai.mp3" 
+]
 };
 
-/* 2. DEFINE UTILITIES */
-let currentList = "list1";
-let currentIndex = 0;
-
+// Helper function to map Display Name (from 'artists' object) to a simplified DB key
 function simplifyDisplayName(displayName) {
-    return displayName.replace(/[()]/g, '').replace(/[^a-zA-Z0-9]/g, '');
+// This must match the field names you created in the 'all_song_data' map!
+if (displayName === "Anugundu Abhishek(LOT-III)") return "AnugunduAbhishek";
+if (displayName === "DSK on the move(LOT-III)") return "DSKOnTheMove";
+if (displayName === "Hyper Harishankar(LOT-III)") return "HyperHarishankar";
+if (displayName === "Intermission(LOT-III)") return "IntermissionLOTIII";
+if (displayName === "Jishnu Anthem Reprise(LOT-III)") return "JishnuAnthemReprise";
+if (displayName === "The fight(LOT-III)") return "TheFightLOTIII";
+if (displayName === "King in the universe(LOT-III)") return "KingInTheUniverse";
+if (displayName === "King vs Harold(LOT-III)") return "KingVsHarold";
+if (displayName === "LOT-III teaser concert(LOT-III)") return "LOTIIITeaserConcert";
+if (displayName === "LOT-III Theme(LOT-III)") return "LOTIIITheme";
+if (displayName === "Saavachuruven unna(LOT-III)") return "SaavachuruvenUnna";
+if (displayName === "Sivagasi's Daaha(LOT-III)") return "SivagasisDaaha";
+if (displayName === "The namechange(LOT-III)") return "TheNamechange";
+if (displayName === "Vadakku Sadhuram il Jishnu(LOT-III)") return "VadakkuSadhuramIlJishnu";
+if (displayName === "Flute anthem(LOT-III)") return "FluteAnthemLOTIII";
+if (displayName === "Item number 1(LOT-III)") return "ItemNumber1";
+if (displayName === "Saavadi Saravedi(LOT-III)") return "SaavadiSaravedi";
+if (displayName === "Jishnu Anthem") return "JishnuAnthem";
+if (displayName === "Jishnu Anthem Thalapathy Vijay Vocal") return "JishnuAnthemThalapathyVijayVocal";
+if (displayName === "Jishnu Anthem slowed and reverbed") return "JishnuAnthemSlowedReverbed";
+if (displayName === "Jishnu Anthem Karoke") return "JishnuAnthemKaroke";
+if (displayName === "Harishankar ku irukka?") return "HarishankarKuIrukka";
+if (displayName === "Happy Birthday Megharajan") return "HappyBirthdayMegharajan";
+if (displayName === "Bomb (Endhu 1cm)") return "BombEndhu1cm";
+if (displayName === "Sanjai's room (Endhu 1cm)") return "SanjaisRoomEndhu1cm";
+
+return displayName.replace(/[^a-zA-Z0-9]/g, '');
 }
+
+// 🆕 This generates the full list of all songs for the trending renderer to use
+const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
+// Find the associated cover image based on the playlist logic used in showPopup
+let cover = "Poster.jpg"; // Default
+if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
+if (displayName.includes("Bomb (Endhu 1cm)") || displayName.includes("Sanjai's room")) cover = "poster4.png";
+if (displayName.includes("Harishankar ku irukka")) cover = "Poster3.jpeg";
+if (displayName.includes("Happy Birthday")) cover = "poster3.png";
+
+return { 
+name: displayName,
+dbName: simplifyDisplayName(displayName),
+cover: cover
+};
+});
+
+
+/* UTILS */
+function getArtist(song) { return artists[song.replace(".mp3","")] || artists["default"]; }
+function getColor(song) { return songAnimations[song.replace(".mp3","")] || songAnimations["default"]; }
 
 function formatViews(num) {
-    if (num === undefined) return "0 views";
-    if (num >= 1000) return (num / 1000).toFixed(1) + 'K views';
-    return num + ' views';
+if (num === undefined) return "N/A views";
+if (num >= 1000) {
+return (num / 1000).toFixed(1) + 'K views';
+}
+return num + ' views';
 }
 
-/* 3. DEFINE PLAYER FUNCTIONS */
-function applySongTheme(color){
-    // This pushes the color to the CSS --song-color variable used by #bass-bg
-    document.documentElement.style.setProperty('--song-color', color);
-    
-    // This creates the soft violet radial glow in the background center
-    document.body.style.background = `radial-gradient(circle at center, ${color}33 0%, #0a0f2e 100%)`;
-    
-    // Updates the player's top border to match the song's "vibe"
-    const player = document.querySelector(".player");
-    if(player) player.style.borderColor = color;
-}
-
-function showPopup(name, artist, list) {
-    document.getElementById("popup").style.display = "block";
-    document.getElementById("popupSongName").innerHTML = `<span>${name} — ${artist}</span>`;
-    let img = document.getElementById("popupImg");
-    if (list === 'list1' || list === 'list4') img.src = "Poster.jpg";
-    else if (list === 'list2') img.src = "Poster2.jpeg";
-    else {
-        if (name.includes("Bomb") || name.includes("Sanjai")) img.src = "poster4.png";
-        else if (name.includes("Harishankar")) img.src = "Poster3.jpeg";
-        else if (name.includes("Happy Birthday")) img.src = "poster3.png";
-        else img.src = "Poster3.jpeg";
-    }
-}
-
-function playSong(list, index) {
-    currentList = list;
-    currentIndex = index;
-    const fileName = playlists[list][index];
-    const audio = document.getElementById("audio");
-    audio.src = fileName;
-    audio.play();
-
-    let clean = fileName.replace(".mp3", "");
-    let displayName = clean;
-    if (list === 'list1' || list === 'list4') {
-        if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-        else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
-        else displayName = clean + "(LOT-III)";
-    }
-
-    document.getElementById("playPauseIcon").innerText = "⏸";
-    document.getElementById("seekContainer").style.display = "flex";
-    document.body.classList.add("pulsing");
-    
-    incrementView(displayName);
-    showPopup(displayName, artists[displayName] || "G.R.Adhavh", list);
-    applySongTheme(songAnimations[displayName] || "#6a5bff");
-}
-
-/* 4. TRENDING LOGIC (Using defined data and functions) */
-const allSongsForTrending = Object.keys(artists).filter(key => key !== 'default').map(displayName => {
-    let cover = "Poster.jpg";
-    if (displayName.includes("Jishnu Anthem")) cover = "Poster2.jpeg";
-    if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
-    if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
-    if (displayName.includes("Happy Birthday")) cover = "poster3.png";
-    return { name: displayName, dbName: simplifyDisplayName(displayName), cover: cover };
-});
-
+/**
+// removed invalid comment
+// removed invalid comment
+// removed invalid comment
+*/
 function renderTrendingUI(viewsMap) {
-    const listElem = document.getElementById("trendingList");
-    if (!listElem) return;
-    listElem.innerHTML = ''; 
-    
-    const sortedTrending = allSongsForTrending.slice().sort((a, b) => (viewsMap[b.dbName] || 0) - (viewsMap[a.dbName] || 0));
-    
-    sortedTrending.slice(0, 3).forEach((song, idx) => {
-        const item = document.createElement("li");
-        item.className = "trendingItem";
-        
-        // This ensures the image used in the Trending UI matches the song
-        let coverImg = "Poster.jpg"; // Default
-        if (song.name.includes("Anthem")) coverImg = "Poster2.jpeg";
-        if (song.name.includes("Harishankar") || song.name.includes("Megharajan")) coverImg = "Poster3.jpeg";
-        if (song.name.includes("Bomb") || song.name.includes("Sanjai")) coverImg = "poster4.png";
+const listElem = document.getElementById("trendingList");
+listElem.innerHTML = ''; 
 
-        item.innerHTML = `
-            <div class="trendingRank">#${idx + 1}</div>
-            <img class="trendingCover" src="${coverImg}" alt="${song.name}" onerror="this.src='https://via.placeholder.com/150/6a5bff/fff?text=Music'">
-            <div class="trendingInfo">
-                <div class="trendingTitle">${song.name}</div>
-                <div class="trendingViews">${artists[song.name] || "G.R.Adhavh"} • ${formatViews(viewsMap[song.dbName])}</div>
-            </div>
-        `;
-        
-        // Find playlist ID to allow playing from trending click
-        let playlistId = null, playlistIndex = -1;
-        for (const lid in playlists) {
-            playlistIndex = playlists[lid].findIndex(f => {
-                let c = f.replace(".mp3", "");
-                if (lid === 'list1' || lid === 'list4') c += "(LOT-III)";
-                return c === song.name;
-            });
-            if (playlistIndex !== -1) { playlistId = lid; break; }
-        }
-        
-        item.onclick = () => { if (playlistId) playSong(playlistId, playlistIndex); };
-        listElem.appendChild(item);
-    });
+// 1. Sort the full list of ALL songs based on views from the fetched map
+const sortedTrending = allSongsForTrending.slice().sort((a, b) => {
+const viewsA = viewsMap[a.dbName] || 0;
+const viewsB = viewsMap[b.dbName] || 0;
+return viewsB - viewsA;
+});
+
+// 2. Limit the list to the top 3 songs
+const top3Trending = sortedTrending.slice(0, 3);
+
+
+// 3. Render UI using the top 3 list
+top3Trending.forEach((song, idx) => {
+const item = document.createElement("li");
+item.className = "trendingItem";
+
+// Find the correct playlist index for playback 
+let playlistIndex = -1;
+let playlistId = null;
+
+// Determine which playlist the song belongs to for the onclick handler
+for (const listId in playlists) {
+playlistIndex = playlists[listId].findIndex(file => {
+let fileName = file.replace(".mp3", "");
+let songNameFromDB = song.name;
+
+if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
+
+if (songNameFromDB === "Harishankar ku irukka?") return fileName === "Harishankar ku irukka";
+if (songNameFromDB === "LOT-III teaser concert(LOT-III)") return fileName === "LOT-III teaser concert";
+if (songNameFromDB === "Sanjai's room (Endhu 1cm)") return fileName === "Sanjai";
+if (songNameFromDB === "Flute anthem(LOT-III)") return fileName === "Flute anthem";
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu Anthem Thalapathy Vijay vocal";
+                
+                // CRITICAL CHECK for the Thalapathy song's actual file name
+                if (songNameFromDB === "Jishnu Anthem Thalapathy Vijay Vocal") return fileName === "Jishnu anthem Thalapathy Vijay vocal";
+
+return fileName === songNameFromDB;
+});
+if (playlistIndex !== -1) {
+playlistId = listId;
+break;
+}
 }
 
-/* 5. REST OF THE UI & FIREBASE CODE */
-function toggleList(id) {
-    const el = document.getElementById(id);
-    const isVisible = el.style.display === "block";
-    document.querySelectorAll('.songList').forEach(l => l.style.display = "none");
-    el.style.display = isVisible ? "none" : "block";
+const artist = getArtist(song.name);
+const currentViews = viewsMap[song.dbName] || 0;
+
+item.innerHTML = `
+           <div class="trendingRank">#${idx + 1}</div>
+           <img class="trendingCover" src="${song.cover}" alt="${song.name}">
+           <div class="trendingInfo">
+               <div class="trendingTitle">${song.name}</div>
+               <div class="trendingViews" id="views-${song.dbName}">${artist} • ${formatViews(currentViews)}</div>
+           </div>
+       `;
+
+item.onclick = (e) => {
+e.stopPropagation();
+if (playlistId) {
+// Check for "Dropping Soon" restrictions before playing
+const isRestricted = (playlistId === 'list4') || 
+                     (playlistId === 'list1' && 
+                      song.name !== "Flute anthem(LOT-III)" && 
+                      song.name !== "LOT-III teaser concert(LOT-III)");
+
+if (isRestricted) {
+    alert("Dropping soon! 🚀");
+} else {
+    playSong(playlistId, playlistIndex);
+}
+}
+};
+listElem.appendChild(item);
+});
 }
 
-function setupPlaylists() {
-    for (let id in playlists) {
-        let listElem = document.getElementById(id);
-        if (!listElem) continue;
-        playlists[id].forEach((fileName, idx) => {
-            let clean = fileName.replace(".mp3", "");
-            let displayName = clean;
-            if (id === 'list1' || id === 'list4') {
-                if (clean === "Sivagasis Daaha x Saavachuruven unna") displayName = "Sivagasi's Dahaa x Saavachuruven unna(LOT-III)";
-                else if (clean === "Sivagasi's Daaha") displayName = "Sivagasi's Daaha(LOT-III)";
-                else displayName = clean + "(LOT-III)";
-            }
-            let div = document.createElement("div");
-            div.className = "track";
-            if (id === 'list1' || id === 'list4') div.classList.add("playable-new");
-            div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artists[displayName] || "G.R.Adhavh"}</span></div><span>▶</span>`;
-            div.onclick = () => playSong(id, idx);
-            listElem.appendChild(div);
-        });
-    }
-}
-
-async function incrementView(displayName) {
-    if (!window.db) return;
-    const dbName = simplifyDisplayName(displayName);
-    const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-    try {
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            const viewsMap = data.views_map || {};
-            viewsMap[dbName] = (viewsMap[dbName] || 0) + 1;
-            await window.updateDoc(docRef, { views_map: viewsMap });
-            renderTrendingUI(viewsMap);
-        }
-    } catch (e) { console.error(e); }
-}
-
+/**
+// removed invalid comment
+*/
 async function fetchAndRenderTrending() {
-    if (!window.db) { setTimeout(fetchAndRenderTrending, 100); return; }
-    try {
-        const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
-        const docSnap = await window.getDoc(docRef);
-        if (docSnap.exists()) renderTrendingUI(docSnap.data().views_map || {});
-    } catch (e) { console.error(e); }
+if (!window.db) {
+setTimeout(fetchAndRenderTrending, 100); 
+return;
 }
 
-/* PLAYER CONTROLS & EVENT LISTENERS */
+try {
+// --- READ THE SINGLE DOCUMENT: "all_songs_views" / "all_song_data" ---
+const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
+const docSnap = await window.getDoc(docRef);
 
-function togglePlay() {
-    const audio = document.getElementById("audio");
-    const icon = document.getElementById("playPauseIcon");
-    if (!audio.src) return;
-
-    if (audio.paused) {
-        audio.play();
-        icon.innerText = "⏸";
-        document.body.classList.add("pulsing");
-    } else {
-        audio.pause();
-        icon.innerText = "▶";
-        document.body.classList.remove("pulsing");
-    }
+if (docSnap.exists()) {
+const data = docSnap.data();
+renderTrendingUI(data.views_map || {}); 
+} else {
+console.warn("Views document does not exist. Please ensure the document 'all_song_data' exists in the 'all_songs_views' collection.");
+renderTrendingUI({});
 }
 
-function nextSong() {
-    if (!currentList) return;
-    currentIndex = (currentIndex + 1) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
+} catch (e) {
+console.error("Error fetching trending data:", e);
+}
 }
 
-function prevSong() {
-    if (!currentList) return;
-    currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
+
+/**
+// removed invalid comment
+// removed invalid comment
+*/
+async function incrementView(displayName) {
+if (!window.db || !window.updateDoc || !window.getDoc) {
+return;
 }
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
+// 🆕 Use the new function to map display name to the DB field name
+const dbName = simplifyDisplayName(displayName);
+if (!dbName) return; 
+
+// --- REFERENCE THE SINGLE DOCUMENT: "all_songs_views" / "all_song_data" ---
+const docRef = window.doc(window.db, "all_songs_views", "all_song_data");
+
+try {
+const docSnap = await window.getDoc(docRef);
+if (!docSnap.exists()) {
+console.error("Single views document not found. Cannot increment.");
+return;
 }
 
-/* AUDIO ELEMENT LOGIC */
-const audio = document.getElementById("audio");
-const seekSlider = document.getElementById("seekSlider");
+const data = docSnap.data();
+const viewsMap = data.views_map || {};
 
-// Update progress bar as song plays
-audio.addEventListener('timeupdate', () => {
-    if (audio.duration) {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        seekSlider.value = pct;
-        document.getElementById("currTimeText").innerText = formatTime(audio.currentTime);
-        document.getElementById("durTimeText").innerText = formatTime(audio.duration);
-    }
+// 2. Read the specific view count and increment it locally
+const currentViews = viewsMap[dbName] || 0;
+viewsMap[dbName] = currentViews + 1;
+
+// 3. Write the ENTIRE updated document back to Firestore
+await window.updateDoc(docRef, {
+views_map: viewsMap
 });
 
-// Seek song when slider is moved
-seekSlider.addEventListener('input', () => {
-    if (audio.duration) {
-        audio.currentTime = (seekSlider.value / 100) * audio.duration;
-    }
-});
+// 4. Update the UI
+renderTrendingUI(viewsMap);
 
-// Auto-play next song when current one ends
+} catch (e) {
+console.error(`Error incrementing views for ${displayName}:`, e);
+}
+}
+
+
+/* UI GENERATION (for playlists) */
+for(let id in playlists){
+if(id === 'list1') playlists[id].sort();
+
+let listElem = document.getElementById(id);
+
+playlists[id].forEach((song, idx)=>{
+let clean = song.replace(".mp3","");
+let displayName = clean;
+if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
+if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
+if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
+if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
+if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)"; // ⬅️ **THIS IS THE CRITICAL MISSING LINE**
+
+// 🆕 Increment view will now work for ALL songs played
+incrementView(displayName);
+let artist = getArtist(displayName) || getArtist(clean);
+
+let div = document.createElement("div");
+div.className="track";
+
+// 🆕 Check if the track is one of the new, playable releases
+if (id === 'list1' && (displayName === "Flute anthem(LOT-III)" || displayName === "LOT-III teaser concert(LOT-III)")) {
+    div.classList.add("playable-new");
+}
+
+div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
+
+div.onclick = (e) => { 
+e.stopPropagation(); 
+
+if (id === 'list4' || (id === 'list1' && displayName !== "Flute anthem(LOT-III)"&& 
+                      displayName !== "LOT-III teaser concert(LOT-III)")) {
+alert("Dropping soon! 🚀");
+}
+else {
+playSong(id, idx); 
+}
+};
+
+listElem.appendChild(div);
+});
+}
+
+// 🆕 Initial render of trending songs fetches data from the single document
+fetchAndRenderTrending();
+
+
+function toggleList(id){
+document.querySelectorAll('.songList').forEach(l => { if(l.id!==id) l.style.display="none"; });
+let el = document.getElementById(id);
+el.style.display = (el.style.display === "block") ? "none" : "block";
+}
+
+/* PLAYER LOGIC */
+let currentList = null, currentIndex = 0;
+let audio = document.getElementById("audio");
+let seekSlider = document.getElementById("seekSlider");
+let currTimeText = document.getElementById("currTimeText");
+let durTimeText = document.getElementById("durTimeText");
+
 audio.addEventListener('ended', nextSong);
 
-function formatTime(s) {
-    if(isNaN(s)) return "0:00";
-    let m = Math.floor(s/60), sec = Math.floor(s%60);
-    return m + ":" + (sec < 10 ? "0" + sec : sec);
+audio.addEventListener('timeupdate', () => {
+if(audio.duration){
+let pct = (audio.currentTime / audio.duration) * 100;
+seekSlider.value = pct;
+currTimeText.innerText = formatTime(audio.currentTime);
+durTimeText.innerText = formatTime(audio.duration);
+}
+});
+
+seekSlider.addEventListener('input', () => {
+if(audio.duration){
+let seekTime = (seekSlider.value / 100) * audio.duration;
+audio.currentTime = seekTime;
+}
+});
+
+function playSong(list, index){
+if(!playlists[list] || playlists[list].length === 0) return;
+
+currentList = list;
+currentIndex = index;
+
+let song = playlists[list][index];
+let clean = song.replace(".mp3","");
+
+let displayName = clean;
+if(clean === "Harishankar ku irukka") displayName = "Harishankar ku irukka?";
+if(clean === "Bomb") displayName = "Bomb (Endhu 1cm)";
+if(clean === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
+if(clean === "Flute anthem") displayName = "Flute anthem(LOT-III)";
+if(clean === "Jishnu Anthem Thalapathy Vijay vocal") displayName = "Jishnu Anthem Thalapathy Vijay Vocal";
+if(clean === "LOT-III teaser concert") displayName = "LOT-III teaser concert(LOT-III)";
+
+// 🆕 Increment view will now work for ALL songs played
+incrementView(displayName); 
+
+let artist = getArtist(displayName) || getArtist(clean);
+let color = getColor(displayName) || getColor(clean);
+
+audio.src = song;
+let playPromise = audio.play();
+if (playPromise !== undefined) {
+playPromise.then(_ => startVisuals()).catch(e => { console.error(e); stopVisuals(); });
 }
 
-window.onload = () => {
-    setupPlaylists();
-    fetchAndRenderTrending();
-};
+document.getElementById("seekContainer").style.display = "flex";
+
+showPopup(displayName, artist, list);
+applySongTheme(color);
+animatePlayButton();
+}
+
+function togglePlay(){
+if(!audio.src) return; 
+if(audio.paused){ audio.play().then(()=>startVisuals()); }
+else { audio.pause(); stopVisuals(); }
+animatePlayButton();
+toggleWave();
+}
+
+function prevSong(){
+if(!currentList || playlists[currentList].length === 0) return;
+if(currentList === 'list4' || currentList === 'list1') return; 
+
+currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
+playSong(currentList, currentIndex);
+}
+
+function nextSong(){
+if(!currentList || playlists[currentList].length === 0) return;
+if(currentList === 'list4' || currentList === 'list1') return;
+
+currentIndex = (currentIndex + 1) % playlists[currentList].length;
+playSong(currentList, currentIndex);
+}
+
+/* POPUP CLOSE FUNCTION */
+function closePopup() {
+document.getElementById("popup").style.display = "none";
+audio.pause();
+stopVisuals();
+animatePlayButton();
+toggleWave(); 
+}
+
+/* VISUALS */
+function startVisuals() { document.body.classList.add("pulsing"); }
+function stopVisuals() { document.body.classList.remove("pulsing"); }
+
+function applySongTheme(color){
+document.documentElement.style.setProperty('--song-color', color);
+document.body.style.background = `radial-gradient(circle at center, ${color}22 0%, #0a0f2e 100%)`;
+document.querySelectorAll("#soundwave div").forEach(w => w.style.background = color);
+document.querySelector(".player").style.borderColor = color;
+}
+
+function showPopup(songName, artist, list){
+let popup = document.getElementById("popup");
+popup.style.display = "block";
+document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
+
+let img = document.getElementById("popupImg");
+img.style.display="block";
+
+if(list === "list1" || list === "list4") {
+img.src = "Poster.jpg";
+}
+else if(list === "list2") {
+img.src = "Poster2.jpeg";
+}
+else if(list === "list3") {
+if(songName.includes("Bomb") || songName.includes("Sanjai")) {
+img.src = "poster4.png"; 
+} 
+else if (songName.includes("Harishankar")) {
+img.src = "Poster3.jpeg"; 
+}
+else if (songName.includes("Happy Birthday")) {
+img.src = "poster3.png"; 
+}
+else {
+img.src = "Poster3.jpeg";
+}
+}
+else {
+img.src = "Poster.jpg";
+}
+
+toggleWave();
+}
+
+function animatePlayButton(){
+let icon = document.getElementById("playPauseIcon");
+icon.innerText = audio.paused ? "▶" : "⏸";
+icon.style.marginLeft = audio.paused ? "2px" : "0px";
+}
+
+function toggleWave(){
+let wave = document.getElementById("soundwave");
+if(audio.paused) wave.classList.add("paused");
+else wave.classList.remove("paused");
+}
+
+function formatTime(s) {
+if(isNaN(s)) return "0:00";
+let min = Math.floor(s / 60);
+let sec = Math.floor(s % 60);
+if(sec < 10) sec = "0" + sec;
+return min + ":" + sec;
+}
 </script>
 </body>
 </html>
+
+
+
+
+
 
 
 
