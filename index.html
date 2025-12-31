@@ -940,7 +940,6 @@ for (let id in playlists) {
 
         let div = document.createElement("div");
         div.className = "track";
-        if (id === 'list1' && (fileName.includes("Flute") || fileName.includes("teaser"))) div.classList.add("playable-new");
         div.innerHTML = `<div><strong>${displayName}</strong><br><span>${getArtist(displayName)}</span></div><span>▶</span>`;
         div.onclick = (e) => { e.stopPropagation(); playSongByName(id, songFilename); };
         listElem.appendChild(div);
@@ -1095,6 +1094,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
