@@ -12,506 +12,60 @@
 <meta name="theme-color" content="#0a0f2e"> 
 
 <style>
-    .trailer-link-box {
-
-        display: block;
-
-        width: 90%;
-
-        max-width: 700px;
-
-        margin: 10px auto;
-
-        padding: 15px;
-
-        text-align: center;
-
-        background: linear-gradient(90deg, rgba(106, 91, 255, 0.2), rgba(184, 75, 255, 0.2));
-
-        border: 1px solid #6a5bff;
-
-        border-radius: 12px;
-
-        text-decoration: none;
-
-        transition: all 0.3s ease;
-
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-
-    }
-
-    .trailer-link-box:hover {
-
-        background: linear-gradient(90deg, rgba(106, 91, 255, 0.4), rgba(184, 75, 255, 0.4));
-
-        transform: translateY(-3px);
-
-        box-shadow: 0 0 20px rgba(106, 91, 255, 0.5);
-
-    }
-
-    .trailer-text {
-
-        color: #ffffff;
-
-        font-weight: bold;
-
-        letter-spacing: 2px;
-
-        font-size: 16px;
-
-        text-transform: uppercase;
-
-    }
-
-    .trailer-text span {
-
-        color: #00ffbf; /* Accent color */
-
-        margin-right: 8px;
-
-    }
-
-    
-
-/* ADD THIS NEW BLOCK INSIDE THE <style> TAG */
-
-/* New badge for the playlist container itself */
-.playlistContainer.new-release {
-    border-color: #38ff38 !important; /* Bright green border */
-}
-.playlistContainer.new-release .playlistHeader {
-    position: relative;
-}
-
-/* Style for the "NEW!!" badge */
-.playlistContainer.new-release .new-badge {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background: #38ff38; /* Bright green background */
-    color: #0a0f2e;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    transform: rotate(5deg);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.4);
-}
-
-/* Styling for the playable tracks */
-.track.playable-new strong {
-    color: #00ffbf; /* Flute Anthem's color for emphasis */
-}
-
-/* END OF NEW CSS BLOCK */
-
-  /* ADD THIS NEW BLOCK INSIDE THE <style> TAG */
-
-.trailer-banner {
-    width: 90%;
-    max-width: 700px;
-    margin: 0px auto 10px auto; /* Adds margin below the header and above the playlists */
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    background: #1a0842; /* Fallback background */
-}
-
-.trailer-banner img {
-    width: 100%;
-    height: auto;
-    display: block;
-    filter: brightness(0.7); /* Slightly darken image so text stands out */
-}
-/* --- UPDATED COUNTDOWN BLOCK --- */
-#countdown-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 700px;
-    padding: 30px 10px;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    border: 1px solid rgba(0, 212, 255, 0.3);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-
-.countdown-title {
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: #00d4ff;
-    margin-bottom: 15px;
-    font-weight: bold;
-    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-}
-
-#countdown {
-    font-size: clamp(2rem, 8vw, 3.5rem); /* Responsive sizing */
-    font-weight: 800;
-    font-family: 'Courier New', Courier, monospace;
-    color: #ffffff;
-    letter-spacing: 2px;
-    line-height: 1;
-}
-
-.label-container {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 10px;
-    opacity: 0.6;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-
-/* This helps align the labels under the numbers */
-.label-container span {
-    flex: 1;
-    text-align: center;
-}
-
-.banner-caption {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 20px;
-    background: linear-gradient(to top, rgba(10, 15, 46, 0.9), rgba(10, 15, 46, 0));
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: center;
-    letter-spacing: 1px;
-}
-.banner-caption span {
-    color: #38ff38; /* Uses the "NEW!!" green for the highlight */
-}
-
-/* END OF NEW CSS BLOCK */
-  
-/* PAGE THEME */
+/* CORE LAYOUT */
 body {
-margin: 0;
-background: #0a0f2e;
-color: white;
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-overflow-x: hidden;
-position: relative;
-min-height: 100vh;
+    margin: 0;
+    background: #0a0f2e; /* Deep navy base */
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+    /* This creates the violet glow from the center */
+    background: radial-gradient(circle at center, var(--song-color, #6a5bff)22 0%, #0a0f2e 100%);
 }
 
-/* --- THE BEATING HEART BACKGROUND --- */
+/* THE BEATING HEART PULSE */
 #bass-bg {
-position: fixed;
-top: 50%;
-left: 50%;
-width: 80vw;
-height: 80vw;
-max-height: 80vh;
-max-width: 80vh;
-transform: translate(-50%, -50%);
-background: radial-gradient(circle, var(--song-color, #6a5bff) 0%, rgba(0,0,0,0) 70%);
-opacity: 0;
-z-index: -1;
-pointer-events: none;
-border-radius: 50%;
-transition: background 0.5s ease;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--song-color, #6a5bff) 0%, transparent 70%);
+    opacity: 0;
+    z-index: -1;
+    pointer-events: none;
 }
 
-/* Pulse Animation */
 .pulsing #bass-bg {
-animation: heartbeat 0.6s cubic-bezier(0.1, 0.7, 1.0, 0.1) infinite;
+    animation: heartbeat 0.6s infinite;
 }
 
 @keyframes heartbeat {
-  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.3; } /* Increased from 0.1 */
-  10% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.8; } /* Increased from 0.6 */
-  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 0; }
+    0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.3; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.5; }
+    100% { transform: translate(-50%, -50%) scale(1.4); opacity: 0; }
 }
 
-/* HEADER */
-header {
-display: flex;
-align-items: center;
-gap: 15px;
-padding: 20px;
-background: rgba(30, 0, 70, 0.8);
-backdrop-filter: blur(8px);
-border-bottom: 2px solid #6a5bff;
-position: sticky;
-top: 0;
-z-index: 10;
-}
-header img { height: 50px; }
-header h1 {
-font-size: 28px;
-font-weight: 800;
-background: linear-gradient(90deg, #6a5bff, #b84bff);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-margin: 0;
-letter-spacing: 1px;
-}
-
-/* CONTENT PADDING */
-/* Padded to accommodate the fixed player bar at the bottom */
-/* Update this block in your <style> tag */
-.content { 
-    padding-top: 20px; 
-    padding-bottom: 250px; /* Increased this to push content above the player */
-}
-
-/* PLAYLIST BOX */
-.playlistContainer {
-width: 90%;
-max-width: 700px;
-margin: 20px auto;
-background: rgba(255,255,255,0.03);
-border-radius: 12px;
-border: 1px solid rgba(255, 255, 255, 0.1);
-padding: 15px;
-transition: all 0.3s ease;
-cursor: pointer;
-}
-.playlistContainer:hover {
-background: rgba(255,255,255,0.07);
-border-color: #6a5bff;
-}
-
-.playlistHeader { display: flex; align-items: center; gap: 15px; }
-.playlistHeader img {
-width: 70px; height: 70px; object-fit: cover;
-border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.playlistTitle { font-size: 20px; font-weight: bold; }
-
-/* SONG LIST */
-.songList { display: none; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px; }
-.track {
-display: flex; justify-content: space-between; align-items: center;
-padding: 12px; border-radius: 6px; margin-bottom: 5px;
-cursor: pointer; transition: background 0.2s;
-}
-.track:hover { background: rgba(255,255,255,0.1); }
-.track strong { font-size: 14px; }
-.track span { font-size: 12px; opacity: 0.7; }
-
-/* PLAYER BAR - MODIFIED */
+/* PLAYER BAR FIXED AT BOTTOM */
 .player {
-position: fixed;
-bottom: 0; left: 0; width: 100%;
-background: rgba(10, 5, 30, 0.95);
-backdrop-filter: blur(10px);
-/* Padding adjusted to move content up */
-padding: 10px 0 50px 0; 
-display: flex; flex-direction: column;
-justify-content: center; align-items: center;
-border-top: 2px solid #6a5bff;
-transition: border-color 0.5s ease;
-z-index: 100;
-box-shadow: 0 -10px 30px rgba(0,0,0,0.5);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: rgba(10, 5, 30, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 0 35px;
+    border-top: 2px solid var(--song-color, #6a5bff);
+    z-index: 100;
 }
 
-/* Added a small bar at the bottom for visual effect/spacer */
-.player::after {
-content: "";
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 40px; /* This creates the bar space */
-background: rgba(10, 5, 30, 1);
-z-index: 1;
-}
-
-.controls-row {
-display: flex; justify-content: center; align-items: center; gap: 30px;
-margin-bottom: 10px;
-z-index: 2; /* Bring controls above the bottom bar */
-}
-
-button.control {
-width: 55px; height: 55px; border-radius: 50%; border: none;
-background: linear-gradient(135deg, #6a5bff, #b84bff);
-color: white; font-size: 20px; cursor: pointer;
-transition: transform 0.2s, box-shadow 0.2s;
-display: flex; justify-content: center; align-items: center;
-box-shadow: 0 4px 15px rgba(106, 91, 255, 0.4);
-z-index: 2;
-}
-button.control:active { transform: scale(0.95); }
-button.control:hover { transform: scale(1.1); box-shadow: 0 6px 20px rgba(106, 91, 255, 0.6); }
-
-/* SEEK BAR / SLIDER */
-.seek-container {
-width: 80%;
-max-width: 600px;
-display: none;
-align-items: center;
-gap: 10px;
-font-size: 12px;
-color: rgba(255,255,255,0.7);
-animation: fadeIn 0.5s ease;
-margin-bottom: 10px; /* Adjusted spacing */
-z-index: 2;
-}
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-input[type="range"] {
--webkit-appearance: none;
-width: 100%; height: 4px;
-background: rgba(255,255,255,0.2);
-border-radius: 2px; outline: none; cursor: pointer;
-}
-input[type="range"]::-webkit-slider-thumb {
--webkit-appearance: none; width: 14px; height: 14px;
-background: var(--song-color, #6a5bff);
-border-radius: 50%; cursor: pointer;
-box-shadow: 0 0 10px var(--song-color, #6a5bff);
-transition: transform 0.1s;
-}
-input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
-
-/* POPUP */
-#popup {
-/* Moved up to clear the new player bar padding */
-position: fixed; bottom: 150px; right: 20px; width: 220px;
-background: rgba(15, 10, 40, 0.9);
-padding: 15px; border-radius: 12px;
-border: 1px solid rgba(255,255,255,0.1);
-display: none; z-index: 90;
-backdrop-filter: blur(10px);
-box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-animation: slideUp 0.3s ease-out;
-}
-@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-#popup img { width: 100%; border-radius: 8px; margin-bottom: 10px; }
-
-/* CLOSE BUTTON STYLE */
-#closePopupBtn {
-position: absolute;
-top: 5px;
-right: 8px;
-background: none;
-border: none;
-color: rgba(255, 255, 255, 0.6);
-font-size: 22px;
-font-weight: bold;
-cursor: pointer;
-z-index: 100;
-padding: 0;
-line-height: 1;
-transition: color 0.2s;
-}
-#closePopupBtn:hover {
-color: #ff4d6d;
-}
-
-/* SCROLLING TITLE */
-#popupSongName {
-white-space: nowrap; overflow: hidden; width: 100%;
-font-size: 14px; text-align: center; margin-bottom: 10px;
-color: #fff; font-weight: 600;
-}
-#popupSongName span { display: inline-block; padding-left: 100%; animation: scrollText 8s linear infinite; }
-@keyframes scrollText { 0% { transform: translateX(0%); } 100% { transform: translateX(-100%); } }
-
-/* SOUNDWAVE */
-.soundwave { display: flex; justify-content: center; gap: 4px; height: 15px; align-items: flex-end; }
-.soundwave div { width: 3px; background: #6a5bff; animation: wave 0.8s infinite ease-in-out; }
-.soundwave div:nth-child(2) { animation-delay: 0.1s; }
-.soundwave div:nth-child(3) { animation-delay: 0.2s; }
-.soundwave div:nth-child(4) { animation-delay: 0.3s; }
-.soundwave div:nth-child(5) { animation-delay: 0.4s; }
-@keyframes wave { 0%, 100% { height: 3px; } 50% { height: 15px; } }
-.paused div { animation-play-state: paused; height: 3px; }
-
-/* TRENDING SECTION STYLES - MODIFIED FOR HORIZONTAL SCROLL */
-.trendingSection {
-width: 90%;
-max-width: 700px;
-margin: 40px auto 20px auto;
-padding: 15px 0; /* Adjusted padding for internal spacing */
-border-radius: 12px;
-background: rgba(255,255,255,0.03);
-border: 1px solid rgba(255, 255, 255, 0.1);
-}
-.trendingSection h2 {
-font-size: 24px;
-border-bottom: 2px solid #b84bff;
-padding: 0 15px 5px 15px; /* Added horizontal padding to title */
-margin-top: 0;
-color: #b84bff;
-}
-.trendingList {
-list-style: none;
-padding: 10px 15px;
-margin: 0;
-display: flex; /* Key for horizontal layout */
-overflow-x: auto; /* Enable horizontal scrolling */
-gap: 15px;
-}
-/* Style for horizontal scrollbar (optional, may vary by browser) */
-.trendingList::-webkit-scrollbar { height: 6px; }
-.trendingList::-webkit-scrollbar-thumb { background: rgba(106, 91, 255, 0.4); border-radius: 3px; }
-.trendingList::-webkit-scrollbar-track { background: rgba(0,0,0,0.1); }
-
-.trendingItem {
-/* Set item width for visibility in horizontal scroll */
-flex: 0 0 150px; 
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-padding: 10px;
-border-radius: 8px;
-transition: background 0.2s, transform 0.2s;
-cursor: pointer;
-}
-.trendingItem:hover { 
-background: rgba(255,255,255,0.07); 
-transform: translateY(-2px);
-}
-.trendingRank {
-font-size: 14px;
-font-weight: bold;
-color: #6a5bff;
-margin-bottom: 5px;
-}
-.trendingCover {
-width: 100%;
-height: 150px;
-border-radius: 6px;
-object-fit: cover;
-margin-bottom: 8px;
-box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-}
-.trendingInfo {
-flex-grow: 1;
-width: 100%;
-}
-.trendingTitle {
-font-size: 14px;
-font-weight: bold;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-.trendingViews {
-font-size: 11px;
-opacity: 0.7;
-margin-top: 3px;
-}
-
+/* PLAYLIST & TRENDING STYLES */
+.playlistContainer { width: 90%; max-width: 700px; margin: 15px auto; background: rgba(255,255,255,0.05); border-radius: 12px; padding: 15px; cursor: pointer; border: 1px solid rgba(255,255,255,0.1); }
+.songList { display: none; margin-top: 10px; border-top: 1px solid rgba(255,255,255,0.1); }
+.trendingList { display: flex; overflow-x: auto; gap: 15px; padding: 10px; list-style: none; }
+.trendingItem { flex: 0 0 150px; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; }
+.trendingCover { width: 100%; height: 120px; object-fit: cover; border-radius: 6px; }
 </style>
 </head>
 <body class="">
@@ -985,6 +539,7 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
 
 
 
