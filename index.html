@@ -828,26 +828,29 @@ const playlists = {
 // Map Display Name to simplified DB key for Firebase
 function simplifyDisplayName(displayName) {
     const clean = displayName.replace("(LOT-III)", "").trim();
-    if (clean.includes("Anugundu Abhishek")) return "AnugunduAbhishek";
+if (clean.includes("Anugundu Abhishek")) return "AnugunduAbhishek";
     if (clean.includes("DSK on the move")) return "DSKOnTheMove";
     if (clean.includes("Hyper Harishankar")) return "HyperHarishankar";
     if (clean.includes("Intermission")) return "IntermissionLOTIII";
     if (clean.includes("Jishnu Anthem Reprise")) return "JishnuAnthemReprise";
     if (clean.includes("The fight")) return "TheFightLOTIII";
-    if (clean.includes("King in the universe")) return "KingInTheUniverse";
+    if (clean.includes("King in the universe") || clean.includes("King in the Universe")) return "KingInTheUniverse";
     if (clean.includes("King vs Harold")) return "KingVsHarold";
-    if (clean.includes("LOT-III teaser concert")) return "LOTIIITeaserConcert";
+    if (clean.includes("teaser concert")) return "LOTIIITeaserConcert";
     if (clean.includes("LOT-III Theme")) return "LOTIIITheme";
     if (clean.includes("Saavachuruven unna")) return "SaavachuruvenUnna";
-    if (clean.includes("Sivagasi's Daaha")) return "SivagasisDaaha";
-    if (clean.includes("The namechange")) return "TheNamechange";
+    if (clean.includes("Sivagasi")) return "SivagasisDaaha";
+    if (clean.includes("the namechange") || clean.includes("The namechange")) return "TheNamechange";
     if (clean.includes("Vadakku Sadhuram")) return "VadakkuSadhuramIlJishnu";
     if (clean.includes("Flute anthem")) return "FluteAnthemLOTIII";
-    if (clean.includes("Item number 1")) return "ItemNumber1";
+    if (clean.includes("Item number 1")) return "Itemnumber1"; // Matches your screenshot
     if (clean.includes("Saavadi Saravedi")) return "SaavadiSaravedi";
+    if (clean.includes("Jishnu Anthem Thalapathy")) return "JishnuanthemThalapathyVijayvocal"; // Matches screenshot
+    if (clean.includes("Jishnu Anthem slowed")) return "JishnuAnthemSlowedReverbed";
+    if (clean.includes("Jishnu Anthem Karoke")) return "JishnuAnthemKaroke";
     if (clean.includes("Jishnu Anthem")) return "JishnuAnthem";
     if (clean.includes("Harishankar")) return "HarishankarKuIrukka";
-    if (clean.includes("Happy Birthday")) return "HappyBirthdayMegharajan";
+    if (clean.includes("Megharajan")) return "HappyBirthdayMegharajan";
     if (clean.includes("Bomb")) return "BombEndhu1cm";
     if (clean.includes("Sanjai")) return "SanjaisRoomEndhu1cm";
     return clean.replace(/[^a-zA-Z0-9]/g, '');
@@ -1094,6 +1097,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
