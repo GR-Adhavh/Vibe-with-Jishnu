@@ -923,7 +923,7 @@ function renderTrendingUI(viewsMap) {
 
         item.onclick = (e) => {
             e.stopPropagation();
-            if (playlistId) playSong(playlistId, playlistIndex);
+            if (playlistId) playSongByName(playlistId, playlists[playlistId][playlistIndex]);
         };
         listElem.appendChild(item);
     });
@@ -964,7 +964,6 @@ for (let id in playlists) {
         let fileName = songFilename.replace(".mp3", "");
         let displayName = fileName;
 
-        // DISPLAY FORMATTING (This adds the brackets for the UI)
         if (fileName === "Bomb3") displayName = "Bomb (Endhu 1cm)";
         if (fileName === "Sanjai") displayName = "Sanjai's room (Endhu 1cm)";
         if (fileName === "Flute anthem") displayName = "Flute anthem(LOT-III)";
@@ -976,18 +975,11 @@ for (let id in playlists) {
         let artist = getArtist(displayName);
         let div = document.createElement("div");
         div.className = "track";
-        
         if (id === 'list1' && (fileName === "Flute anthem" || fileName === "LOT-III teaser concert")) {
             div.classList.add("playable-new");
         }
-        
         div.innerHTML = `<div><strong>${displayName}</strong><br><span>${artist}</span></div><span style="font-size:10px;">▶</span>`;
-        
-        // FIX: Pass the exact songFilename string instead of index
-        div.onclick = (e) => { 
-            e.stopPropagation(); 
-            playSongByName(id, songFilename); 
-        };
+        div.onclick = (e) => { e.stopPropagation(); playSongByName(id, songFilename); };
         listElem.appendChild(div);
     });
 }
@@ -1020,7 +1012,6 @@ seekSlider.addEventListener('input', () => {
     if(audio.duration) audio.currentTime = (seekSlider.value / 100) * audio.duration;
 });
 
-// NEW FUNCTION: Plays by filename to prevent sorting errors
 function playSongByName(listId, filename) {
     if (!playlists[listId]) return;
     currentList = listId;
@@ -1029,15 +1020,14 @@ function playSongByName(listId, filename) {
     let fileNameClean = filename.replace(".mp3","");
     let disp = fileNameClean;
     
-    // UI Mapping for the popup
     if (fileNameClean === "Bomb3") disp = "Bomb (Endhu 1cm)";
     if (fileNameClean === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
     if (fileNameClean === "Flute anthem") disp = "Flute anthem(LOT-III)";
     if (fileNameClean === "LOT-III teaser concert") disp = "LOT-III teaser concert(LOT-III)";
 
     incrementView(disp);
-    audio.src = filename; // This is the actual file like "Anugundu Abhishek(LOT-III).mp3"
-    audio.play().then(() => startVisuals()).catch(e => console.log("Play error:", e));
+    audio.src = filename;
+    audio.play().then(() => startVisuals()).catch(e => console.log(e));
     
     document.getElementById("seekContainer").style.display = "flex";
     showPopup(disp, getArtist(disp), listId);
@@ -1045,28 +1035,16 @@ function playSongByName(listId, filename) {
     animatePlayButton();
 }
 
-// Keep original index function for Prev/Next buttons
-function playSong(list, index){
-    if(!playlists[list]) return;
-    playSongByName(list, playlists[list][index]);
-}
-
-function togglePlay(){
-    if(!audio.src) return;
-    audio.paused ? (audio.play(), startVisuals()) : (audio.pause(), stopVisuals());
-    animatePlayButton(); toggleWave();
-}
-
 function prevSong(){
     if(!currentList) return;
     currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
+    playSongByName(currentList, playlists[currentList][currentIndex]);
 }
 
 function nextSong(){
     if(!currentList) return;
     currentIndex = (currentIndex + 1) % playlists[currentList].length;
-    playSong(currentList, currentIndex);
+    playSongByName(currentList, playlists[currentList][currentIndex]);
 }
 
 function closePopup() {
@@ -1119,6 +1097,7 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
 
