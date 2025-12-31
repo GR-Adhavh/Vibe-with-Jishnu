@@ -970,23 +970,66 @@ audio.addEventListener('timeupdate', () => {
 seekSlider.addEventListener('input', () => { audio.currentTime = (seekSlider.value / 100) * audio.duration; });
 
 function playSongByName(listId, filename) {
+    if (!playlists[listId]) return;
     currentList = listId;
     currentIndex = playlists[listId].indexOf(filename);
-    let fileNameClean = filename.replace(".mp3","");
     
-    // Determine the display name for popup and Firebase
+    let fileNameClean = filename.replace(".mp3","");
     let disp = fileNameClean;
-    if (['list1', 'list4'].includes(listId) && !disp.includes("(LOT-III)")) disp += "(LOT-III)";
-    if (fileNameClean === "Bomb3") disp = "Bomb (Endhu 1cm)";
-    if (fileNameClean === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
+    
+    // UI Mapping for the popup and Firebase
+    if (fileNameClean === "Bomb3" || fileNameClean === "Bomb") {
+        disp = "Bomb (Endhu 1cm)";
+    } else if (fileNameClean === "Sanjai") {
+        disp = "Sanjai's room (Endhu 1cm)";
+    } else if (fileNameClean === "Harishankar ku irukka") {
+        disp = "Harishankar ku irukka?";
+    } else if (['list1', 'list4'].includes(listId) && !disp.includes("(LOT-III)")) {
+        disp += "(LOT-III)";
+    }
 
     incrementView(disp);
-    audio.src = filename; // Loads "Anugundu Abhishek.mp3"
-    audio.play().then(() => document.body.classList.add("pulsing")).catch(e => console.log(e));
+    audio.src = filename; // This loads the actual file: "Bomb3.mp3" or "Sanjai.mp3"
+    audio.play().then(() => startVisuals()).catch(e => console.log("Play error:", e));
+    
     document.getElementById("seekContainer").style.display = "flex";
-    showPopup(disp, getArtist(disp), listId);
+    
+    // We pass 'filename' here to help showPopup pick the right photo
+    showPopup(disp, getArtist(disp), listId, filename); 
     applySongTheme(getColor(disp));
-    document.getElementById("playPauseIcon").innerText = "⏸";
+    animatePlayButton();
+}
+
+// Update showPopup to check the filename for the image
+function showPopup(songName, artist, list, actualFilename){
+    let popup = document.getElementById("popup");
+    popup.style.display = "block";
+    document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
+    let img = document.getElementById("popupImg");
+    img.style.display="block";
+    
+    // Normalize filename for checking
+    let fName = actualFilename ? actualFilename.toLowerCase() : "";
+
+    if(list === "list1" || list === "list4") {
+        img.src = "Poster.jpg";
+    }
+    else if(list === "list2") {
+        img.src = "Poster2.jpeg";
+    }
+    else if(list === "list3") {
+        // IMAGE LOGIC BASED ON FILENAME
+        if(fName.includes("bomb") || fName.includes("sanjai")) {
+            img.src = "poster4.png"; 
+        } 
+        else if (fName.includes("harishankar")) {
+            img.src = "Poster3.jpeg"; 
+        }
+        else {
+            img.src = "poster3.png"; // Default for list 3
+        }
+    }
+    toggleWave();
 }
 
 function prevSong(){ currentIndex = (currentIndex - 1 + playlists[currentList].length) % playlists[currentList].length; playSongByName(currentList, playlists[currentList][currentIndex]); }
@@ -1052,5 +1095,6 @@ function formatTime(s) {
 </script>
 </body>
 </html>
+
 
 
