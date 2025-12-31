@@ -630,61 +630,65 @@ margin-top: 3px;
 <audio id="audio"></audio>
 
 <script type="module">
-    // --- FIREBASE INITIALIZATION (Consolidated) ---
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    // --- FIREBASE INITIALIZATION (Fixed Duplicate Imports) ---
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+    import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
-        authDomain: "weapon-fanpage.firebaseapp.com",
-        projectId: "weapon-fanpage",
-        storageBucket: "weapon-fanpage.firebasestorage.app",
-        messagingSenderId: "124549409527",
-        appId: "1:124549409527:web:85657a1d41c8950f7601f2"
-    };
+    const firebaseConfig = {
+        apiKey: "AIzaSyDohsquOam8YQXz7tqrWOG5f4pcXh-CnBM",
+        authDomain: "weapon-fanpage.firebaseapp.com",
+        projectId: "weapon-fanpage",
+        storageBucket: "weapon-fanpage.firebasestorage.app",
+        messagingSenderId: "124549409527",
+        appId: "1:124549409527:web:85657a1d41c8950f7601f2"
+    };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-    // Global access for the functions used in inline HTML onclicks
-    window.db = db;
-    window.doc = doc;
-    window.updateDoc = updateDoc;
-    window.getDoc = getDoc;
+    // Share Firebase functions globally for the standard script below
+    window.db = db;
+    window.doc = doc;
+    window.updateDoc = updateDoc;
+    window.getDoc = getDoc;
 
-    // --- COUNTDOWN LOGIC ---
-    function updateCountdown() {
-        const now = new Date();
-        const targetDate = new Date(`Jan 21, 2026 00:00:00`).getTime();
-        const expiryDate = new Date(`Jan 22, 2026 00:00:00`).getTime();
-        const currentTime = now.getTime();
-        const distance = targetDate - currentTime;
-        const container = document.getElementById("countdown-container");
+    // --- COUNTDOWN LOGIC ---
+    function updateCountdown() {
+        const now = new Date();
+        const targetDate = new Date(`Jan 21, 2026 00:00:00`).getTime();
+        const expiryDate = new Date(`Jan 22, 2026 00:00:00`).getTime();
+        const currentTime = now.getTime();
+        const distance = targetDate - currentTime;
+        const container = document.getElementById("countdown-container");
 
-        if (currentTime >= expiryDate) {
-            if(container) container.style.display = "none";
-            return; 
-        }
+        if (currentTime >= expiryDate) {
+            if(container) container.style.display = "none";
+            return; 
+        }
 
-        if (distance <= 0) {
-            document.getElementById("countdown").innerHTML = "Happy Birthday Jishnu";
-            document.getElementById("countdown").style.fontSize = "1.8rem";
-            document.querySelector(".label-container").style.display = "none";
-            document.querySelector(".countdown-title").innerHTML = "Celebration Time!";
-            return;
-        }
+        if (distance <= 0) {
+            const cd = document.getElementById("countdown");
+            if(cd) {
+                cd.innerHTML = "Happy Birthday Jishnu";
+                cd.style.fontSize = "1.8rem";
+            }
+            const label = document.querySelector(".label-container");
+            if(label) label.style.display = "none";
+            return;
+        }
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-        const format = (num) => num.toString().padStart(2, '0');
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        const format = (num) => num.toString().padStart(2, '0');
 
-        document.getElementById("countdown").innerHTML = `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
-    }
+        const cdBox = document.getElementById("countdown");
+        if(cdBox) cdBox.innerHTML = `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    }
 
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 </script>
 
 <script>
@@ -960,3 +964,4 @@ window.onload = () => {
 </script>
 </body>
 </html>
+
