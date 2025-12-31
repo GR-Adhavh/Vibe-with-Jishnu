@@ -749,7 +749,6 @@ console.log("Firebase Initialized:", app.name);
 
 <script>
 /* DATA - UPDATED */
-/* DATA - UPDATED */
 const artists = {
     "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
     "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
@@ -836,7 +835,7 @@ for (let listId in playlists) {
 }
 
 function getArtist(song) { 
-    let name = song.replace(".mp3","").replace("(LOT-III)","").trim();
+    let name = song.replace(".mp3","").replace("(LOT-III)","").replace("?","").trim();
     return artists[name] || artists["default"]; 
 }
 function getColor(song) { return songAnimations[song] || songAnimations["default"]; }
@@ -940,6 +939,8 @@ function playSongByName(listId, filename) {
     audio.src = filename;
     audio.play().then(() => document.body.classList.add("pulsing")).catch(e => console.log(e));
     document.getElementById("seekContainer").style.display = "flex";
+    
+    // Fixed Popup call
     showPopup(disp, getArtist(disp), listId, filename);
     applySongTheme(getColor(disp));
     document.getElementById("playPauseIcon").innerText = "⏸";
@@ -970,38 +971,49 @@ function applySongTheme(color){
     document.querySelector(".player").style.borderColor = color;
 }
 
-function showPopup(songName, artist, list, actualFilename){
-    document.getElementById("popup").style.display = "block";
+// RESTORED POPUP FUNCTION
+function showPopup(songName, artist, listId, actualFilename){
+    let popup = document.getElementById("popup");
+    popup.style.display = "block";
     document.getElementById("popupSongName").innerHTML = `<span>${songName} — ${artist}</span>`;
+    
     let img = document.getElementById("popupImg");
+    img.style.display = "block";
+    
     let fName = actualFilename ? actualFilename.toLowerCase() : "";
-    if(list === "list1" || list === "list4") img.src = "Poster.jpg";
-    else if(list === "list2") img.src = "Poster2.jpeg";
-    else {
-        if(fName.includes("bomb") || fName.includes("sanjai")) img.src = "poster4.png";
-        else if(fName.includes("harishankar")) img.src = "Poster3.jpeg";
-        else if(fName.includes("birthday") || fName.includes("megharajan")) img.src = "poster3.png";
-        else img.src = "poster3.png";
+
+    // Correct Poster Logic
+    if(listId === "list1" || listId === "list4") {
+        img.src = "Poster.jpg";
     }
+    else if(listId === "list2") {
+        img.src = "Poster2.jpeg";
+    }
+    else if(listId === "list3") {
+        if(fName.includes("bomb") || fName.includes("sanjai")) {
+            img.src = "poster4.png";
+        } else if (fName.includes("harishankar")) {
+            img.src = "Poster3.jpeg";
+        } else if (fName.includes("birthday") || fName.includes("megharajan")) {
+            img.src = "poster3.png";
+        } else {
+            img.src = "Poster3.jpeg";
+        }
+    } else {
+        img.src = "Poster.jpg";
+    }
+
+    if (window.toggleWave) window.toggleWave(); 
 }
 
-window.closePopup = () => { document.getElementById("popup").style.display = "none"; audio.pause(); document.body.classList.remove("pulsing"); };
+window.closePopup = () => { 
+    document.getElementById("popup").style.display = "none"; 
+    audio.pause(); 
+    document.body.classList.remove("pulsing"); 
+};
 
 function formatTime(s) {
     if(isNaN(s)) return "0:00";
     let min = Math.floor(s / 60), sec = Math.floor(s % 60);
     return min + ":" + (sec < 10 ? "0" + sec : sec);
 }
-</script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
