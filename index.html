@@ -836,8 +836,10 @@ for (let listId in playlists) {
 }
 
 function getArtist(song) { 
-    let name = song.replace(".mp3","").replace("(LOT-III)","").replace("?","").trim();
-    return artists[name] || artists["default"]; 
+    // This looks for the exact match (e.g., "Saavadi Saravedi(LOT-III)")
+    // If not found, it tries to trim spaces/question marks
+    let name = song.trim();
+    return artists[name] || artists[name.replace("?", "")] || artists["default"]; 
 }
 function getColor(song) { return songAnimations[song] || songAnimations["default"]; }
 function formatTime(s) {
@@ -1020,5 +1022,6 @@ window.closePopup = () => {
 </script>
 </body>
 </html>
+
 
 
