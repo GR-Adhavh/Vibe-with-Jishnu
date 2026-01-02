@@ -993,7 +993,13 @@ function showPopup(songName, artist, listId, filename){
 
     // POSTER LOGIC
     if(listId === "list1" || listId === "list4") {
+		if(fName.includes("sivagasi's") && fName.includes("unna")) {
+            img.src = "sdxsu.png";
+        } else if (fName.includes("dahaa")) {
+            img.src = "sivagasi.png";
+		} else {
         img.src = "Poster.jpg";
+		}
     }
     else if(listId === "list2") {
         img.src = "Poster2.jpeg";
@@ -1022,6 +1028,7 @@ window.closePopup = () => {
 </script>
 </body>
 </html>
+
 
 
 
