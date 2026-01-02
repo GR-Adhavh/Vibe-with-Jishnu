@@ -991,16 +991,20 @@ function showPopup(songName, artist, listId, filename){
     
     let fName = filename.toLowerCase();
 
-    // POSTER LOGIC
-    if(listId === "list1" || listId === "list4") {
-		if(fName.includes("sivagasi's") && fName.includes("unna")) {
-            img.src = "sdxsu.png";
-        } else if (fName.includes("dahaa")) {
-            img.src = "sivagasi.png";
-		} else {
+    /* --- UPDATED POSTER LOGIC --- */
+if(listId === "list1" || listId === "list4") {
+    // 1. Check for the Mix track first (contains both names)
+    if(fName.includes("sivagasi") && fName.includes("saavachuruven")) {
+        img.src = "sdxsu.png";
+    } 
+    // 2. Check for the solo track
+    else if (fName.includes("sivagasi")) {
+        img.src = "sivagasi.png";
+    } 
+    else {
         img.src = "Poster.jpg";
-		}
     }
+}
     else if(listId === "list2") {
         img.src = "Poster2.jpeg";
     }
@@ -1028,6 +1032,7 @@ window.closePopup = () => {
 </script>
 </body>
 </html>
+
 
 
 
