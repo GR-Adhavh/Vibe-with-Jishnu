@@ -12,7 +12,66 @@
 <meta name="theme-color" content="#0a0f2e"> 
 
 <style>
-/* ADD THIS NEW BLOCK INSIDE THE <style> TAG */
+
+        #countdown-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 90%;
+            max-width: 600px;
+            padding: 40px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        .countdown-title {
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            color: #00d4ff;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+        }
+
+        #countdown {
+            font-size: clamp(2rem, 10vw, 4rem);
+            font-weight: 800;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffffff;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .label-container {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-top: 15px;
+            opacity: 0.6;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: white;
+        }
+
+        .label-container span {
+            flex: 1;
+            text-align: center;
+        }
+
+        /* Birthday state styling */
+        .birthday-glow {
+            color: #38ff38 !important;
+            text-shadow: 0 0 20px rgba(56, 255, 56, 0.6) !important;
+        }
+
+
+/* new css ends here*/
 
 /* New badge for the playlist container itself */
 .playlistContainer.new-release {
@@ -416,6 +475,16 @@ margin-top: 3px;
     </div>
 </div>
 
+    
+<div id="countdown-container">
+    <div class="countdown-title" id="title">LOT-III Release In</div>
+    <div id="countdown">00:00:00:00</div>
+    <div class="label-container" id="labels">
+        <span>Days</span>
+        <span>Hrs</span>
+        <span>Min</span>
+        <span>Sec</span>
+    </div>
 <div class="playlistContainer new-release">
     <div class="playlistHeader" onclick="toggleList('list1')">
         <span class="new-badge">NEW!!</span>
@@ -531,7 +600,54 @@ console.log("Firebase Initialized:", app.name);
 </script>
 
 <script>
-/* DATA - UPDATED */
+    function updateCountdown() {
+        const now = new Date();
+        
+        // TARGET: Jan 21, 2026
+        const targetDate = new Date(`January 21, 2026 00:00:00`).getTime();
+        // EXPIRY: Jan 22, 2026 (When it gets destroyed)
+        const expiryDate = new Date(`January 22, 2026 00:00:00`).getTime();
+        
+        const currentTime = now.getTime();
+        const distance = targetDate - currentTime;
+        
+        const container = document.getElementById("countdown-container");
+        const display = document.getElementById("countdown");
+        const title = document.getElementById("title");
+        const labels = document.getElementById("labels");
+
+        // 1. DESTROY: If it is Jan 22nd or later
+        if (currentTime >= expiryDate) {
+            container.remove(); // Completely removes the element from the DOM
+            return;
+        }
+
+        // 2. CELEBRATE: If it is Jan 21st
+        if (distance <= 0) {
+            title.innerHTML = "Celebration Time!";
+            display.innerHTML = "Happy Birthday Jishnu!!";
+            display.classList.add("birthday-glow");
+            display.style.fontSize = "2.2rem"; 
+            labels.style.display = "none"; // Hide the Days/Min labels
+            return;
+        }
+
+        // 3. COUNTDOWN: Normal countdown logic
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        const format = (num) => num.toString().padStart(2, '0');
+
+        display.innerHTML = `${days}:${format(hours)}:${format(minutes)}:${format(seconds)}`;
+    }
+
+    // Refresh every second
+    setInterval(updateCountdown, 1000);
+    // Run immediately on load
+    updateCountdown();
+/* new script ends here DATA - UPDATED */
 const artists = {
 "Intermission(LOT-III)": "Jishnu, G.R.Adhavh",
 "Saavachuruven unna(LOT-III)": "Jishnu, G.R.Adhavh, Sanjai",
@@ -1030,6 +1146,7 @@ return min + ":" + sec;
 </script>
 </body>
 </html>
+
 
 
 
