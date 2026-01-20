@@ -533,6 +533,7 @@ margin-top: 3px;
 <a href="https://drive.google.com/file/d/1sl3XzH4e5rl8wIvRxTHvxDzpU0vTlZPv/view?usp=drivesdk" target="_blank" class="trailer-link-box">
 
     <div class="trailer-text"><span>▶</span> LOT-III OFFICIAL TRAILER</div>
+</a>
 
 <a href="https://youtu.be/Td1VHqZAfoU" target="_blank" class="trailer-link-box">
 
@@ -602,7 +603,7 @@ margin-top: 3px;
 <ul class="trendingList" id="trendingList">
 </ul>
 </div>
-</div>
+
 
 <div id="popup">
 <button id="closePopupBtn" onclick="closePopup()">×</button>
@@ -908,7 +909,11 @@ window.toggleList = (id) => {
 
 function playSongByName(listId, filename) {
     currentList = listId;
-    currentIndex = playlists[listId].indexOf(filename);
+
+    currentIndex = playlists[listId].findIndex(
+        f => f.trim().toLowerCase() === filename.trim().toLowerCase()
+    );
+
     let fileNameClean = filename.replace(".mp3","");
     let disp = fileNameClean;
 
@@ -917,13 +922,19 @@ function playSongByName(listId, filename) {
     if (fileNameClean === "Sanjai") disp = "Sanjai's room (Endhu 1cm)";
 
     incrementView(disp);
+
+    audio.pause();
+    audio.src = "";
+    audio.load();
+
     audio.src = filename;
-    audio.play().then(() => document.body.classList.add("pulsing")).catch(e => console.log(e));
+    audio.load();
+    audio.play()
+        .then(() => document.body.classList.add("pulsing"))
+        .catch(e => console.log(e));
+
     document.getElementById("seekContainer").style.display = "flex";
-    
-    // CALL POPUP
     showPopup(disp, getArtist(disp), listId, filename);
-    
     applySongTheme(getColor(disp));
     document.getElementById("playPauseIcon").innerText = "⏸";
 }
@@ -1004,6 +1015,7 @@ window.closePopup = () => {
 </script>
 </body>
 </html>
+
 
 
 
