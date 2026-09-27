@@ -639,10 +639,12 @@ margin-top: 3px;
 
         // 1. SELF DESTRUCT LOGIC
         if (currentTime >= expiryDate || testDestroy) {
-            container.remove(); // This deletes the element from the HTML entirely
-            console.log("Countdown destroyed.");
-            return; 
-        }
+    if (container) {
+        container.remove();
+        console.log("Countdown destroyed.");
+    }
+    return; 
+}
 
         // 2. BIRTHDAY / END STATE LOGIC
         if (distance <= 0 || testBirthday) {
@@ -992,7 +994,8 @@ else if(listId === "list3") {
     } else {
         img.src = "Poster3.jpeg";
     }
-}
+}  // closes list3
+}  // closes showPopup()
 
 window.closePopup = () => { 
     document.getElementById("popup").style.display = "none"; 
