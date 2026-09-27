@@ -541,9 +541,8 @@ margin-top: 3px;
 </div>
 
 
-<div class="playlistContainer new-release">
+<div class="playlistContainer">
     <div class="playlistHeader" onclick="toggleList('list1')">
-        <span class="new-badge">NEW!!</span>
         <img src="Poster.jpg" alt="LOT-III" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
         <div>
             <div class="playlistTitle">LOT-III OST</div>
@@ -553,9 +552,8 @@ margin-top: 3px;
     <div id="list1" class="songList"></div>
 </div>
 
-<div class="playlistContainer new-release">
+<div class="playlistContainer">
     <div class="playlistHeader" onclick="toggleList('list4')">
-	<span class="new-badge">NEW!!</span>
         <img src="Poster.jpg" alt="LOT-III Singles" onerror="this.src='https://via.placeholder.com/80/6a5bff/fff?text=Music'">
         <div>
             <div class="playlistTitle">LOT-III Singles</div>
@@ -736,7 +734,7 @@ const playlists = {
     list1: ["Anugundu Abhishek.mp3", "DSK on the move.mp3", "Hyper Harishankar.mp3", "Intermission.mp3", "Jishnu Anthem Reprise.mp3", "The fight.mp3", "King in the Universe.mp3", "King vs Harold.mp3", "LOT-III teaser concert.mp3", "LOT-III Theme.mp3", "Saavachuruven unna.mp3", "Sivagasi's Daaha.mp3", "Sivagasis Daaha x Saavachuruven unna.mp3", "The namechange.mp3", "Vadakku Sadhuram il Jishnu.mp3", "Flute anthem.mp3","Jishnu the flashback.mp3"],
     list4: ["Item number 1.mp3", "Saavadi Saravedi.mp3"],
     list2: ["Jishnu Anthem.mp3", "Jishnu anthem Thalapathy Vijay vocal.mp3", "Jishnu Anthem slowed and reverbed.mp3", "Jishnu Anthem Karoke.mp3"],
-    list3: ["Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3"]
+    list3: ["Harishankar ku irukka.mp3", "Happy Birthday Megharajan.mp3", "Bomb.mp3", "Sanjai.mp3","Kavin Wedding.mp3"]
 };
 
 // --- UNIVERSAL MAPPING FUNCTION ---
@@ -980,19 +978,18 @@ if(listId === "list1" || listId === "list4") {
     else if(listId === "list2") {
         img.src = "Poster2.jpeg";
     }
-    else if(listId === "list3") {
-        // Checking filename for specific list 3 posters
-        if(fName.includes("bomb") || fName.includes("sanjai")) {
-            img.src = "poster4.png";
-        } else if (fName.includes("harishankar")) {
-            img.src = "Poster3.jpeg";
-        } else if (fName.includes("birthday") || fName.includes("megharajan")) {
-            img.src = "poster3.png";
-        } else {
-            img.src = "Poster3.jpeg";
-        }
+else if(listId === "list3") {
+    // Checking filename for specific list 3 posters
+    if(fName.includes("Kavin Wedding")) {
+        img.src = "kgw.png";
+    } else if(fName.includes("bomb") || fName.includes("sanjai")) {
+        img.src = "poster4.png";
+    } else if (fName.includes("harishankar")) {
+        img.src = "Poster3.jpeg";
+    } else if (fName.includes("birthday") || fName.includes("megharajan")) {
+        img.src = "poster3.png";
     } else {
-        img.src = "Poster.jpg";
+        img.src = "Poster3.jpeg";
     }
 }
 
