@@ -637,14 +637,18 @@ margin-top: 3px;
         const distance = targetDate - currentTime;
         const container = document.getElementById("countdown-container");
 
+        // The countdown is already expired. Remove it safely and stop the timer.
+        if (!container) {
+            return;
+        }
+
         // 1. SELF DESTRUCT LOGIC
         if (currentTime >= expiryDate || testDestroy) {
-    if (container) {
-        container.remove();
-        console.log("Countdown destroyed.");
-    }
-    return; 
-}
+            container.remove();
+            console.log("Countdown destroyed.");
+            clearInterval(countdownInterval);
+            return;
+        }
 
         // 2. BIRTHDAY / END STATE LOGIC
         if (distance <= 0 || testBirthday) {
@@ -669,7 +673,7 @@ margin-top: 3px;
     }
 
     // Refresh every second
-    setInterval(updateCountdown, 1000);
+    const countdownInterval = setInterval(updateCountdown, 1000);
     updateCountdown();
 
     
@@ -892,8 +896,12 @@ const audio = document.getElementById("audio");
 const seekSlider = document.getElementById("seekSlider");
 
 window.toggleList = (id) => {
-    document.querySelectorAll('.songList').forEach(l => l.style.display="none");
-    let el = document.getElementById(id);
+    document.querySelectorAll('.songList').forEach(l => l.style.display = "none");
+    const el = document.getElementById(id);
+    if (!el) {
+        console.error("Playlist element not found:", id);
+        return;
+    }
     el.style.display = (el.style.display === "block") ? "none" : "block";
 };
 
@@ -1005,15 +1013,3 @@ window.closePopup = () => {
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
