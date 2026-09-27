@@ -788,6 +788,7 @@ for (let listId in playlists) {
             if (displayName.includes("Bomb") || displayName.includes("Sanjai")) cover = "poster4.png";
             if (displayName.includes("Harishankar")) cover = "Poster3.jpeg";
             if (displayName.includes("Happy Birthday")) cover = "poster3.png";
+            if (displayName.includes("Kavin Wedding")) cover = "kgw.png";
 
             allSongsForTrending.push({ name: displayName, dbName: simplifyDisplayName(displayName), cover: cover });
             seenSongs.add(displayName);
@@ -980,7 +981,7 @@ if(listId === "list1" || listId === "list4") {
     }
 else if(listId === "list3") {
     // Checking filename for specific list 3 posters
-    if(fName.includes("Kavin Wedding")) {
+    if(fName.includes("kavin wedding")) {
         img.src = "kgw.png";
     } else if(fName.includes("bomb") || fName.includes("sanjai")) {
         img.src = "poster4.png";
