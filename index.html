@@ -49,31 +49,6 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* --- TOP HERO IMAGE --- */
-.top-hero {
-    position: relative;
-    width: 100%;
-    max-height: 70vh;
-    overflow: hidden;
-    background: var(--bg-2);
-}
-.top-hero img {
-    display: block;
-    width: 100%;
-    height: auto;
-    max-height: 70vh;
-    object-fit: cover;
-    object-position: center top;
-}
-.top-hero::after {
-    content: "";
-    position: absolute;
-    inset: auto 0 0 0;
-    height: 45%;
-    background: linear-gradient(to top, var(--bg) 0%, rgba(12,6,20,0.6) 50%, rgba(12,6,20,0) 100%);
-    pointer-events: none;
-}
-
 /* --- THE BEATING HEART BACKGROUND --- */
 #bass-bg {
     position: fixed;
@@ -132,6 +107,80 @@ header h1 {
     margin: 0;
     letter-spacing: 0.5px;
 }
+
+/* --- ANIMATED FRAME (below header) --- */
+.frame-wrap {
+    width: 90%;
+    max-width: 700px;
+    margin: 28px auto 6px auto;
+    position: relative;
+    animation: frameFloat 6s ease-in-out infinite, frameGlow 3s ease-in-out infinite;
+}
+@keyframes frameFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes frameGlow {
+    0%, 100% { filter: drop-shadow(0 0 14px rgba(255,61,129,0.45)); }
+    50%      { filter: drop-shadow(0 0 30px rgba(255,159,28,0.65)); }
+}
+.frame {
+    position: relative;
+    padding: 5px;
+    border-radius: 24px;
+    overflow: hidden;
+    background: #1a0b24;
+}
+/* spinning rainbow-fire border */
+.frame::before {
+    content: "";
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 220%; aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    background: conic-gradient(from 0deg, #ff3d81, #ff9f1c, #ffd23f, #22e1ff, #ff3d81 60%, #ff9f1c, #ff3d81);
+    animation: frameSpin 5s linear infinite;
+}
+@keyframes frameSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+.frame-inner {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #0c0614;
+    line-height: 0;
+}
+.frame-inner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 65vh;
+    object-fit: cover;
+    animation: kenBurns 14s ease-in-out infinite alternate;
+}
+@keyframes kenBurns { from { transform: scale(1); } to { transform: scale(1.07); } }
+/* light sweep across the picture */
+.frame-inner::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -70%;
+    width: 40%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,0.28), transparent);
+    transform: skewX(-20deg);
+    animation: frameShine 5s ease-in-out infinite;
+    pointer-events: none;
+}
+@keyframes frameShine { 0%, 55% { left: -70%; } 100% { left: 140%; } }
+/* corner brackets */
+.frame-corner {
+    position: absolute;
+    width: 26px; height: 26px;
+    border: 3px solid #ffd23f;
+    z-index: 2;
+    pointer-events: none;
+    animation: cornerPulse 2.4s ease-in-out infinite;
+}
+.frame-corner.tl { top: 14px; left: 14px; border-right: 0; border-bottom: 0; border-top-left-radius: 8px; }
+.frame-corner.tr { top: 14px; right: 14px; border-left: 0; border-bottom: 0; border-top-right-radius: 8px; }
+.frame-corner.bl { bottom: 14px; left: 14px; border-right: 0; border-top: 0; border-bottom-left-radius: 8px; }
+.frame-corner.br { bottom: 14px; right: 14px; border-left: 0; border-top: 0; border-bottom-right-radius: 8px; }
+@keyframes cornerPulse { 0%, 100% { opacity: 0.35; transform: scale(0.9); } 50% { opacity: 1; transform: scale(1.1); } }
 
 /* TRAILER LINK */
 .trailer-link-box {
@@ -434,7 +483,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 @media (max-width: 520px) {
     .playlistHeader img { width: 64px; height: 64px; }
     #popup { width: 180px; right: 12px; }
-    .top-hero, .top-hero img { max-height: 55vh; }
 }
 @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
@@ -444,10 +492,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 <body class="">
     
 
-<div class="top-hero">
-    <img src="jtfour.jpeg" alt="LOT-III" onerror="this.parentNode.style.display='none'">
-</div>
-
 <div id="bass-bg"></div>
 
 <header>
@@ -456,6 +500,16 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.3); }
 </header>
 
     
+<div class="frame-wrap">
+    <div class="frame">
+        <div class="frame-inner">
+            <img src="jtfour.jpeg" alt="LOT-III" onerror="this.closest('.frame-wrap').style.display='none'">
+            <span class="frame-corner tl"></span><span class="frame-corner tr"></span>
+            <span class="frame-corner bl"></span><span class="frame-corner br"></span>
+        </div>
+    </div>
+</div>
+
 <a href="https://youtu.be/Td1VHqZAfoU" target="_blank" class="trailer-link-box">
 
     <div class="trailer-text"><span>▶</span> LOT-III FULL MOVIE</div>
