@@ -675,9 +675,13 @@ function simplifyDisplayName(displayName) {
     if (clean.includes("universe")) return "KingInTheUniverse";
     if (clean.includes("harold")) return "KingVsHarold";
     if (clean.includes("teaser")) return "LOTIIITeaserConcert";
-    if (clean.includes("theme")) return "LOTIIITheme";
-    if (clean.includes("saavachuruven")) return "SaavachuruvenUnna";
-    if (clean.includes("sivagasi")) return "SivagasisDaaha";
+    if (clean.includes("theme") && clean.includes("lot")) return "LOTIIITheme";
+    if (clean.includes("sivagasi") && clean.includes("saavachuruven"))
+        return "SivagasisDaahaXSaavachuruvenUnna";
+    if (clean.includes("saavachuruven"))
+        return "SaavachuruvenUnna";
+    if (clean.includes("sivagasi"))
+        return "SivagasisDaaha";
     if (clean.includes("flute")) return "FluteAnthemLOTIII";
     if (clean.includes("bomb")) return "BombEndhu1cm";
     if (clean.includes("sanjai")) return "SanjaisRoomEndhu1cm";
